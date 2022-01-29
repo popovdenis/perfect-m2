@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Helper\Product\ConfigurationPool">
+        <arguments>
+            <argument name="instancesByType" xsi:type="array">
+                <item name="aw_event_ticket" xsi:type="object">Aheadworks\EventTickets\Model\Product\Configuration</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Wishlist\Block\Catalog\Product\View\AddTo\Wishlist">
+        <plugin name="aw-et-wishlist-options" type="Aheadworks\EventTickets\Plugin\Block\Wishlist\OptionsPlugin" />
+    </type>
+    <type name="Magento\Wishlist\Block\Item\Configure">
+        <plugin name="aw-et-wishlist-options" type="Aheadworks\EventTickets\Plugin\Block\Wishlist\OptionsPlugin" />
+    </type>
+    <type name="Magento\Customer\CustomerData\Customer">
+        <plugin name="aw-et-customer-data" type="Aheadworks\EventTickets\Plugin\CustomerData\CustomerPlugin" />
+    </type>
+</config>

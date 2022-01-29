@@ -1,0 +1,42 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Aheadworks\EventTickets\Block\Adminhtml\Product\Edit\Tab\SpaceConfiguration */
+?>
+<div data-role="aw-et-space-configuration-wizard-dialog"
+     data-bind="scope: '<?= /* @noEscape */ $block->getScope() ?>'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "<?= /* @noEscape */ $block->getScope() ?>": {
+                        "component": "Aheadworks_EventTickets/js/product/new/space/modal-configuration",
+                        "options": {
+                            "type": "slide",
+                            "title": "<?= $block->escapeHtml(__('Select Space Configuration')) ?>"
+                        },
+                        "isTemplate": false,
+                        "stepWizardName": "<?= /* @noEscape */ $block->getStepWizardName() ?>",
+                        "children": {
+                            "wizard": {
+                                "url": "<?= /* @noEscape */ $block->getStepWizardUrl() ?>",
+                                "showSpinner": true,
+                                "component": "Magento_Ui/js/form/components/html"
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+</script>
+<script>
+    require(['jquery', 'mage/apply/main'], function ($, main) {
+        main.apply();
+        $('[data-role=aw-et-space-configuration-wizard-dialog]').applyBindings();
+    })
+</script>

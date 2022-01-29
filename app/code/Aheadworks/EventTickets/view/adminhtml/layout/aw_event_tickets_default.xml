@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="page.main.actions">
+            <block class="Aheadworks\EventTickets\Block\Adminhtml\Page\Menu" name="aw_et_menu">
+                <block class="Aheadworks\EventTickets\Block\Adminhtml\Page\Menu\Item" name="aw_et_menu_item.venues">
+                    <arguments>
+                        <argument name="path" xsi:type="string">*/venue/index</argument>
+                        <argument name="label" xsi:type="string">Venues</argument>
+                        <argument name="resource" xsi:type="string">Aheadworks_EventTickets::venues</argument>
+                        <argument name="controllers" xsi:type="array">
+                            <item name="0" xsi:type="string">venue</item>
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\EventTickets\Block\Adminhtml\Page\Menu\Item" name="aw_et_menu_item.spaces">
+                    <arguments>
+                        <argument name="path" xsi:type="string">*/space/index</argument>
+                        <argument name="label" xsi:type="string">Spaces</argument>
+                        <argument name="resource" xsi:type="string">Aheadworks_EventTickets::spaces</argument>
+                        <argument name="controllers" xsi:type="array">
+                            <item name="0" xsi:type="string">space</item>
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\EventTickets\Block\Adminhtml\Page\Menu\Item" name="aw_et_menu_item.events_list">
+                    <arguments>
+                        <argument name="path" xsi:type="string">*/event/index</argument>
+                        <argument name="label" xsi:type="string">One-Time Events &amp; Tickets</argument>
+                        <argument name="resource" xsi:type="string">Aheadworks_EventTickets::events</argument>
+                        <argument name="controllers" xsi:type="array">
+                            <item name="0" xsi:type="string">event</item>
+                            <item name="1" xsi:type="string">ticket</item>
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\EventTickets\Block\Adminhtml\Page\Menu\Item" name="aw_et_menu_item.recurring_events_list">
+                    <arguments>
+                        <argument name="path" xsi:type="string">*/recurring_event/index</argument>
+                        <argument name="label" xsi:type="string">Recurring Events &amp; Tickets</argument>
+                        <argument name="resource" xsi:type="string">Aheadworks_EventTickets::recurring_events</argument>
+                        <argument name="controllers" xsi:type="array">
+                            <item name="0" xsi:type="string">recurring_event</item>
+                            <item name="1" xsi:type="string">recurring_ticket</item>
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\EventTickets\Block\Adminhtml\Page\Menu\Item" name="aw_et_menu_item.ticket_types_list">
+                    <arguments>
+                        <argument name="path" xsi:type="string">*/ticketType/index</argument>
+                        <argument name="label" xsi:type="string">Ticket Types</argument>
+                        <argument name="resource" xsi:type="string">Aheadworks_EventTickets::ticket_types</argument>
+                        <argument name="controllers" xsi:type="array">
+                            <item name="0" xsi:type="string">ticketType</item>
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\EventTickets\Block\Adminhtml\Page\Menu\Item" name="aw_et_menu_item.settings">
+                    <arguments>
+                        <argument name="path" xsi:type="string">adminhtml/system_config/edit/section/aw_event_tickets</argument>
+                        <argument name="label" xsi:type="string">Settings</argument>
+                        <argument name="resource" xsi:type="string">Aheadworks_EventTickets::settings</argument>
+                    </arguments>
+                </block>
+
+                <block class="Aheadworks\EventTickets\Block\Adminhtml\Page\Menu\Item" name="aw_et_menu_item.readme">
+                    <arguments>
+                        <argument name="label" xsi:type="string">Readme</argument>
+                        <argument name="link_attributes" xsi:type="array">
+                            <item name="href" xsi:type="string">https://aheadworks.com/resources/event-tickets/user-manual-event-tickets</item>
+                            <item name="target" xsi:type="string">_blank</item>
+                            <item name="class" xsi:type="string">separator</item>
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\EventTickets\Block\Adminhtml\Page\Menu\Item" name="aw_et_menu_item.support">
+                    <arguments>
+                        <argument name="label" xsi:type="string">Get Support</argument>
+                        <argument name="link_attributes" xsi:type="array">
+                            <item name="href" xsi:type="string">https://aheadworks.com/contact/</item>
+                            <item name="target" xsi:type="string">_blank</item>
+                        </argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

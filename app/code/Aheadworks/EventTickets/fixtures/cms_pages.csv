@@ -1,0 +1,9 @@
+title,page_layout,meta_keywords,meta_description,identifier,content_heading,content,is_active,sort_order,layout_update_xml,custom_theme,custom_root_template,custom_layout_update_xml,custom_theme_from,custom_theme_to
+Event Tickets How to Page,1column,,,event-tickets-how-to-page,Event Tickets How to Page,"<div class=""aw-et__how-to-page cms-content"">
+        <h2 class=""aw-et__title"">I bought a ticket, what's next?</h2>
+        <p class=""aw-et__icon-block aw-et__pdf-icon""><span class=""aw-et__text"">Shortly after purchase you will receive an email with your ticket in pdf format</span></p>
+        <p class=""aw-et__icon-block aw-et__print-icon aw-et__right-position""><span class=""aw-et__text"">Optionally, you can print the ticket before the event</span></p>
+        <p class=""aw-et__icon-block aw-et__scan-icon""><span class=""aw-et__text"">At the event gate, let a ticket taker to scan a QR code of your ticket, either in printed form or right from the phone screen</span></p>
+        <p class=""aw-et__icon-block aw-et__ticket-icon aw-et__right-position""><span class=""aw-et__text"">Enjoy the event!</span></p>
+    </div>
+",0,,,,,,,

@@ -1,0 +1,95 @@
+<div class="summary" data-bind="mageInit: {'collapsible':{'openedState': 'active', 'active': true}}">
+    <div class="summary-header" data-role="title">
+        <span class="title-sum" translate="'Summary'"/>
+        <span class="ticket-sum" text="getSelectedTicketQtyLabel()"/>
+        <span class="ticket-sum ticket-sum-product" if="getSelectedProductQty()" text="getSelectedProductQtyLabel()"/>
+        <div class="arrow-icon"></div>
+    </div>
+    <div class="summary-detail-block" data-role="content">
+        <div data-bind="if: isNeedToShowDefaultLabel()" class="summary-default-msg">
+            <span translate="'Please, configure ticket(s)'"/>
+        </div>
+
+        <div class="summary-item-block" if="getSelectedTicketQty()">
+            <div class="summary-item-block-title" translate="'Tickets'" />
+            <div class="time-slot" repeat="foreach: getSelectedTicketsByTimeSlot(), item: '$timeSlot'">
+                <div class="slot-description" if="$timeSlot().date">
+                    <div class="date">
+                        <text args="$timeSlot().date"/>
+                    </div>
+                    <div class="time">
+                        <text args="$timeSlot().range"/>
+                    </div>
+                </div>
+
+                <!-- ko foreach: { data: $timeSlot().sectors, as: '$sector'}  -->
+                    <div class="sector-element">
+                        <div class="sector-name-wrapper">
+                            <span class="sector-name" text="$sector.name"/>
+                        </div>
+                        <!-- ko foreach: { data: $sector.tickets, as: 'selected'}  -->
+                        <div class="summ-tickets">
+                            <text args="selected.qty"/> x <text args="selected.ticket.ticket_type.label"/> <span class="price-wrapper">(<span html="selected.formattedPrice"/>)</span>
+                            <span class="total">
+                            <span class="price"><text args="selected.total"/></span>
+                                <if args="$parents[1].isNeedToDisplayTax()">
+                                    <span class="price price-excluding-tax"
+                                          attr="'data-label': $t('Excl. Tax')">
+                                        <text args="selected.exclTaxTotal"/>
+                                    </span>
+                                </if>
+                            </span>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                <!-- /ko -->
+            </div>
+        </div>
+
+        <div class="summary-item-block" if="getSelectedProductQty()">
+            <div class="summary-item-block-title" translate="'Additional Products'" />
+            <div class="time-slot" repeat="foreach: getSelectedProductsByTimeSlot(), item: '$timeSlot'">
+                <div class="slot-description" if="$timeSlot().date">
+                    <div class="date">
+                        <text args="$timeSlot().date"/>
+                    </div>
+                    <div class="time">
+                        <text args="$timeSlot().range"/>
+                    </div>
+                </div>
+
+                <!-- ko foreach: { data: $timeSlot().sectors, as: '$sector'}  -->
+                    <div class="sector-element">
+                        <div class="sector-name-wrapper">
+                            <span class="sector-name" if="$sector.products" text="$sector.name"/>
+                        </div>
+                        <!-- ko foreach: { data: $sector.products, as: 'selected'}  -->
+                        <div class="summ-products">
+                            <text args="selected.qty"/> x <text args="selected.product.name"/> <span class="price-wrapper">(<span html="selected.formattedPrice"/>)</span>
+                            <span class="total">
+                            <span class="price"><text args="selected.total"/></span>
+                            <if args="$parents[1].isNeedToDisplayTax()">
+                                <span class="price price-excluding-tax"
+                                      attr="'data-label': $t('Excl. Tax')">
+                                    <text args="selected.exclTaxTotal"/>
+                                </span>
+                            </if>
+                            </span>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+    <div class="price-wrapper">
+        <span class="price" text="getTotalSummary()"/>
+        <if args="isNeedToDisplayTax()">
+        <span class="price-wrapper price-excluding-tax"
+              attr="'data-label': $t('Excl. Tax')"
+              data-price-type="basePrice"
+              html="getTotalSummaryExlcTax()">
+        </span>
+        </if>
+    </div>
+</div>

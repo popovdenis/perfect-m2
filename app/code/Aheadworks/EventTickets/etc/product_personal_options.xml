@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Aheadworks_EventTickets:etc/product_personal_options.xsd">
+    <option name="default" label="Default">
+        <inputType name="name" label="Name" />
+        <inputType name="email" label="Email" />
+        <inputType name="phone_number" label="Phone Number" />
+    </option>
+    <option name="text" label="Text">
+        <inputType name="field" label="Field" />
+    </option>
+    <option name="select" label="Select">
+        <inputType name="dropdown" label="Dropdown" />
+    </option>
+    <option name="date" label="Date">
+        <inputType name="date" label="Date" />
+    </option>
+</config>

@@ -1,0 +1,60 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  //
+  //  Sectors dynamic rows
+  //  _____________________________________________
+
+  .aw-event-tickets.dynamic-rows.sectors {
+    .status_field {
+      width: 20%;
+    }
+  }
+
+  .aw-event-tickets.sectors {
+    .price-field {
+      width: 20rem;
+    }
+
+    thead {
+      .admin__field-tooltip {
+        vertical-align: bottom;
+
+        .admin__field-tooltip-action {
+          margin-left: 0.5rem;
+        }
+        .admin__field-tooltip-content {
+          right: -43rem;
+          width: 46rem;
+
+          &:after, &:before {
+            right: 39.5rem;
+          }
+        }
+      }
+    }
+
+    .admin__control-table-wrapper {
+      overflow: inherit;
+    }
+  }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}

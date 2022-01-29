@@ -1,0 +1,11 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Aheadworks\EventTickets\Block\Product\View */
+$product = $block->getProduct();
+?>
+<?php if ($product->isSaleable()): ?>
+    <div class="aw-et__view-options-container">
+        <?= $block->getChildHtml('et_options'); ?>
+    </div>
+<?php endif; ?>

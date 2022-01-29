@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="empty" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="aw.et.ticket.management"
+                   template="Aheadworks_EventTickets::ticket/management.phtml" cacheable="false">
+                <block class="Magento\Framework\View\Element\Template"
+                       template="Aheadworks_EventTickets::ticket/management/check-in.phtml"
+                       name="aw.et.ticket.management.check-in" as="check_in_form"/>
+                <block class="Aheadworks\EventTickets\Block\Ticket\Management\Info"
+                       template="Aheadworks_EventTickets::ticket/management/info.phtml"
+                       name="aw.et.ticket.management.info" as="info"/>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

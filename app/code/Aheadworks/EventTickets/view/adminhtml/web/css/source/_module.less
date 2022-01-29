@@ -1,0 +1,145 @@
+@import 'module/components/dynamic-rows/_storefront_description.less';
+@import 'module/components/dynamic-rows/_sectors.less';
+@import 'module/components/_page-menu.less';
+@import 'module/components/grid/colums/_single-select.less';
+@import 'module/components/_product-wizard.less';
+@import 'module/components/form/_modal.less';
+@import 'module/components/form/_schedule.less';
+
+@import 'module/_variables.less';
+@import 'module/product/form/options/_sector.less';
+@import 'module/product/calendar/_people_qty_filter.less';
+
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  .aw-et__view-options-container {
+    .sectors {
+
+      .header-sector-tickets {
+        .arrow {
+          top: 30%;
+
+          .lib-button-icon(
+            @_icon-font-content: @icon-down,
+            @_icon-font-size: 46px,
+            @_icon-font-text-hide: false,
+            @_icon-font-color: @aw-sector-type-title__color,
+            @_icon-font-color-hover: @aw-sector-type-title__color,
+            @_icon-font-line-height: 1
+          );
+        }
+      }
+
+      .tickets-type {
+        .tickets-type-item {
+          .tickets-type-item-content {
+            .item-content-ticket {
+              .qty-ticket-inp-block {
+                .input-text {
+                  width: 43px;
+                  text-indent: 9px;
+                }
+              }
+            }
+          }
+
+          .attendee-element {
+            margin-bottom: 20px;
+          }
+        }
+
+        .qty-inp-block {
+          .input-text {
+            width: 43px;
+          }
+        }
+      }
+    }
+
+    input[type="number"] {
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+      }
+    }
+
+    .aw-et-remove-event {
+      padding: 0;
+      margin: 0;
+      border: none;
+      position: absolute;
+      z-index: 100;
+      right: 0;
+      top: 0;
+      background: transparent;
+      .lib-css(box-shadow, none, 1);
+
+      .lib-button-icon(
+        @_icon-font-content: @icon-remove,
+        @_icon-font-size: 19px,
+        @_icon-font-text-hide: true,
+        @_icon-font-color: #ffffff,
+        @_icon-font-color-hover: #ffffff,
+        @_icon-font-line-height: 1
+      );
+    }
+  }
+
+  .aw-et__time-slots {
+    padding-top: 15px !important;
+  }
+
+  .aw_event_tickets-ticket-index,.aw_event_tickets-recurring_ticket-index {
+    .admin__data-grid-wrap {
+      .action-select-wrap .action-menu {
+        right: auto !important;
+        min-width: auto !important;
+      }
+    }
+  }
+
+  .fc-event {
+    &._disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+
+  .time-slot {
+    .aw-et-remove-slot-btn {
+      top: 20px;
+
+      &::before {
+        font-size: 30px;
+      }
+    }
+  }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}
+
+.aw-et__space-configuration-panel-content {
+    .admin__fieldset{
+        padding-top: 0!important;
+        padding-bottom: 0!important;
+    }
+}

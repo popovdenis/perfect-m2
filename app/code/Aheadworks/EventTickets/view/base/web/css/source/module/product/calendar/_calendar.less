@@ -1,0 +1,154 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  .aw_et-calendar-container {
+    overflow-x: auto;
+
+    .fc-head {
+      .fc-day-header {
+        padding: 10px;
+        .lib-css(background-color, @aw-et-calendar-header-td__background-color);
+
+        > span {
+          .lib-vendor-prefix-display(flex);
+          .lib-vendor-box-align(center);
+          .lib-css(justify-content, space-between, 1);
+        }
+      }
+    }
+
+    .fc-past {
+      .aw-et__header-day-number {
+        .lib-css(background-color, @aw-et-calendar-header-day-number__past__background-color);
+      }
+    }
+
+    .aw-et__header-day-number {
+      .lib-css(border-radius, 100%);
+      .lib-css(background-color, @aw-et-calendar-header-day-number__background-color);
+      .lib-css(color, @aw-et-calendar-header-day-number__color);
+      padding: 0;
+      font-size: 12px;
+      width: 25px;
+      display: inline-block;
+      height: 25px;
+      text-align: center;
+      line-height: 25px;
+
+      &.current-day {
+        .lib-css(background-color, @aw-et-calendar-header-day-number__active__background-color);
+        .lib-css(color, @aw-et-calendar-header-day-number__active__color);
+      }
+    }
+
+    /*.fc-event-container {
+      cursor: pointer;
+    }*/
+
+    .fc-now-indicator.fc-now-indicator-line {
+      border-top-width: 3px;
+    }
+
+    .fc-header-toolbar {
+      .fc-center {
+        text-transform: uppercase;
+
+        h2 {
+          font-size: 15px;
+          font-weight: 600;
+        }
+      }
+
+      .fc-button-primary {
+        background: transparent;
+
+        &:hover {
+          .lib-css(background-color, @aw-et-calendar-toolbar-button__hover__background-color);
+        }
+
+        &.fc-button-active {
+          .lib-css(background-color, @aw-et-calendar-toolbar-button__active__background-color);
+        }
+
+        &.fc-prev-button,
+        &.fc-next-button {
+          padding: 4.5px 7px;
+        }
+      }
+    }
+
+    .fc-axis {
+      display: none;
+    }
+
+    .fc-time-grid-event {
+      .fc-time{
+        font-size: 14px;
+      }
+    }
+
+    .aw-et-remove-event {
+      padding: 0;
+      margin: 0;
+      border: none;
+      position: absolute;
+      z-index: 100;
+      right: 0;
+      top: 0;
+      background: transparent;
+      .lib-css(box-shadow, none, 1);
+
+      .lib-button-icon(
+        @_icon-font-content: @icon-remove,
+        @_icon-font-size: 15px,
+        @_icon-font-text-hide: true,
+        @_icon-font-color: #ffffff,
+        @_icon-font-color-hover: #ffffff,
+        @_icon-font-line-height: 1
+      );
+    }
+  }
+
+  .aw_et-calendar {
+    min-width: 900px;
+  }
+
+  .fc-event {
+    &:not(.active-slot) {
+      .fc-content{
+        .aw-et-remove-event {
+          display: none;
+        }
+      }
+    }
+
+    &._disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+  .aw_et-calendar-container {
+    overflow-x: inherit;
+  }
+}

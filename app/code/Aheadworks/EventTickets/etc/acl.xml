@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Catalog::catalog">
+                    <resource id="Aheadworks_EventTickets::home" title="Event Tickets by Aheadworks" sortOrder="100">
+                        <resource id="Aheadworks_EventTickets::venues" title="Manage Venues" />
+                        <resource id="Aheadworks_EventTickets::spaces" title="Manage Spaces" />
+                        <resource id="Aheadworks_EventTickets::events" title="Events" >
+                            <resource id="Aheadworks_EventTickets::tickets" title="Tickets" />
+                        </resource>
+                        <resource id="Aheadworks_EventTickets::recurring_events" title="Recurring Events" >
+                            <resource id="Aheadworks_EventTickets::recurring_tickets" title="Tickets" />
+                        </resource>
+                        <resource id="Aheadworks_EventTickets::ticket_types" title="Manage Ticket Types" />
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Aheadworks_EventTickets::config_aw_event_tickets" title="Event Tickets by Aheadworks" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

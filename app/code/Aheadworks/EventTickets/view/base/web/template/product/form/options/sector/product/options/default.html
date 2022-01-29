@@ -1,0 +1,9 @@
+<div if="options.length > 0" class="product-options">
+    <dl class="item-options">
+        <!--ko foreach: options-->
+            <dt class="label" data-bind="text: label"></dt>
+            <dd if="$data.full_view" class="values" data-bind="html: full_view"/>
+            <dd ifnot="$data.full_view" class="values" data-bind="html: value"/>
+        <!-- /ko -->
+    </dl>
+</div>

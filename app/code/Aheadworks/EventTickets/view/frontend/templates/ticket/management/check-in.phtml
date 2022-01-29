@@ -1,0 +1,31 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Framework\View\Element\Template */
+?>
+<form action="<?= $block->escapeUrl($block->getUrl('aw_event_tickets/ticket/management_checkIn')) ?>"
+      method="post"
+      data-mage-init='{"validation":{}}'>
+    <fieldset class="fieldset check-in">
+        <div class="field field-ticket-number required">
+            <label class="label" for="ticket_number">
+                <span><?= $block->escapeHtml(__('Ticket Number')) ?></span>
+            </label>
+            <div class="control">
+                <input type="text"
+                       title="<?= $block->escapeHtml(__('Ticket Number')) ?>"
+                       class="input-text required-entry"
+                       name="ticket_number"
+                       data-validate="{required:true}"/>
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" title="<?= $block->escapeHtml(__('Check In')) ?>"
+                    class="action primary check-in-ticket">
+                <span><?= $block->escapeHtml(__('Check In')) ?></span>
+            </button>
+        </div>
+    </div>
+</form>

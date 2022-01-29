@@ -1,0 +1,95 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/* @var $block \Aheadworks\EventTickets\Block\Adminhtml\Product\Space\Steps\Summary */
+?>
+<div class="aw-et-summary-block">
+    <h2 class="steps-wizard-title">
+        <?= $block->escapeHtml(__('Step 3: Summary')); ?>
+    </h2>
+    <div data-bind="scope: '<?= /* @noEscape */  $block->getComponentName() ?>'">
+        <!-- ko if: venueInfo() -->
+            <h3 class="venue-info-title">
+                <?= $block->escapeHtml(__('Selected Venue Details:')); ?>
+            </h3>
+            <div class="venue-info" data-bind="foreach: venueInfoFields">
+                <div class="venue-info-field">
+                    <label class="admin__field-label">
+                        <span data-bind="i18n: $data.field_description"></span>
+                    </label>
+                    <label class="admin__field-label" data-bind="css: $data.additional_classes">
+                        <span data-bind="text: $parent.getVenueFieldValue($data.field_name)"></span>
+                    </label>
+                </div>
+            </div>
+        <!-- /ko -->
+        <!-- ko if: spaceInfo() -->
+            <h3 class="space-info-title">
+                <?= $block->escapeHtml(__('Selected Space Details:')); ?>
+            </h3>
+            <div class="space-info" data-bind="foreach: spaceInfoFields">
+                <div class="space-info-field">
+                    <label class="admin__field-label">
+                        <span data-bind="i18n: $data.field_description"></span>
+                    </label>
+                    <label class="admin__field-label" data-bind="css: $data.additional_classes">
+                        <span data-bind="text: $parent.getSpaceFieldValue($data.field_name)"></span>
+                    </label>
+                </div>
+            </div>
+        <!-- /ko -->
+    </div>
+    <div data-bind="scope: 'aw_event_tickets_sectors_listing_container'">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "aw_event_tickets_sectors_listing_container":{
+                        "type":"fieldset",
+                        "name":"aw_event_tickets_sectors_listing_container",
+                        "config":{"label":"","collapsible":false,"componentType":"fieldset"},
+                        "children":{
+                            "aw_event_tickets_sectors_listing":{
+                                "type":"container",
+                                "name":"aw_event_tickets_sectors_listing",
+                                "dataScope":"aw_event_tickets_sectors_listing",
+                                "config":{
+                                    "autoRender":true,
+                                    "render_url": "<?= $block->escapeUrl($block->getUrl('mui/index/render/isWizard/true')) ?>",
+                                    "update_url":"<?= $block->escapeUrl($block->getUrl('mui/index/render')) ?>",
+                                    "realTimeLink":true,
+                                    "dataLinks":{"imports":true,"exports":false},
+                                    "component":"Magento_Ui/js/form/components/insert-listing",
+                                    "externalProvider":"<?= /* @noEscape */ $block->getData('config/providerName') ?>",
+                                    "ns":"<?= /* @noEscape */ $block->getData('config/ns') ?>",
+                                    "deps":["product_form.product_form_data_source"],
+                                    "provider":"product_form.product_form_data_source",
+                                    "loading":false,
+	                                "isWizardFilter": true,
+                                    "exports":{
+                                        "isWizardFilter":"${ $.externalProvider }:params.isWizard"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "<?= /* @noEscape */  $block->getComponentName() ?>": {
+                        "component": "Aheadworks_EventTickets/js/product/new/space/steps/summary",
+                        "venueInfoFields": <?= /* @noEscape */ \Zend_Json::encode($block->getData('config/venueInfoFields')) ?>,
+                        "spaceInfoFields": <?= /* @noEscape */ \Zend_Json::encode($block->getData('config/spaceInfoFields')) ?>,
+                        "loadSectorConfigUrl": "<?= /* @noEscape */ $block->getUrl($block->getData('config/loadSectorConfigUrl')) ?>",
+                        "sectorsProviderName": "<?= /* @noEscape */ $block->getData('config/providerName') ?>",
+                        "modalComponent": "<?= /* @noEscape */ $block->getData('config/form') . '.' . $block->getData('config/modal') ?>",
+                        "formProvider": "<?= /* @noEscape */  $block->getData('config/formProvider') ?>",
+                        "spaceConfigurationComponent": "<?= /* @noEscape */ $block->getData('config/form') . '.' . $block->getData('config/spaceConfiguration') ?>",
+                        "appendTo": "<?= /* @noEscape */  $block->getParentComponentName() ?>"
+                    }
+                }
+            }
+        }
+    }
+</script>

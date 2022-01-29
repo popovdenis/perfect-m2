@@ -1,0 +1,55 @@
+<!--@subject {{trans 'Your ticket(s) to %event_name' event_name=$ticket.getEventTitle()}}@-->
+{{template config_path="design/email/header_template"}}
+<div class="wrapper-email-block">
+    <p class="customer-name">
+        {{trans 'Dear %customer_name,' customer_name=$ticket.getAttendeeName()}}
+        <span>{{trans 'Please find your ticket(s) attached'}}</span>
+    </p>
+    <p class="title-ticket">
+        {{trans
+        '%event_title' event_title=$ticket.getEventTitle()
+        }}
+        <span></span>
+    </p>
+
+    <div class="data-block">
+        <div class="title">
+            {{trans
+            'Date and time'
+            }}
+        </div>
+        {{for item in tickets}}
+            <div class="content-data">
+                <div class="bold-block">
+                    {{var item.getEventStartDate() }} - {{var item.getEventEndDate() }}
+                </div>
+            </div>
+        {{/for}}
+    </div>
+
+    <div class="data-block">
+        <div class="title">
+            {{trans
+            'Address'
+            }}
+        </div>
+        <div class="content-data">
+            {{trans
+            '%event_address' event_address=$ticket.getEventAddress()
+            }}
+        </div>
+    </div>
+
+    {{depend eventImageUrl}}
+    <div class="block-images">
+        <img src="{{var eventImageUrl}}" width="300" alt="{{var ticket.getEventTitle()}}" />
+    </div>
+    {{/depend}}
+
+    <div class="data-block">
+        <div class="content-data">
+            {{var ticket.getEventDescription()|raw}}
+        </div>
+    </div>
+</div>
+{{template config_path="design/email/footer_template"}}

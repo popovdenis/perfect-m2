@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="aw_et_deadline_check" instance="Aheadworks\EventTickets\Cron\DeadlineCheck" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+        <job name="aw_et_price_update_check" instance="Aheadworks\EventTickets\Cron\PriceUpdateCheck" method="execute">
+            <schedule>1 0 * * *</schedule>
+        </job>
+        <job name="aw_et_end_date_check" instance="Aheadworks\EventTickets\Cron\EndDateCheck" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+    </group>
+</config>

@@ -1,0 +1,41 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Aheadworks\EventTickets\Block\Product\View */
+$product = $block->getProduct();
+?>
+<div id="formEdit" data-role="aw-et-view-options"
+     data-mage-init='{"Magento_Ui/js/core/app": <?= /* @noEscape */ $block->escapeSpecialSymbols($block->getJsLayout()) ?>}'
+     data-bind="scope: 'awEtViewOptions'"
+     class="aw-et__view-options-container">
+    <?php if ($product->getAwEtScheduleType() == $block->getRecurringType()): ?>
+        <?php if ($block->getFilterFlag()): ?>
+            <div data-bind="scope: 'awEtFilterByTicketQty'">
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            </div>
+        <?php endif; ?>
+        <div class="aw_et-calendar-container" data-bind="scope: 'awFullCalendarComponent'">
+            <div class="aw_et-calendar"></div>
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        </div>
+    <?php endif; ?>
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/javascript">
+    require(['ko', 'jquery', 'underscore', 'uiRegistry'], function (ko, $, _, registry) {
+        var components;
+
+        $('#product_composite_configure_fields_options').remove();
+        components = _.union(
+            registry.filter('ns = awEtViewOptions'),
+            registry.filter('ns = awEtViewOptionsProvider'),
+            registry.filter('ns = awFullCalendarComponent')
+        );
+        _.each(components, function (component) {
+            registry.remove(component.name);
+        });
+
+        $('body').trigger('contentUpdated');
+        $('[data-role=aw-et-view-options]').applyBindings();
+    })
+</script>

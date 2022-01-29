@@ -1,0 +1,105 @@
+& when (@media-common = true) {
+  .aw-et__how-to-page {
+    font-family: @aw-sector-font-family__base;
+    color: @aw-sector-type-title__color;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 300;
+
+    .aw-et__title {
+      text-align: center;
+      line-height: 1.38;
+      font-weight: 300;
+      font-size: 42px;
+      margin-bottom: 50px;
+    }
+
+    .aw-et__icon-block {
+      margin-bottom: 80px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+
+      .aw-et__text {
+        font-size: 22px;
+        line-height: 1.3;
+        display: block;
+        width: 100%;
+      }
+
+      &.aw-et__right-position {
+        .aw-et__text {
+          text-align: right;
+        }
+      }
+
+      &::before, &::after  {
+        content: '';
+        background-size: contain;
+        background-repeat: no-repeat;
+        display: block;
+        min-width: 110px;
+        height: 100px;
+      }
+
+    }
+
+    .aw-et__pdf-icon {
+      &::before {
+        background-image: url('../Aheadworks_EventTickets/images/pdf.png');
+        margin-right: 20px;
+
+      }
+      &:after {
+        display: none;
+      }
+    }
+
+    .aw-et__print-icon {
+      &::after {
+        background-image: url('../Aheadworks_EventTickets/images/print.png');
+        margin-left: 20px;
+      }
+
+      &::before {
+        display: none;
+      }
+    }
+
+    .aw-et__scan-icon {
+      &::before {
+        background-image: url('../Aheadworks_EventTickets/images/scan.png');
+        margin-right: 20px;
+      }
+
+      &:after {
+        display: none;
+      }
+    }
+
+    .aw-et__ticket-icon {
+      &::after {
+        background-image: url('../Aheadworks_EventTickets/images/ticket.png');
+        margin-left: 20px;
+      }
+
+      &::before {
+        display: none;
+      }
+    }
+
+  }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .aw-et__how-to-page {
+    .aw-et__icon-block {
+      .aw-et__text {
+        font-size: 18px;
+      }
+    }
+  }
+}

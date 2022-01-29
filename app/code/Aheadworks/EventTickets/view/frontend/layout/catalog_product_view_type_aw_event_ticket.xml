@@ -1,0 +1,362 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Aheadworks_EventTickets::css/calendar.css" />
+    </head>
+    <body>
+        <attribute name="class" value="aw-et-product-page"/>
+        <referenceBlock name="product.info">
+            <block class="Aheadworks\EventTickets\Block\Product\View" as="form_bottom" name="product.info.form"
+                   template="Aheadworks_EventTickets::product/view/form_bottom.phtml">
+                <block class="Aheadworks\EventTickets\Block\Product\View" name="product.info.et.options"
+                       template="Aheadworks_EventTickets::product/view/form_bottom/options.phtml" as="et_options">
+                    <arguments>
+                        <argument name="jsLayout" xsi:type="array">
+                            <item name="components" xsi:type="array">
+                                <item name="awEtFilterByTicketQty" xsi:type="array">
+                                    <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/ui/filter</item>
+                                    <item name="deps" xsi:type="array">
+                                        <item name="0" xsi:type="string">awEtViewOptionsProvider</item>
+                                        <item name="1" xsi:type="string">awFullCalendarComponent</item>
+                                    </item>
+                                </item>
+                                <item name="awFullCalendarComponent" xsi:type="array">
+                                    <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/ui/calendar</item>
+                                    <item name="deps" xsi:type="array">
+                                        <item name="0" xsi:type="string">awEtViewOptionsProvider</item>
+                                    </item>
+                                </item>
+                                <item name="awEtViewOptions" xsi:type="array">
+                                    <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options</item>
+                                    <item name="can_render_products" xsi:type="boolean">true</item>
+                                    <item name="deps" xsi:type="array">
+                                        <item name="0" xsi:type="string">awEtViewOptionsProvider</item>
+                                    </item>
+                                    <item name="config" xsi:type="array">
+                                        <item name="ticketTemplate" xsi:type="array">
+                                            <item name="attendeeTemplate" xsi:type="array">
+                                                <item name="customOptionTemplates" xsi:type="array">
+                                                    <item name="name" xsi:type="array">
+                                                        <item name="template" xsi:type="string">Aheadworks_EventTickets/product/form/options/ticket/attendee/field</item>
+                                                    </item>
+                                                    <item name="email" xsi:type="array">
+                                                        <item name="template" xsi:type="string">Aheadworks_EventTickets/product/form/options/ticket/attendee/field</item>
+                                                    </item>
+                                                    <item name="phone_number" xsi:type="array">
+                                                        <item name="template" xsi:type="string">Aheadworks_EventTickets/product/form/options/ticket/attendee/field</item>
+                                                    </item>
+                                                    <item name="field" xsi:type="array">
+                                                        <item name="template" xsi:type="string">Aheadworks_EventTickets/product/form/options/ticket/attendee/field</item>
+                                                    </item>
+                                                    <item name="dropdown" xsi:type="array">
+                                                        <item name="template" xsi:type="string">Aheadworks_EventTickets/product/form/options/ticket/attendee/field</item>
+                                                    </item>
+                                                    <item name="date" xsi:type="array">
+                                                        <item name="template" xsi:type="string">Aheadworks_EventTickets/product/form/options/ticket/attendee/field</item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="price" xsi:type="array">
+                                                    <item name="displayArea" xsi:type="string">price</item>
+                                                    <item name="component" xsi:type="string">Magento_Catalog/js/product/list/columns/price-box</item>
+                                                    <item name="template" xsi:type="string">Magento_Catalog/product/price/price_box</item>
+                                                    <item name="provider" xsi:type="string">${ $.provider }</item>
+                                                    <item name="renders" xsi:type="array">
+                                                        <item name="prices" xsi:type="array">
+                                                            <item name="default" xsi:type="array">
+                                                                <item name="component" xsi:type="string">Magento_Catalog/js/product/list/columns/pricetype-box</item>
+                                                                <item name="template" xsi:type="string">Magento_Catalog/product/final_price</item>
+                                                                <item name="children" xsi:type="array">
+                                                                    <item name="special_price" xsi:type="array">
+                                                                        <item name="label" xsi:type="string" translate="true">Special Price</item>
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/ticket/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Magento_Catalog/product/price/special_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">1</item>
+                                                                    </item>
+                                                                    <item name="regular_price" xsi:type="array">
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/ticket/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Aheadworks_EventTickets/product/form/options/sector/product/price/regular_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">2</item>
+                                                                    </item>
+                                                                    <item name="minimal_price" xsi:type="array">
+                                                                        <item name="label" xsi:type="string" translate="true"/>
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/ticket/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Magento_Catalog/product/price/minimal_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">3</item>
+                                                                    </item>
+                                                                    <item name="minimal_regular_price" xsi:type="array">
+                                                                        <item name="label" xsi:type="string" translate="true">Regular Price</item>
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/ticket/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Magento_Catalog/product/price/minimal_regular_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">4</item>
+                                                                    </item>
+                                                                    <item name="max_price" xsi:type="array">
+                                                                        <item name="label" xsi:type="string" translate="true"/>
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/ticket/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Magento_Catalog/product/price/max_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">5</item>
+                                                                    </item>
+                                                                    <item name="max_regular_price" xsi:type="array">
+                                                                        <item name="label" xsi:type="string" translate="true">Regular Price</item>
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/ticket/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Magento_Catalog/product/price/max_regular_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">6</item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                        <item name="productTemplate" xsi:type="array">
+                                            <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product</item>
+                                            <item name="parent" xsi:type="string">${ $.name }</item>
+                                            <item name="provider" xsi:type="string">${ $.provider }</item>
+                                            <item name="typesUsingDataPriceAttr" xsi:type="array">
+                                                <item name="0" xsi:type="string">configurable</item>
+                                            </item>
+                                            <item name="optionsConfig" xsi:type="array">
+                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/options-renderer/default</item>
+                                                <item name="provider" xsi:type="string">${ $.provider }</item>
+                                            </item>
+                                            <item name="loaderStatusConfig" xsi:type="array">
+                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/loaderStatus</item>
+                                                <item name="defaultDeps" xsi:type="array">
+                                                    <item name="0" xsi:type="string">image</item>
+                                                    <item name="1" xsi:type="string">price</item>
+                                                </item>
+                                            </item>
+                                            <item name="rendererList" xsi:type="array">
+                                                <item name="configurable" xsi:type="array">
+                                                    <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/options-renderer/configurable</item>
+                                                    <item name="provider" xsi:type="string">${ $.provider }</item>
+                                                    <item name="swatchOptionConfig" xsi:type="array">
+                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/options-renderer/configurable/swatch-option</item>
+                                                        <item name="provider" xsi:type="string">${ $.provider }</item>
+                                                        <item name="name" xsi:type="string">option</item>
+                                                        <item name="template" xsi:type="string">Aheadworks_EventTickets/product/form/options/sector/product/options/configurable/swatch-option</item>
+                                                    </item>
+                                                    <item name="selectOptionConfig" xsi:type="array">
+                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/options-renderer/configurable/select-option</item>
+                                                        <item name="provider" xsi:type="string">${ $.provider }</item>
+                                                        <item name="name" xsi:type="string">option</item>
+                                                        <item name="template" xsi:type="string">Aheadworks_EventTickets/product/form/options/sector/product/options/configurable/select-option</item>
+                                                        <item name="attributeFieldConfig" xsi:type="array">
+                                                            <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/options-renderer/configurable/field/select</item>
+                                                            <item name="provider" xsi:type="string">${ $.provider }</item>
+                                                            <item name="template" xsi:type="string">ui/form/field</item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="image" xsi:type="array">
+                                                    <item name="displayArea" xsi:type="string">image</item>
+                                                    <item name="component" xsi:type="string">Magento_Catalog/js/view/image</item>
+                                                    <item name="template" xsi:type="string">Magento_Catalog/product/image</item>
+                                                </item>
+                                                <item name="price" xsi:type="array">
+                                                    <item name="displayArea" xsi:type="string">price</item>
+                                                    <item name="component" xsi:type="string">Magento_Catalog/js/product/list/columns/price-box</item>
+                                                    <item name="template" xsi:type="string">Magento_Catalog/product/price/price_box</item>
+                                                    <item name="provider" xsi:type="string">${ $.provider }</item>
+                                                    <item name="renders" xsi:type="array">
+                                                        <item name="prices" xsi:type="array">
+                                                            <item name="default" xsi:type="array">
+                                                                <item name="component" xsi:type="string">Magento_Catalog/js/product/list/columns/pricetype-box</item>
+                                                                <item name="template" xsi:type="string">Magento_Catalog/product/final_price</item>
+                                                                <item name="children" xsi:type="array">
+                                                                    <item name="special_price" xsi:type="array">
+                                                                        <item name="label" xsi:type="string" translate="true">Special Price</item>
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/ticket/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Aheadworks_EventTickets/product/form/options/sector/product/price/special_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">1</item>
+                                                                    </item>
+                                                                    <item name="regular_price" xsi:type="array">
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Aheadworks_EventTickets/product/form/options/sector/product/price/regular_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">2</item>
+                                                                    </item>
+                                                                    <item name="minimal_price" xsi:type="array">
+                                                                        <item name="label" xsi:type="string" translate="true"/>
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/ticket/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Magento_Catalog/product/price/minimal_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">3</item>
+                                                                    </item>
+                                                                    <item name="minimal_regular_price" xsi:type="array">
+                                                                        <item name="label" xsi:type="string" translate="true">Regular Price</item>
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/ticket/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Magento_Catalog/product/price/minimal_regular_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">4</item>
+                                                                    </item>
+                                                                    <item name="max_price" xsi:type="array">
+                                                                        <item name="label" xsi:type="string" translate="true"/>
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/ticket/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Magento_Catalog/product/price/max_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">5</item>
+                                                                    </item>
+                                                                    <item name="max_regular_price" xsi:type="array">
+                                                                        <item name="label" xsi:type="string" translate="true">Regular Price</item>
+                                                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/ticket/price/final-price</item>
+                                                                        <item name="bodyTmpl" xsi:type="string">Magento_Catalog/product/price/max_regular_price</item>
+                                                                        <item name="children" xsi:type="array">
+                                                                            <item name="tax" xsi:type="array">
+                                                                                <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/options/sector/product/price/tax/adjustment</item>
+                                                                            </item>
+                                                                        </item>
+                                                                        <item name="sortOrder" xsi:type="number">6</item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                                <item name="awEtViewSummary" xsi:type="array">
+                                    <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/summary</item>
+                                    <item name="deps" xsi:type="array">
+                                        <item name="0" xsi:type="string">awEtViewOptionsProvider</item>
+                                    </item>
+                                </item>
+                                <item name="awEtViewOptionsProvider" xsi:type="array">
+                                    <item name="component" xsi:type="string">Aheadworks_EventTickets/js/product/form/provider</item>
+                                    <item name="show_attributes" xsi:type="string">price</item>
+                                </item>
+                            </item>
+                        </argument>
+                    </arguments>
+                    <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart"
+                           template="Magento_Catalog::product/view/addtocart.phtml" as="add_to_cart_button" />
+                </block>
+            </block>
+        </referenceBlock>
+        <referenceContainer name="product.info.type">
+            <block class="Aheadworks\EventTickets\Block\Product\View\Type\EventTicket" name="product.info.et"
+                   as="product_type_data" template="Aheadworks_EventTickets::product/view/type/default.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <container name="et.options.container" htmlTag="div" htmlClass="aw-et__form-container-wrapper" after="product.info.media"/>
+        </referenceContainer>
+
+        <referenceBlock name="product.info.details">
+            <block class="Magento\Framework\View\Element\Template" name="product.info.description"
+                   template="Aheadworks_EventTickets::product/view/product_info.phtml" group="detailed_info" >
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Details</argument>
+                </arguments>
+                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.native.description"
+                       template="Magento_Catalog::product/view/attribute.phtml" >
+                    <arguments>
+                        <argument name="at_call" xsi:type="string">getDescription</argument>
+                        <argument name="at_code" xsi:type="string">description</argument>
+                        <argument name="css_class" xsi:type="string">description</argument>
+                        <argument name="at_label" xsi:type="string">none</argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\EventTickets\Block\Product\View\Details" name="product.info.et.description"
+                       template="Aheadworks_EventTickets::product/view/product_details.phtml" >
+                    <arguments>
+                        <argument name="aw_et_attributes" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item translate="true" name="attribute_label" xsi:type="string">Venue Title</item>
+                                <item name="attribute_value" xsi:type="array">
+                                    <item name="entity_getter" xsi:type="string">getVenue</item>
+                                    <item name="storefront_description_getter" xsi:type="string">getTitle</item>
+                                </item>
+                            </item>
+                            <item name="1" xsi:type="array">
+                                <item translate="true" name="attribute_label" xsi:type="string">Venue Description</item>
+                                <item name="attribute_value" xsi:type="array">
+                                    <item name="entity_getter" xsi:type="string">getVenue</item>
+                                    <item name="storefront_description_getter" xsi:type="string">getDescription</item>
+                                </item>
+                            </item>
+                            <item name="2" xsi:type="array">
+                                <item translate="true" name="attribute_label" xsi:type="string">Venue Address</item>
+                                <item name="attribute_value" xsi:type="array">
+                                    <item name="entity_getter" xsi:type="string">getVenue</item>
+                                    <item name="value_getter" xsi:type="string">getAddress</item>
+                                </item>
+                            </item>
+                            <item name="3" xsi:type="array">
+                                <item translate="true" name="attribute_label" xsi:type="string">Space Title</item>
+                                <item name="attribute_value" xsi:type="array">
+                                    <item name="entity_getter" xsi:type="string">getSpace</item>
+                                    <item name="storefront_description_getter" xsi:type="string">getTitle</item>
+                                </item>
+                            </item>
+                            <item name="4" xsi:type="array">
+                                <item translate="true" name="attribute_label" xsi:type="string">Space Description</item>
+                                <item name="attribute_value" xsi:type="array">
+                                    <item name="entity_getter" xsi:type="string">getSpace</item>
+                                    <item name="storefront_description_getter" xsi:type="string">getDescription</item>
+                                </item>
+                            </item>
+                        </argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceBlock>
+        <move element="product.info" destination="et.options.container" before="-"/>
+    </body>
+</page>

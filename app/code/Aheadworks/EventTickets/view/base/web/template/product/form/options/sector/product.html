@@ -1,0 +1,51 @@
+<div class="product-item"
+     data-bind="blockLoader: isLoading,
+                attr: {id: getUid()}">
+
+    <div class="product-item-details product-item-info">
+
+        <div class="product-item-photo">
+            <!-- ko foreach: getRegion('image') -->
+            <!-- ko template: {name: getTemplate(), data: $parent.product.image} --><!-- /ko -->
+            <!-- /ko -->
+        </div>
+
+        <div class="product-item-details-wrapper">
+            <div class="product-item-name">
+                <a data-bind="attr: {href: product.url, title: product.name}"
+                   tabindex="0"
+                   class="link-name">
+                    <span text="product.name" />
+                </a>
+            </div>
+
+            <div class="product-short-description" html="product.short_description"></div>
+
+            <div class="price-and-salable">
+                <!-- ko repeat: {foreach: getDataForRenderingPrice(), item: '$row'} -->
+                <div class="price-box-wrap">
+                    <each args="getRegion('price')" render=""/>
+                </div>
+                <!-- /ko -->
+
+                <div if="product.is_salable" class="stock available"><span translate="'In stock'"/></div>
+                <div ifnot="product.is_salable" class="stock unavailable"><span translate="'Out of stock'"/></div>
+            </div>
+
+            <div class="qty-box-wrapper">
+                <span class="title-qty-box" translate="'Qty\:'"/>
+                <scope args="qtyBox" render=""/>
+            </div>
+
+            <input type="hidden"
+                   data-bind="attr: {name: generateCustomFieldName('sector_id')}, value: sector.id"/>
+            <input type="hidden"
+                   data-bind="attr: {name: generateCustomFieldName('sku')}, value: product.sku"/>
+
+            <div class="aw-et-option-wrapper">
+                <each args="getRegion('options')" render=""/>
+            </div>
+        </div>
+
+    </div>
+</div>

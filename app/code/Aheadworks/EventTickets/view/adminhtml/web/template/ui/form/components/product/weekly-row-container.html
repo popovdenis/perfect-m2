@@ -1,0 +1,9 @@
+<div class="aw-et__weekly-row-container">
+    <if args="visible">
+        <span class="float-left" translate="'Repeat every'"/>
+        <each args="getRegion('weeks-count')" render=""/>
+        <span class="float-left" translate="'week(s) starting from'"/>
+        <each args="getRegion('weekly-start-date')" render=""/>
+        <div class="clearer"></div>
+    </if>
+</div>

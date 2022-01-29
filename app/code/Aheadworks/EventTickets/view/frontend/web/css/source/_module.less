@@ -1,0 +1,91 @@
+
+@import 'module/_variables.less';
+@import 'module/product/form/options/_sector.less';
+@import 'module/product/form/options/ticket/_attendee.less';
+@import 'module/product/form/options/_summary.less';
+@import 'module/_cms_pages.less';
+@import 'product/view/form_bottom/_options.less';
+@import 'product/form/options/sector/_product.less';
+@import 'module/product/calendar/_calendar.less';
+@import 'module/product/calendar/_people_qty_filter';
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  .aw-et__form-container-wrapper {
+    clear: both;
+    margin-bottom: @indent__xl;
+
+    .aw-et__view-options-container {
+      padding-top: @indent__m;
+
+      .options-container {
+
+        .swatch-attribute {
+          .super-attribute-select {
+            position: absolute;
+            opacity: 0;
+            width: 10px;
+          }
+        }
+
+        .title {
+          font-size: 40px;
+          font-weight: 300;
+          line-height: 1.1;
+          color: @aw-sector-type-title__color;
+          margin-bottom: @indent__base;
+        }
+
+        .action {
+          &.back {
+            color: @aw-options-button-back__color;
+            background-color: transparent;
+            border: none;
+            line-height: 1.4;
+            padding: 0;
+            display: inline;
+            font-weight: 400;
+            border-radius: 0;
+            box-shadow: none;
+            margin-bottom: @indent__xl;
+          }
+        }
+
+      }
+    }
+  }
+
+  .aw-et-product-page {
+    .aw-et__actions {
+      .action {
+        width: auto;
+        line-height: 2.2rem;
+        padding: 14px 17px;
+        font-size: 1.8rem;
+      }
+    }
+
+    .aw-et.additional-attributes-wrapper.table-wrapper {
+      margin-top: 1.5rem;
+    }
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}

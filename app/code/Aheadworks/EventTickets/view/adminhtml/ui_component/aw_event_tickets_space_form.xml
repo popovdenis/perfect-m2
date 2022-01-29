@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">aw_event_tickets_space_form.aw_event_tickets_space_form_data_source</item>
+            <item name="deps" xsi:type="string">aw_event_tickets_space_form.aw_event_tickets_space_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">General Information</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">aw_event_tickets_space_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Aheadworks\EventTickets\Block\Adminhtml\Space\Edit\Button\Back</item>
+            <item name="save" xsi:type="string">Aheadworks\EventTickets\Block\Adminhtml\Space\Edit\Button\Save</item>
+            <item name="reset" xsi:type="string">Aheadworks\EventTickets\Block\Adminhtml\Space\Edit\Button\Reset</item>
+            <item name="save_and_continue" xsi:type="string">Aheadworks\EventTickets\Block\Adminhtml\Space\Edit\Button\SaveAndContinue</item>
+        </item>
+    </argument>
+    <dataSource name="aw_event_tickets_space_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Aheadworks\EventTickets\Ui\DataProvider\Space\FormDataProvider</argument>
+            <argument name="name" xsi:type="string">aw_event_tickets_space_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="aw_event_tickets/space/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="general_fieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">General Information</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">10</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <field name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">space</item>
+                    <item name="dataScope" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </field>
+        <field name="name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Name</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">space</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="dataScope" xsi:type="string">name</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="notice" xsi:type="string" translate="true">Visible in admin panel only.</item>
+                </item>
+            </argument>
+        </field>
+        <field name="status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="label" xsi:type="string" translate="true">Enable Space</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="source" xsi:type="string">space</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="dataScope" xsi:type="string">status</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="string">1</item>
+                        <item name="false" xsi:type="string">0</item>
+                    </item>
+                    <item name="default" xsi:type="string">1</item>
+                </item>
+            </argument>
+        </field>
+        <field name="venue_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Venue</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">space</item>
+                    <item name="dataScope" xsi:type="string">venue_id</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+                <item name="options" xsi:type="object">Aheadworks\EventTickets\Model\Source\VenueList</item>
+            </argument>
+        </field>
+        <!--@todo: M2ET-99 -->
+        <!--<field name="image_path">-->
+            <!--<argument name="data" xsi:type="array">-->
+                <!--<item name="config" xsi:type="array">-->
+                    <!--<item name="dataType" xsi:type="string">text</item>-->
+                    <!--<item name="label" xsi:type="string" translate="true">Image</item>-->
+                    <!--<item name="formElement" xsi:type="string">input</item>-->
+                    <!--<item name="source" xsi:type="string">space</item>-->
+                    <!--<item name="sortOrder" xsi:type="number">40</item>-->
+                    <!--<item name="dataScope" xsi:type="string">image_path</item>-->
+                <!--</item>-->
+            <!--</argument>-->
+        <!--</field>-->
+        <!--@todo: M2ET-96 -->
+        <!--<field name="tickets_qty">-->
+            <!--<argument name="data" xsi:type="array">-->
+                <!--<item name="config" xsi:type="array">-->
+                    <!--<item name="dataType" xsi:type="string">text</item>-->
+                    <!--<item name="label" xsi:type="string" translate="true">Capacity</item>-->
+                    <!--<item name="formElement" xsi:type="string">input</item>-->
+                    <!--<item name="source" xsi:type="string">space</item>-->
+                    <!--<item name="sortOrder" xsi:type="number">50</item>-->
+                    <!--<item name="dataScope" xsi:type="string">tickets_qty</item>-->
+                    <!--<item name="disabled" xsi:type="boolean">true</item>-->
+                <!--</item>-->
+            <!--</argument>-->
+        <!--</field>-->
+    </fieldset>
+    <fieldset name="storefront_description">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Storefront Description</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="string">20</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <dynamicRows name="labels" class="Aheadworks\EventTickets\Ui\Component\Form\Element\DynamicRows">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="componentType" xsi:type="string">dynamicRows</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/dynamic-rows</item>
+                    <item name="template" xsi:type="string">ui/dynamic-rows/templates/default</item>
+                    <item name="addButtonLabel" xsi:type="string" translate="true">Add</item>
+                    <item name="defaultRecord" xsi:type="boolean">true</item>
+                    <item name="pageSize" xsi:type="string">100</item>
+                    <item name="dndConfig" xsi:type="array">
+                        <item name="enabled" xsi:type="boolean">false</item>
+                    </item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-wide aw-event-tickets dynamic-rows storefront_description</item>
+                </item>
+            </argument>
+            <container name="record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/dynamic-rows/record</item>
+                        <item name="componentType" xsi:type="string">container</item>
+                    </item>
+                </argument>
+                <field name="store_id" class="Aheadworks\EventTickets\Ui\Component\Form\Element\Store">
+                    <argument name="options" xsi:type="object">Aheadworks\EventTickets\Ui\Component\Listing\Column\Store\Options</argument>
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="label" xsi:type="string" translate="true">Store View</item>
+                            <item name="formElement" xsi:type="string">select</item>
+                            <item name="component" xsi:type="string">Magento_Ui/js/form/element/select</item>
+                            <item name="template" xsi:type="string">ui/form/field</item>
+                            <item name="elementTmpl" xsi:type="string">ui/form/element/select</item>
+                            <item name="source" xsi:type="string">space</item>
+                            <item name="sortOrder" xsi:type="number">10</item>
+                            <item name="dataScope" xsi:type="string">store_id</item>
+                            <item name="disableForDefaultRecord" xsi:type="boolean">true</item>
+                            <item name="default" xsi:type="string">0</item>
+                            <item name="additionalClasses" xsi:type="string">select_field</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="title">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="component" xsi:type="string">Magento_Catalog/js/components/import-handler</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="label" xsi:type="string" translate="true">Title</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="source" xsi:type="string">space</item>
+                            <item name="sortOrder" xsi:type="number">20</item>
+                            <item name="dataScope" xsi:type="string">title</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="required-entry" xsi:type="boolean">true</item>
+                            </item>
+                            <item name="imports" xsi:type="array">
+                                <item name="handleNameChanges" xsi:type="string">${$.provider}.name</item>
+                            </item>
+                            <item name="queryTemplate" xsi:type="string"/>
+                            <item name="mask" xsi:type="string">{{${ $.ns }.${ $.ns }.general_fieldset.name}}</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="description">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="label" xsi:type="string" translate="true">Description</item>
+                            <item name="formElement" xsi:type="string">textarea</item>
+                            <item name="source" xsi:type="string">space</item>
+                            <item name="sortOrder" xsi:type="number">30</item>
+                            <item name="dataScope" xsi:type="string">description</item>
+                        </item>
+                    </argument>
+                </field>
+                <actionDelete>
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="sortOrder" xsi:type="number">50</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="disableForDefaultRecord" xsi:type="boolean">true</item>
+                            <item name="additionalClasses" xsi:type="string">action_delete_button</item>
+                        </item>
+                    </argument>
+                </actionDelete>
+            </container>
+        </dynamicRows>
+    </fieldset>
+    <fieldset name="sectors_fieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Sectors</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="string">30</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <container name="add_sector_button_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="template" xsi:type="string">ui/form/components/complex</item>
+                    <item name="label" xsi:type="string" />
+                </item>
+            </argument>
+        </container>
+        <dynamicRows name="sectors">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="componentType" xsi:type="string">dynamicRows</item>
+                    <item name="template" xsi:type="string">Aheadworks_EventTickets/ui/dynamic-rows/collapsible</item>
+                    <item name="dndConfig" xsi:type="array">
+                        <item name="enabled" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-wide aw-event-tickets dynamic-rows sectors</item>
+                    <item name="columnsHeader" xsi:type="boolean">false</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/dynamic-rows</item>
+                    <item name="addButton" xsi:type="boolean">true</item>
+                    <item name="addButtonLabel" xsi:type="string" translate="true">Add sector</item>
+                    <item name="defaultRecord" xsi:type="boolean">true</item>
+                    <item name="pageSize" xsi:type="string">100</item>
+                </item>
+            </argument>
+            <container name="record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/dynamic-rows/record-collapsible</item>
+                        <item name="componentType" xsi:type="string">container</item>
+                        <item name="headerLabel" xsi:type="string">New sector</item>
+                        <item name="positionProvider" xsi:type="string">sector_container.sort_order</item>
+                        <item name="showDeleteButton" xsi:type="boolean">true</item>
+                        <item name="imports" xsi:type="array">
+                            <item name="label" xsi:type="string">${ $.name }.sector_container.sector_fields_container.name:value</item>
+                            <item name="showDeleteButton" xsi:type="string">${ $.name }.sector_container.is_new:checked</item>
+                        </item>
+                    </item>
+                </argument>
+                <fieldset name="sector_container">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" />
+                            <item name="collapsible" xsi:type="boolean">true</item>
+                            <item name="opened" xsi:type="boolean">true</item>
+                        </item>
+                    </argument>
+                    <container name="sector_fields_container">
+                        <argument name="data" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="sortOrder" xsi:type="number">10</item>
+                                <item name="formElement" xsi:type="string">container</item>
+                                <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                                <item name="showLabel" xsi:type="boolean">false</item>
+                                <item name="breakLine" xsi:type="boolean">false</item>
+                                <item name="additionalClasses" xsi:type="string">admin__field-group-columns admin__control-group-equal</item>
+                            </item>
+                        </argument>
+                        <field name="name">
+                            <argument name="data" xsi:type="array">
+                                <item name="config" xsi:type="array">
+                                    <item name="dataType" xsi:type="string">text</item>
+                                    <item name="dataScope" xsi:type="string">name</item>
+                                    <item name="formElement" xsi:type="string">input</item>
+                                    <item name="label" xsi:type="string" translate="true">Name</item>
+                                    <item name="sortOrder" xsi:type="number">30</item>
+                                    <item name="source" xsi:type="string">space</item>
+                                    <item name="validation" xsi:type="array">
+                                        <item name="required-entry" xsi:type="boolean">true</item>
+                                    </item>
+                                    <item name="notice" xsi:type="string" translate="true">Visible in admin panel only.</item>
+                                </item>
+                            </argument>
+                        </field>
+                        <field name="sku">
+                            <argument name="data" xsi:type="array">
+                                <item name="config" xsi:type="array">
+                                    <item name="component" xsi:type="string">Magento_Catalog/js/components/import-handler</item>
+                                    <item name="dataType" xsi:type="string">text</item>
+                                    <item name="dataScope" xsi:type="string">sku</item>
+                                    <item name="formElement" xsi:type="string">input</item>
+                                    <item name="label" xsi:type="string" translate="true">SKU</item>
+                                    <item name="sortOrder" xsi:type="number">35</item>
+                                    <item name="source" xsi:type="string">space</item>
+                                    <item name="validation" xsi:type="array">
+                                        <item name="required-entry" xsi:type="boolean">true</item>
+                                    </item>
+                                    <item name="imports" xsi:type="array">
+                                        <item name="handleNameChanges" xsi:type="string">${$.provider}:${ $.parentScope }.name</item>
+                                    </item>
+                                    <item name="queryTemplate" xsi:type="string"/>
+                                    <item name="mask" xsi:type="string">{{${ $.parentName }.name}}</item>
+                                </item>
+                            </argument>
+                        </field>
+                        <field name="status">
+                            <argument name="data" xsi:type="array">
+                                <item name="config" xsi:type="array">
+                                    <item name="dataType" xsi:type="string">boolean</item>
+                                    <item name="formElement" xsi:type="string">checkbox</item>
+                                    <item name="label" xsi:type="string" translate="true">Enable Sector</item>
+                                    <item name="prefer" xsi:type="string">toggle</item>
+                                    <item name="sortOrder" xsi:type="number">40</item>
+                                    <item name="dataScope" xsi:type="string">status</item>
+                                    <item name="valueMap" xsi:type="array">
+                                        <item name="true" xsi:type="string">1</item>
+                                        <item name="false" xsi:type="string">0</item>
+                                    </item>
+                                    <item name="default" xsi:type="string">1</item>
+                                    <item name="source" xsi:type="string">space</item>
+                                    <item name="additionalClasses" xsi:type="string">status_field</item>
+                                </item>
+                            </argument>
+                        </field>
+                        <!--@todo: M2ET-99 -->
+                        <!--<field name="image_path">-->
+                            <!--<argument name="data" xsi:type="array">-->
+                                <!--<item name="config" xsi:type="array">-->
+                                    <!--<item name="dataType" xsi:type="string">text</item>-->
+                                    <!--<item name="label" xsi:type="string" translate="true">Image</item>-->
+                                    <!--<item name="formElement" xsi:type="string">input</item>-->
+                                    <!--<item name="sortOrder" xsi:type="number">50</item>-->
+                                    <!--<item name="dataScope" xsi:type="string">image_path</item>-->
+                                    <!--<item name="source" xsi:type="string">space</item>-->
+                                <!--</item>-->
+                            <!--</argument>-->
+                        <!--</field>-->
+                        <field name="tickets_qty">
+                            <argument name="data" xsi:type="array">
+                                <item name="config" xsi:type="array">
+                                    <item name="dataType" xsi:type="string">text</item>
+                                    <item name="label" xsi:type="string" translate="true">Tickets Qty</item>
+                                    <item name="formElement" xsi:type="string">input</item>
+                                    <item name="sortOrder" xsi:type="number">60</item>
+                                    <item name="dataScope" xsi:type="string">tickets_qty</item>
+                                    <item name="source" xsi:type="string">space</item>
+                                    <item name="validation" xsi:type="array">
+                                        <item name="required-entry" xsi:type="boolean">true</item>
+                                        <item name="validate-integer" xsi:type="boolean">true</item>
+                                        <item name="not-negative-amount" xsi:type="boolean">true</item>
+                                    </item>
+                                </item>
+                            </argument>
+                        </field>
+                    </container>
+                    <field name="id">
+                        <argument name="data" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="visible" xsi:type="boolean">false</item>
+                                <item name="dataType" xsi:type="string">text</item>
+                                <item name="formElement" xsi:type="string">input</item>
+                                <item name="source" xsi:type="string">space</item>
+                                <item name="dataScope" xsi:type="string">id</item>
+                                <item name="sortOrder" xsi:type="number">20</item>
+                            </item>
+                        </argument>
+                        <settings>
+                            <additionalClasses>
+                                <class name="_hidden">true</class>
+                            </additionalClasses>
+                        </settings>
+                    </field>
+                    <field name="sort_order">
+                        <argument name="data" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="dataType" xsi:type="string">text</item>
+                                <item name="formElement" xsi:type="string">input</item>
+                                <item name="dataScope" xsi:type="string">sort_order</item>
+                                <item name="visible" xsi:type="boolean">false</item>
+                                <item name="source" xsi:type="string">space</item>
+                                <item name="sortOrder" xsi:type="number">30</item>
+                            </item>
+                        </argument>
+                        <settings>
+                            <additionalClasses>
+                                <class name="_hidden">true</class>
+                            </additionalClasses>
+                        </settings>
+                    </field>
+                    <field name="is_new">
+                        <argument name="data" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="dataType" xsi:type="string">boolean</item>
+                                <item name="formElement" xsi:type="string">checkbox</item>
+                                <item name="dataScope" xsi:type="string">is_new</item>
+                                <item name="value" xsi:type="number">1</item>
+                                <item name="valueMap" xsi:type="array">
+                                    <item name="true" xsi:type="number">1</item>
+                                    <item name="false" xsi:type="number">0</item>
+                                </item>
+                                <item name="visible" xsi:type="boolean">false</item>
+                                <item name="sortOrder" xsi:type="number">40</item>
+                            </item>
+                        </argument>
+                        <settings>
+                            <additionalClasses>
+                                <class name="_hidden">true</class>
+                            </additionalClasses>
+                        </settings>
+                    </field>
+                    <fieldset name="sector_storefront_description">
+                        <argument name="data" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="label" xsi:type="string" translate="true" />
+                            </item>
+                        </argument>
+                        <dynamicRows name="labels" class="Aheadworks\EventTickets\Ui\Component\Form\Element\DynamicRows">
+                            <argument name="data" xsi:type="array">
+                                <item name="config" xsi:type="array">
+                                    <item name="componentType" xsi:type="string">dynamicRows</item>
+                                    <item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/dynamic-rows</item>
+                                    <item name="template" xsi:type="string">ui/dynamic-rows/templates/default</item>
+                                    <item name="addButtonLabel" xsi:type="string" translate="true">Add</item>
+                                    <item name="defaultRecord" xsi:type="boolean">true</item>
+                                    <item name="pageSize" xsi:type="string">100</item>
+                                    <item name="dndConfig" xsi:type="array">
+                                        <item name="enabled" xsi:type="boolean">false</item>
+                                    </item>
+                                    <item name="additionalClasses" xsi:type="string">admin__field-wide aw-event-tickets dynamic-rows storefront_description</item>
+                                </item>
+                            </argument>
+                            <container name="record">
+                                <argument name="data" xsi:type="array">
+                                    <item name="config" xsi:type="array">
+                                        <item name="isTemplate" xsi:type="boolean">true</item>
+                                        <item name="is_collection" xsi:type="boolean">true</item>
+                                        <item name="component" xsi:type="string">Aheadworks_EventTickets/js/dynamic-rows/record</item>
+                                        <item name="componentType" xsi:type="string">container</item>
+                                    </item>
+                                </argument>
+                                <field name="store_id" class="Aheadworks\EventTickets\Ui\Component\Form\Element\Store">
+                                    <argument name="options" xsi:type="object">Aheadworks\EventTickets\Ui\Component\Listing\Column\Store\Options</argument>
+                                    <argument name="data" xsi:type="array">
+                                        <item name="config" xsi:type="array">
+                                            <item name="dataType" xsi:type="string">text</item>
+                                            <item name="label" xsi:type="string" translate="true">Store View</item>
+                                            <item name="formElement" xsi:type="string">select</item>
+                                            <item name="component" xsi:type="string">Magento_Ui/js/form/element/select</item>
+                                            <item name="template" xsi:type="string">ui/form/field</item>
+                                            <item name="elementTmpl" xsi:type="string">ui/form/element/select</item>
+                                            <item name="source" xsi:type="string">space</item>
+                                            <item name="sortOrder" xsi:type="number">10</item>
+                                            <item name="dataScope" xsi:type="string">store_id</item>
+                                            <item name="disableForDefaultRecord" xsi:type="boolean">true</item>
+                                            <item name="default" xsi:type="string">0</item>
+                                            <item name="additionalClasses" xsi:type="string">select_field</item>
+                                        </item>
+                                    </argument>
+                                </field>
+                                <field name="title">
+                                    <argument name="data" xsi:type="array">
+                                        <item name="config" xsi:type="array">
+                                            <item name="component" xsi:type="string">Magento_Catalog/js/components/import-handler</item>
+                                            <item name="dataType" xsi:type="string">text</item>
+                                            <item name="label" xsi:type="string" translate="true">Title</item>
+                                            <item name="formElement" xsi:type="string">input</item>
+                                            <item name="source" xsi:type="string">space</item>
+                                            <item name="sortOrder" xsi:type="number">20</item>
+                                            <item name="dataScope" xsi:type="string">title</item>
+                                            <item name="validation" xsi:type="array">
+                                                <item name="required-entry" xsi:type="boolean">true</item>
+                                            </item>
+                                            <item name="imports" xsi:type="array">
+                                                <item name="handleNameChanges" xsi:type="string">${ $.provider + ':' + $.parentScope.substr(0, $.parentScope.indexOf('.labels'))} }.name</item>
+                                            </item>
+                                            <item name="queryTemplate" xsi:type="string"/>
+                                            <item name="mask" xsi:type="string">{{${$.parentName.substr(0, $.parentName.indexOf('.sector_container'))}.sector_container.sector_fields_container.name}}</item>
+                                        </item>
+                                    </argument>
+                                </field>
+                                <field name="description">
+                                    <argument name="data" xsi:type="array">
+                                        <item name="config" xsi:type="array">
+                                            <item name="dataType" xsi:type="string">text</item>
+                                            <item name="label" xsi:type="string" translate="true">Description</item>
+                                            <item name="formElement" xsi:type="string">textarea</item>
+                                            <item name="source" xsi:type="string">space</item>
+                                            <item name="sortOrder" xsi:type="number">30</item>
+                                            <item name="dataScope" xsi:type="string">description</item>
+                                        </item>
+                                    </argument>
+                                </field>
+                                <actionDelete>
+                                    <argument name="data" xsi:type="array">
+                                        <item name="config" xsi:type="array">
+                                            <item name="sortOrder" xsi:type="number">50</item>
+                                            <item name="dataType" xsi:type="string">text</item>
+                                            <item name="disableForDefaultRecord" xsi:type="boolean">true</item>
+                                            <item name="additionalClasses" xsi:type="string">action_delete_button</item>
+                                        </item>
+                                    </argument>
+                                </actionDelete>
+                            </container>
+                        </dynamicRows>
+                    </fieldset>
+                </fieldset>
+            </container>
+        </dynamicRows>
+    </fieldset>
+</form>

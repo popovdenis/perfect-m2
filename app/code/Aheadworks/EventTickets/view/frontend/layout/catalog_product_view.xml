@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Aheadworks\EventTickets\Block\Information\Bar"
+                   name="aw-et.information.bar" as="aw-et-information-bar" before="-">
+                <arguments>
+                    <argument name="bar_messages" xsi:type="array">
+                        <item name="exclusive" xsi:type="string">Aheadworks\EventTickets\Block\Product\Information\Exclusive\Message</item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

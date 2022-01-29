@@ -1,0 +1,207 @@
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  .aw-et__view-options-container {
+    .summary-container {
+
+      .title {
+        margin-bottom: @indent__m;
+
+        strong {
+          font-weight: 300;
+          line-height: 1.1;
+          font-size: 26px;
+          margin-top: @indent__m;
+          margin-bottom: @indent__base;
+        }
+      }
+
+      .summary {
+        &.active {
+          .summary-header {
+            .arrow-icon {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+
+      .summary-header {
+        border-bottom: 1px solid @aw-summary__border-color;
+        padding-bottom: 11px;
+        margin-bottom: 25px;
+        color: @aw-sector-type-title__color;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+
+        .title-sum {
+          font-size: 18px;
+          font-weight: 300;
+          line-height: 1;
+          letter-spacing: -0.2px;
+          float: left;
+        }
+
+        .ticket-sum {
+          font-size: @font-size__base;
+          font-weight: bold;
+          line-height: 1;
+          letter-spacing: -0.1px;
+          float: right;
+          margin-right: 25px;
+          position: relative;
+
+          &-product {
+            &::after {
+              content: '+';
+              display: block;
+              position: absolute;
+              right: -17px;
+              top: 0;
+            }
+          }
+        }
+
+        .arrow-icon {
+          position: absolute;
+          right: 0;
+          top: 0;
+          line-height: 1;
+
+          .lib-button-icon(
+            @_icon-font-content: @icon-down,
+            @_icon-font-size: 16px,
+            @_icon-font-text-hide: false,
+            @_icon-font-color: @aw-sector-type-title__color,
+            @_icon-font-color-hover: @aw-sector-type-title__color,
+            @_icon-font-line-height: 14px
+          );
+        }
+      }
+
+      .summary-detail-block {
+        border-bottom: 1px solid @aw-summary__border-color;
+        margin-bottom: 25px;
+        color: @aw-sector-type-title__color;
+
+        .summary-default-msg {
+          margin-bottom: 25px;
+          font-size: @font-size__base;
+          line-height: 1.2;
+        }
+
+        .sector-element {
+          margin-bottom: 20px;
+          font-size: @font-size__base;
+          line-height: 1.2;
+          padding-left: 15px;
+
+          .sector-name-wrapper {
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: @indent__s;
+          }
+
+          .summ-tickets, .summ-products {
+            margin-bottom: @indent__s;
+            overflow: hidden;
+
+            .price-wrapper {
+              font-size: @font-size__s;
+              color: @aw-sector-available__color;
+              line-height: 1;
+            }
+
+            .total {
+              font-size: @font-size__s;
+              line-height: 1;
+              font-weight: 600;
+
+              .price {
+                float: right;
+              }
+
+              .price-excluding-tax {
+                clear: both;
+              }
+            }
+          }
+        }
+
+        .summary-item-block {
+          &:last-child {
+            margin-top: 35px;
+          }
+
+          &-title {
+            margin-bottom: 13px;
+            font-size: @aw-et-summary-item-title__font-size;
+            font-weight: 600;
+            line-height: 1;
+            text-transform: uppercase;
+            text-align: left;
+            color: @aw-et-summary-item-title__color;
+          }
+        }
+      }
+
+      .price-wrapper {
+        color: @aw-summary-price__color;
+        font-size: @font-size__s * 3;
+        font-weight: 600;
+        line-height: 1;
+        margin-bottom: @indent__xl;
+      }
+
+      .price-excluding-tax {
+        font-size: @font-size__s;
+        line-height: 16px;
+        margin-top: 0.5rem;
+
+        &:before {
+          content: attr(data-label) ': ';
+          font-size: 1.1rem;
+          font-weight: normal;
+        }
+      }
+
+      .time-slot {
+
+      }
+
+      .slot-description {
+        margin-bottom: 10px;
+        font-weight: bold;
+
+        .date {
+          display: inline;
+        }
+
+        .time {
+          display: inline;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}

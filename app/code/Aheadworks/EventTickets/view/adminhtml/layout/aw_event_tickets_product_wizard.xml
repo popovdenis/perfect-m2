@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_layout.xsd">
+    <container name="root">
+        <block class="Aheadworks\EventTickets\Block\Adminhtml\Product\Edit\Tab\Space\StepWizardConfiguration"
+               name="root.aw.et.space.wizard.config">
+            <arguments>
+                <argument name="config" xsi:type="array">
+                    <item name="form" xsi:type="string">product_form.product_form</item>
+                    <item name="modal" xsi:type="string">awEtSpaceConfigurationModal</item>
+                    <item name="stepWizardName" xsi:type="string">aw-et-space-configuration-step-wizard</item>
+                    <item name="dataScope" xsi:type="string">awEtProductFormSpaceConfiguration</item>
+                </argument>
+            </arguments>
+            <block class="Magento\Ui\Block\Component\StepsWizard" name="aw-et-space-configuration-step-wizard">
+                <arguments>
+                    <argument name="config" xsi:type="array">
+                        <item name="form" xsi:type="string">product_form.product_form</item>
+                        <item name="modal" xsi:type="string">awEtSpaceConfigurationModal</item>
+                        <item name="dataScope" xsi:type="string">awEtProductFormSpaceConfiguration</item>
+                    </argument>
+                </arguments>
+                <block class="Aheadworks\EventTickets\Block\Adminhtml\Product\Space\Steps\SelectVenue" name="step1">
+                    <arguments>
+                        <argument name="config" xsi:type="array">
+                            <item name="form" xsi:type="string">product_form.product_form</item>
+                            <item name="modal" xsi:type="string">awEtSpaceConfigurationModal</item>
+                            <item name="multiSelectName" xsi:type="string">aw_event_tickets_venue_listing.aw_event_tickets_venue_listing.aw_event_tickets_venue_columns.ids</item>
+                            <item name="ns" xsi:type="string">aw_event_tickets_venue_listing</item>
+                            <item name="providerName" xsi:type="string">aw_event_tickets_venue_listing.aw_event_tickets_venue_listing_data_source</item>
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\EventTickets\Block\Adminhtml\Product\Space\Steps\SelectSpace" name="step2">
+                    <arguments>
+                        <argument name="config" xsi:type="array">
+                            <item name="form" xsi:type="string">product_form.product_form</item>
+                            <item name="modal" xsi:type="string">awEtSpaceConfigurationModal</item>
+                            <item name="multiSelectName" xsi:type="string">aw_event_tickets_space_listing.aw_event_tickets_space_listing.aw_event_tickets_space_columns.ids</item>
+                            <item name="ns" xsi:type="string">aw_event_tickets_space_listing</item>
+                            <item name="providerName" xsi:type="string">aw_event_tickets_space_listing.aw_event_tickets_space_listing_data_source</item>
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Aheadworks\EventTickets\Block\Adminhtml\Product\Space\Steps\Summary" name="step3">
+                    <arguments>
+                        <argument name="config" xsi:type="array">
+                            <item name="form" xsi:type="string">product_form.product_form</item>
+                            <item name="formProvider" xsi:type="string">product_form.product_form_data_source</item>
+                            <item name="spaceConfiguration" xsi:type="string">event-ticket-options.container_aw_et_sector_config.aw_et_sector_config</item>
+                            <item name="modal" xsi:type="string">awEtSpaceConfigurationModal</item>
+                            <item name="ns" xsi:type="string">aw_event_tickets_sector_listing</item>
+                            <item name="providerName" xsi:type="string">aw_event_tickets_sector_listing.aw_event_tickets_sector_listing_data_source</item>
+                            <item name="loadSectorConfigUrl" xsi:type="string">aw_event_tickets/product/sectorConfig</item>
+                            <item name="venueInfoFields" xsi:type="array">
+                                <item name="0" xsi:type="array">
+                                    <item name="field_name" xsi:type="string">name</item>
+                                    <item name="field_description" xsi:type="string">Name:</item>
+                                    <item name="additional_classes" xsi:type="string">venue title</item>
+                                </item>
+                                <item name="1" xsi:type="array">
+                                    <item name="field_name" xsi:type="string">address</item>
+                                    <item name="field_description" xsi:type="string">Address:</item>
+                                    <item name="additional_classes" xsi:type="string">venue address</item>
+                                </item>
+                            </item>
+                            <item name="spaceInfoFields" xsi:type="array">
+                                <item name="0" xsi:type="array">
+                                    <item name="field_name" xsi:type="string">name</item>
+                                    <item name="field_description" xsi:type="string">Name:</item>
+                                    <item name="additional_classes" xsi:type="string">space title</item>
+                                </item>
+                                <item name="1" xsi:type="array">
+                                    <item name="field_name" xsi:type="string">sectors_qty</item>
+                                    <item name="field_description" xsi:type="string">Sectors Qty:</item>
+                                    <item name="additional_classes" xsi:type="string">space sectors_qty</item>
+                                </item>
+                            </item>
+                        </argument>
+                    </arguments>
+                </block>
+            </block>
+        </block>
+    </container>
+</layout>

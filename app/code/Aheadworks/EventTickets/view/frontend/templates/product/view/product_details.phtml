@@ -1,0 +1,28 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Aheadworks\EventTickets\Block\Product\View\Details */
+
+?>
+
+<?php
+    $awEtAttributes = $block->getAwEtAttributes();
+?>
+<div class="aw-et additional-attributes-wrapper table-wrapper">
+    <table class="data table additional-attributes" id="product-attribute-specs-table">
+        <tbody>
+        <?php foreach ($awEtAttributes as $awEtAttributeData): ?>
+            <?php
+                $attributeLabel = $awEtAttributeData['attribute_label'];
+                $attributeValue = $block->resolveAttributeValue($awEtAttributeData['attribute_value']);
+            ?>
+            <?php if (!empty($attributeValue)): ?>
+                <tr>
+                    <th class="col label" scope="row"><?= $block->escapeHtml(__($attributeLabel)) ?></th>
+                    <td class="col data" data-th="<?= $block->escapeHtml(__($attributeLabel)) ?>"><?= $block->escapeHtml(__($attributeValue)) ?></td>
+                </tr>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
