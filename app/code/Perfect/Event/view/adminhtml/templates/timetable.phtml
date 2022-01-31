@@ -1,8 +1,11 @@
+<?php
+/** @var \Perfect\Event\Block\Adminhtml\Timetable $block */
+?>
 <div id="scheduler"></div>
 <script type="text/x-magento-init">
 {
     "#scheduler": {
-        "timetable": {}
+        "Perfect_Event/js/timetable_widget": <?php echo  /* @noEscape */ $block->getConfig() ?>
     }
 }
 </script>
