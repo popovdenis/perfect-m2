@@ -1,0 +1,12 @@
+{
+  "perfect_event": {
+    "column": {
+      "id": true,
+      "title": true,
+      "enabled": true
+    },
+    "constraint": {
+      "PRIMARY": true
+    }
+  }
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="perfect" translate="label" sortOrder="10" showInDefault="1">
+            <class>separator-top</class>
+            <label>Perfect Configuration</label>
+            <tab>perfect</tab>
+            <resource>Perfect_Event::configuration</resource>
+
+<!--            <group id="import_rules_cron" translate="label" type="text" sortOrder="40" showInDefault="1"-->
+<!--                   showInWebsite="1" showInStore="1">-->
+<!--                <label>Import Rules Cron Schedule</label>-->
+
+<!--                <field id="cron_schedule" translate="label" type="text" sortOrder="30" showInDefault="1"-->
+<!--                       showInWebsite="1" showInStore="1">-->
+<!--                    <label>Cron Schedule</label>-->
+<!--                </field>-->
+<!--            </group>-->
+        </section>
+    </system>
+</config>

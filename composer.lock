@@ -21153,12 +21153,12 @@
             "version": "v2.3.6",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Setasign/FPDI.git",
+                "url": "https://github.com/2tvenom/CBOREncode.git",
                 "reference": "6231e315f73e4f62d72b73f3d6d78ff0eed93c31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Setasign/FPDI/zipball/6231e315f73e4f62d72b73f3d6d78ff0eed93c31",
+                "url": "https://api.github.com/repos/2tvenom/CBOREncode/zipball/6231e315f73e4f62d72b73f3d6d78ff0eed93c31",
                 "reference": "6231e315f73e4f62d72b73f3d6d78ff0eed93c31",
                 "shasum": ""
             },
