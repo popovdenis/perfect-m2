@@ -16,19 +16,25 @@ class Timetable extends \Magento\Backend\Block\Template
      * @var \Magento\Framework\Serialize\Serializer\Json
      */
     private $jsonEncoder;
+    /**
+     * @var \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory
+     */
+    private $collectionFactory;
 
     /**
      * Timetable constructor.
      *
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Framework\Serialize\Serializer\Json     $jsonEncoder
-     * @param array                                            $data
-     * @param \Magento\Framework\Json\Helper\Data|null         $jsonHelper
-     * @param \Magento\Directory\Helper\Data|null              $directoryHelper
+     * @param \Magento\Backend\Block\Template\Context                          $context
+     * @param \Magento\Framework\Serialize\Serializer\Json                     $jsonEncoder
+     * @param \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $collectionFactory
+     * @param array                                                            $data
+     * @param \Magento\Framework\Json\Helper\Data|null                         $jsonHelper
+     * @param \Magento\Directory\Helper\Data|null                              $directoryHelper
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Serialize\Serializer\Json $jsonEncoder,
+        \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $collectionFactory,
         array $data = [],
         ?JsonHelper $jsonHelper = null,
         ?DirectoryHelper $directoryHelper = null
@@ -36,13 +42,31 @@ class Timetable extends \Magento\Backend\Block\Template
     {
         parent::__construct($context, $data, $jsonHelper, $directoryHelper);
         $this->jsonEncoder = $jsonEncoder;
+        $this->collectionFactory = $collectionFactory;
     }
 
     /**
      * @return bool|false|string
      */
-    public function getConfig()
+    public function getConfig($schedulerId)
     {
-        return $this->jsonEncoder->serialize(['scheduler' => '#scheduler']);
+        $config = [
+            'scheduler' => '#scheduler' . $schedulerId,
+            'customers' => $this->getCustomers()
+        ];
+
+        return $this->jsonEncoder->serialize($config);
+    }
+
+    /**
+     * Get customer collection
+     */
+    public function getCustomers()
+    {
+        $customers = [];
+        $customerCollection = $this->collectionFactory->create();
+        $customerCollection->addFieldToFilter('group_id', ['eq' => 5]);
+
+        return $customerCollection->getItems();
     }
 }

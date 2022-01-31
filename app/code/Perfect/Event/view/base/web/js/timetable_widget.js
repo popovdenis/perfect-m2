@@ -11,7 +11,8 @@ define([
 
     $.widget('perfect.timetable',{
         options: {
-            scheduler: null
+            scheduler: null,
+            customers: []
         },
 
         /**
@@ -19,6 +20,20 @@ define([
          */
         _create: function() {
             this._initScheduler();
+            this._initDateController();
+        },
+
+        _initDateController: function () {
+            $('.timetable-controls-date-buttons-change-prev').off('click').on('click', function () {
+                $('div[type="button"].jqx-rc-all').find('.jqx-icon-arrow-left').each(function () {
+                    $(this).trigger('click');
+                });
+            });
+            $('.timetable-controls-date-buttons-change-next').off('click').on('click', function () {
+                $('div[type="button"].jqx-rc-all').find('.jqx-icon-arrow-right').each(function () {
+                    $(this).trigger('click');
+                });
+            });
         },
 
         /**
@@ -30,19 +45,22 @@ define([
                 scheduler = $(this.options.scheduler);
 
             scheduler.jqxScheduler({
-                date: new $.jqx.date(2022, 1, 30),
-                width: 1400,
-                height: 650,
-                source: self._getAdapter(),
-                view: 'weekView',
+                date: new $.jqx.date('todayDate'),
+                width: 700,
+                source: new $.jqx.dataAdapter(this.getSource()),
+                view: 'dayView',
                 theme: 'energyblue',
+                dayNameFormat: "abbr",
+                showHeader: false,
+                showToolbar: false,
+                // showAllDayRow: false,
                 ready: function () {
                     scheduler.jqxScheduler('ensureAppointmentVisible', 'id1');
                 },
                 resources: {
                     colorScheme: "scheme02",
                     dataField: "calendar",
-                    source:  new $.jqx.dataAdapter(this.getSource())
+                    source: new $.jqx.dataAdapter(this.getSource())
                 },
                 appointmentDataFields: {
                     from: "start",
@@ -53,11 +71,7 @@ define([
                     resourceId: "calendar"
                 },
                 views: [
-                    { type: "dayView", showWeekends: false, timeRuler: { scaleStartHour: 9, scaleEndHour: 20 } },
-                    { type: "weekView", showWeekends: false, timeRuler: { scaleStartHour: 9, scaleEndHour: 20 } },
-                    { type: "timelineDayView", showWeekends: false, timeRuler: { scaleStartHour: 9, scaleEndHour: 20 } },
-                    { type: "timelineWeekView", showWeekends: false, timeRuler: { scaleStartHour: 9, scaleEndHour: 20 } },
-                    { type: "agendaView" }
+                    { type: "dayView", showWeekends: false, timeRuler: { scaleStartHour: 9, scaleEndHour: 20 } }
                 ]
             });
             scheduler.on('appointmentAdd', function (event) {
@@ -68,10 +82,6 @@ define([
                 var args = event.args;
                 var appointment = args.appointment;
             });
-        },
-
-        _getAdapter: function () {
-            return new $.jqx.dataAdapter(this.getSource());
         },
 
         getSource: function () {
