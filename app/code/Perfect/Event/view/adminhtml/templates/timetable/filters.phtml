@@ -1,0 +1,64 @@
+<div class="admin__data-grid-header">
+    <div class="admin__data-grid-header-row">
+
+        <div class="data-grid-filters-actions-wrap">
+            <div class="data-grid-filters-action-wrap">
+                <button class="action-default _active" data-action="grid-filter-expand"
+                        data-bind="css: {_active: false}, disable: false, toggleCollapsible, i18n: 'Filters'">
+                    Фильтры
+                </button>
+            </div>
+        </div>
+
+        <div class="admin__data-grid-filters-wrap _show" data-part="filter-form">
+            <fieldset class="admin__fieldset admin__data-grid-filters">
+                <legend class="admin__filters-legend">
+                    <span data-bind="i18n: 'Advanced filter'">Advanced filter</span>
+                </legend>
+                <fieldset class="admin__form-field" data-bind="visible: true">
+                    <legend class="admin__form-field-legend">
+                        <span>Клиент с</span>
+                    </legend>
+                    <div class="admin__form-field">
+                        <label class="admin__form-field-label" for="TGSD9XV">
+                            <span>from</span>
+                        </label>
+                        <div class="admin__form-field-control">
+                            <input class="control-text admin__control-text" type="text" name="created_at_from" id="created_at_from">
+                            <button id="timetable_dp" type="button" class="ui-datepicker-trigger v-middle"></button>
+                        </div>
+                    </div>
+                    <div class="admin__form-field">
+                        <label class="admin__form-field-label" for="P6DK6SF">
+                            <span>to</span>
+                        </label>
+                        <div class="admin__form-field-control">
+                            <input class="control-text admin__control-text" type="text" name="created_at_to" id="created_at_to">
+                            <button id="timetable_dp2" type="button" class="ui-datepicker-trigger v-middle"></button>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="admin__data-grid-filters-footer">
+                    <div class="admin__footer-main-actions">
+                        <button class="action-tertiary" type="button" data-action="grid-filter-cancel">
+                            <span data-bind="i18n: 'Cancel'">Отмена</span>
+                        </button>
+                        <button class="action-secondary" type="button" data-action="grid-filter-apply"
+                                data-bind="closeCollapsible">
+                            <span data-bind="i18n: 'Apply Filters'">Apply Filters</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    require(["jquery", "mage/calendar"], function ($) {
+        $('#created_at_from,#created_at_to').datepicker({
+            showMonthAfterYear: false,
+            dateFormat: 'd/m/yy'
+        });
+    });
+</script>
