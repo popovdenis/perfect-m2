@@ -102,7 +102,7 @@ define([
                 },
                 resources: {
                     colorScheme: "scheme04",
-                    dataField: "calendar",
+                    dataField: "master",
                     source: source
                 },
                 appointmentDataFields: {
@@ -111,7 +111,7 @@ define([
                     id: "id",
                     description: "description",
                     subject: "subject",
-                    resourceId: "calendar",
+                    resourceId: "master",
                     recurrencePattern: "recurrenceRule",
                     recurrenceException: "recurrenceException"
                 },
@@ -166,7 +166,7 @@ define([
                     { name: 'name', type: 'string' },
                     { name: 'recurrenceRule', type: 'string' },
                     { name: 'recurrenceException', type: 'string' },
-                    { name: 'calendar', type: 'string' },
+                    { name: 'master', type: 'string' },
                     { name: 'started_at', type: 'date', format: "yyyy-MM-dd HH:mm" },
                     { name: 'finished_at', type: 'date', format: "yyyy-MM-dd HH:mm" }
                 ],
@@ -198,7 +198,6 @@ define([
                     // eras in reverse chronological order.
                     // name: the name of the era in this culture (e.g. A.D., C.E.)
                     // start: when the era starts in ticks (gregorian, gmt), null if it is the earliest supported era.
-                    // offset: offset in years from gregorian calendar
                     { "name": "A.D.", "start": null, "offset": 0 }
                 ],
                 twoDigitYearMax: 2029,
@@ -337,7 +336,7 @@ define([
                     subject: appointment.subject,
                     description: appointment.description,
                     location: "place",
-                    calendar: appointment.master,
+                    master: appointment.master,
                     started_at: startedAt.toString(),
                     finished_at: finishedAt.toString()
                 });

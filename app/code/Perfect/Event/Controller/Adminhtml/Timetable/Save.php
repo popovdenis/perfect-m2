@@ -35,6 +35,14 @@ class Save extends \Magento\Backend\App\Action
      * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
      */
     private $timezone;
+    /**
+     * @var \Magento\Framework\Api\SearchCriteriaBuilder
+     */
+    private $searchCriteriaBuilder;
+    /**
+     * @var \Magento\Customer\Api\CustomerRepositoryInterface
+     */
+    private $customerRepository;
 
     /**
      * Index constructor.
@@ -45,6 +53,8 @@ class Save extends \Magento\Backend\App\Action
      * @param \Perfect\Event\Api\Data\EventInterfaceFactory        $eventFactory
      * @param \Perfect\Event\Api\EventRepositoryInterface          $eventRepository
      * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone
+     * @param \Magento\Framework\Api\SearchCriteriaBuilder         $searchCriteriaBuilder
+     * @param \Magento\Customer\Api\CustomerRepositoryInterface    $customerRepository
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -52,7 +62,9 @@ class Save extends \Magento\Backend\App\Action
         \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
         \Perfect\Event\Api\Data\EventInterfaceFactory $eventFactory,
         EventRepositoryInterface $eventRepository,
-        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone
+        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
+        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
     ) {
         parent::__construct($context);
         $this->_resultPageFactory = $resultPageFactory;
@@ -60,6 +72,8 @@ class Save extends \Magento\Backend\App\Action
         $this->eventFactory = $eventFactory;
         $this->eventRepository = $eventRepository;
         $this->timezone = $timezone;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -72,18 +86,9 @@ class Save extends \Magento\Backend\App\Action
         if ($postValues = $this->getRequest()->getPostValue()) {
             $appointment = $postValues['appointment'];
             $eventId = (int) $appointment['id'];
-            $start = preg_replace('/GMT.*$/', '', $appointment['started_at']);
-            $end = preg_replace('/GMT.*$/', '', $appointment['finished_at']);
 
             try {
-                $eventData = [
-                    EventInterface::SUBJECT => $appointment['subject'],
-                    EventInterface::DESCRIPTION => $appointment['description'],
-                    EventInterface::STARTED_AT => date('Y-m-d H:i:s', strtotime($start)),
-                    EventInterface::FINISHED_AT => date('Y-m-d H:i:s', strtotime($end)),
-                    EventInterface::WORKER_ID => 3,
-                ];
-                $event = $this->initEvent($eventData, $eventId);
+                $event = $this->initEvent($appointment, $eventId);
 
                 $this->eventRepository->save($event);
 
@@ -102,21 +107,48 @@ class Save extends \Magento\Backend\App\Action
      *
      * @return \Perfect\Event\Api\Data\EventInterface
      */
-    protected function initEvent(array $eventData, int $eventId): EventInterface
+    protected function initEvent(array $appointmentData, int $eventId): EventInterface
     {
         try {
-            $event = $this->eventRepository->get($eventId);
+            $appointment = $this->eventRepository->get($eventId);
         } catch (NoSuchEntityException $exception) {
-            $event = $this->eventFactory->create();
+            $appointment = $this->eventFactory->create();
         }
 
         $this->dataObjectHelper->populateWithArray(
-            $event,
-            $eventData,
+            $appointment,
+            $appointmentData,
             EventInterface::class
         );
 
-        return $event;
+        if ($appointmentData['started_at']) {
+            $appointment->setStartedAt(preg_replace('/GMT.*$/', '', $appointmentData['started_at']));
+        }
+        if ($appointmentData['finished_at']) {
+            $appointment->setFinishedAt(preg_replace('/GMT.*$/', '', $appointmentData['finished_at']));
+        }
+        if ($appointmentData['master']) {
+            $appointment->setWorkerId($this->getEmployer($appointmentData['master'])->getId());
+        }
+
+        return $appointment;
+    }
+
+    /**
+     * @param $name
+     *
+     * @return \Magento\Customer\Api\Data\CustomerInterface|null
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function getEmployer($name)
+    {
+        $this->searchCriteriaBuilder->addFilter('firstname', $name, 'eq');
+
+        $employer = $this->customerRepository->getList(
+            $this->searchCriteriaBuilder->create()
+        )->getItems();
+
+        return $employer ? array_shift($employer) : null;
     }
 
     /**
