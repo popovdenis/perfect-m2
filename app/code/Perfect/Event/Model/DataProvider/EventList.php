@@ -31,18 +31,6 @@ class EventList extends AbstractDataProvider
      */
     private $pool;
 
-    /**
-     * Event constructor.
-     *
-     * @param                                                            $name
-     * @param                                                            $primaryFieldName
-     * @param                                                            $requestFieldName
-     * @param \Perfect\Event\Model\ResourceModel\Event\CollectionFactory $eventCollectionFactory
-     * @param \Magento\Framework\App\Request\DataPersistorInterface      $dataPersistor
-     * @param \Magento\Ui\DataProvider\Modifier\PoolInterface            $pool
-     * @param array                                                      $meta
-     * @param array                                                      $data
-     */
     public function __construct(
         $name,
         $primaryFieldName,
