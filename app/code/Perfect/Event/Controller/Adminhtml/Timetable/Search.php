@@ -69,6 +69,8 @@ class Search extends \Magento\Backend\App\Action
                     'firstname' => $customer->getFirstname(),
                     'phone' => $customer->getPhone(),
                     'email' => $customer->getEmail(),
+                    'label' => $customer->getFirstname(),
+                    'value' => $customer->getFirstname()
                 ];
             }
         }

@@ -44,7 +44,7 @@ define([
         _initAutocomplete: function () {
             var self = this;
             $(self.options.clientNameElement).autocomplete({
-                minLength: 3,
+                minLength: 2,
                 source: function(request, response) {
                     $.ajax( {
                         url: self.options.searchConfig.url,
@@ -72,10 +72,23 @@ define([
                 messages: {
                     noResults: 'Клиенты не найдены',
                     results: function (amount) {
-                        var n = 1;
+                        return '';
                     }
+                },
+                select: function (event, ui) {
+                    var item = ui.item;
+
+                    $(self.options.clientNameElement).val(item.firstname);
+                    $(self.options.clientPhoneElement).val(item.phone);
+                    $(self.options.clientEmailElement).val(item.email);
+
+                    // // reset the term after the select event
+                    // // this allows custom select handling to work properly
+                    // this.term = this._value();
+                    //
+                    // this.close( event );
+                    // this.selectedItem = item;
                 }
-                // appendTo: "#city_results"
             });
         },
 
@@ -131,9 +144,14 @@ define([
                     fields.statusLabel.html("Статус");
                     fields.resourceLabel.html("Сотрудник");
 
+                    $(self.options.clientNameElement).val('');
+                    $(self.options.clientPhoneElement).val('');
+                    $(self.options.clientEmailElement).val('');
+
                     var clientContactContainer = "<div><div class='jqx-scheduler-edit-dialog-label'>Имя клиента</div>";
                     clientContactContainer += "<div class='jqx-scheduler-edit-dialog-field'>" +
-                        "<input type='text' id='client_name' class='jqx-widget-content jqx-input-widget jqx-input jqx-widget jqx-rc-all' style='width: 100%; height: 25px; box-sizing: border-box;'></div>";
+                        "<input type='text' id='client_name' autocomplete=\"off\" class='jqx-widget-content jqx-input-widget jqx-input jqx-widget jqx-rc-all'" +
+                        " style='width: 100%; height: 25px; box-sizing: border-box;'></div>";
 
                     clientContactContainer += "<div><div class='jqx-scheduler-edit-dialog-label'>Телефон</div>";
                     clientContactContainer += "<div class='jqx-scheduler-edit-dialog-field'>"
