@@ -19,8 +19,6 @@ class Action extends Column
      */
     const URL_PATH_EDIT = 'perfect_event/index/newAction';
     const URL_PATH_DELETE = 'perfect_event/index/delete';
-    const URL_PATH_ENABLE = 'perfect_event/index/enable';
-    const URL_PATH_DISABLE = 'perfect_event/index/disable';
 
     /**
      * @var UrlInterface

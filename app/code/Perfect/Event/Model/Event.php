@@ -27,41 +27,93 @@ class Event extends AbstractModel implements EventInterface
     protected $_eventPrefix = 'perfect_event';
 
     /**
-     * Profile Id setter.
+     * Model construct that should be used for object initialization.
      *
-     * @param int $id
-     *
-     * @return self
+     * @return void
      */
-    public function setId($id): EventInterface
+    protected function _construct()
     {
-        return $this->setData(self::ENTITY_ID, $id);
+        $this->_init(\Perfect\Event\Model\ResourceModel\Event::class);
     }
 
     /**
-     * Organisation Id getter.
-     *
-     * @return int|null
+     * @inheritdoc
+     */
+    public function setId($entityId): EventInterface
+    {
+        return $this->setData(self::ID, $entityId);
+    }
+
+    /**
+     * @inheritdoc
      */
     public function getId()
     {
-        return $this->getData(self::ENTITY_ID);
+        return $this->getData(self::ID);
     }
 
     /**
      * @inheritdoc
      */
-    public function setTitle($title): EventInterface
+    public function setSubject($subject): EventInterface
     {
-        return $this->setData(self::TITLE, $title);
+        return $this->setData(self::SUBJECT, $subject);
     }
 
     /**
      * @inheritdoc
      */
-    public function getTitle()
+    public function getSubject()
     {
-        return $this->getData(self::TITLE);
+        return $this->getData(self::SUBJECT);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setDescription($description): EventInterface
+    {
+        return $this->setData(self::DESCRIPTION, $description);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDescription()
+    {
+        return $this->getData(self::DESCRIPTION);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setStartedAt($startedAt): EventInterface
+    {
+        return $this->setData(self::STARTED_AT, $startedAt);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getStartedAt()
+    {
+        return $this->getData(self::STARTED_AT);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setFinishedAt($finishedAt): EventInterface
+    {
+        return $this->setData(self::FINISHED_AT, $finishedAt);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getFinishedAt()
+    {
+        return $this->getData(self::FINISHED_AT);
     }
 
     /**
@@ -78,5 +130,21 @@ class Event extends AbstractModel implements EventInterface
     public function getEnabled()
     {
         return $this->getData(self::ENABLED);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setWorkerId($workerId): EventInterface
+    {
+        return $this->setData(self::WORKER_ID, $workerId);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getWorkerId()
+    {
+        return $this->getData(self::WORKER_ID);
     }
 }

@@ -1,12 +1,23 @@
 {
-  "perfect_event": {
-    "column": {
-      "id": true,
-      "title": true,
-      "enabled": true
-    },
-    "constraint": {
-      "PRIMARY": true
+    "perfect_event": {
+        "column": {
+            "id": true,
+            "subject": true,
+            "description": true,
+            "started_at": true,
+            "finished_at": true,
+            "enabled": true,
+            "worker_id": true
+        },
+        "index": {
+            "PERFECT_EVENT_SUBJECT": true,
+            "PERFECT_EVENT_DESCRIPTION": true,
+            "PERFECT_EVENT_ENABLED": true,
+            "PERFECT_EVENT_WORKER_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "PERFECT_EVENT_WORKER_ID_CUSTOMER_ENTITY_ENTITY_ID": true
+        }
     }
-  }
 }

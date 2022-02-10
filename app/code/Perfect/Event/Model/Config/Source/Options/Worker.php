@@ -97,7 +97,9 @@ class Worker implements OptionSourceInterface
             /** @var \Magento\Customer\Api\Data\GroupInterface $workerGroup */
             $workerGroup = $this->customerHelper->getCustomerGroupByName(self::MASTER_CUSTOMER_GROUP);
 
-            return $workerGroup->getId();
+            if ($workerGroup) {
+                return $workerGroup->getId();
+            }
         } catch (LocalizedException $e) {
         }
 

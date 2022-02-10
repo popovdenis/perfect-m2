@@ -6,7 +6,6 @@ use Exception;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
-use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Perfect\Event\Api\Data\EventInterface;
 use Perfect\Event\Api\EventRepositoryInterface;

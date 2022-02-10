@@ -2,6 +2,7 @@
 
 namespace Perfect\Event\Model\DataProvider;
 
+use Magento\Customer\Api\CustomerRepositoryInterface;
 use Perfect\Event\Model\ResourceModel\Event\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
@@ -30,6 +31,10 @@ class Event extends AbstractDataProvider
      * @var \Magento\Ui\DataProvider\Modifier\PoolInterface
      */
     private $pool;
+    /**
+     * @var \Magento\Customer\Api\CustomerRepositoryInterface
+     */
+    private $customerRepository;
 
     public function __construct(
         $name,
@@ -38,6 +43,7 @@ class Event extends AbstractDataProvider
         CollectionFactory $eventCollectionFactory,
         DataPersistorInterface $dataPersistor,
         PoolInterface $pool,
+        CustomerRepositoryInterface $customerRepository,
         array $meta = [],
         array $data = []
     ) {
@@ -47,6 +53,7 @@ class Event extends AbstractDataProvider
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
 
         $this->pool = $pool;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -72,13 +79,10 @@ class Event extends AbstractDataProvider
             return $this->loadedData;
         }
 
-        $arrItems['items'] = [];
         foreach ($this->getCollection()->getItems() as $item) {
-            $arrItems['items'][] = $item->getData();
+            $this->loadedData[$item->getId()]['appointment'] = $item->getData();
+            $this->loadedData[$item->getId()]['appointment']['worker'] = $this->getWorker($item->getWorkerId());
         }
-        $arrItems['totalRecords'] = $this->collection->getSize();
-
-        $this->loadedData = $arrItems;
 
         return $this->loadedData;
     }
@@ -96,5 +100,21 @@ class Event extends AbstractDataProvider
         }
 
         return $meta;
+    }
+
+    /**
+     * @param $workerId
+     *
+     * @return string|null
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    protected function getWorker($workerId)
+    {
+        if ($customer = $this->customerRepository->getById($workerId)) {
+            return $customer->getFirstname();
+        }
+
+        return null;
     }
 }

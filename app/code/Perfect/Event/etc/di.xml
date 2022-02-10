@@ -2,6 +2,12 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
+    <preference for="Perfect\Event\Api\Data\EventInterface"
+                type="Perfect\Event\Model\Event"/>
+
+    <preference for="Perfect\Event\Api\EventRepositoryInterface"
+                type="Perfect\Event\Model\EventRepository"/>
+
     <!-- - - - - - - - - - - Perfect grid - - - - - -->
 
     <virtualType name="Perfect\Event\Model\ResourceModel\Event\GridCollection"

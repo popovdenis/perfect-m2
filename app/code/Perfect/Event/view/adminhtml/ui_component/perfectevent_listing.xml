@@ -4,35 +4,27 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">perfectevent_listing.perfectevent_listing_data_source</item>
-            <item name="deps" xsi:type="string">perfectevent_listing.perfectevent_listing_data_source</item>
         </item>
-        <item name="spinner" xsi:type="string">perfectevent_columns</item>
     </argument>
     <settings>
         <buttons>
             <button name="add" class="Perfect\Event\Block\Adminhtml\Edit\Buttons\AddButton"/>
         </buttons>
+        <spinner>perfectevent_columns</spinner>
+        <deps>
+            <dep>perfectevent_listing.perfectevent_listing_data_source</dep>
+        </deps>
     </settings>
-    <dataSource name="perfectevent_listing_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Perfect\Event\Model\DataProvider\Event</argument>
-            <argument name="name" xsi:type="string">perfectevent_listing_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string">id</argument>
-            <argument name="requestFieldName" xsi:type="string">id</argument>
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
-                    <item name="storageConfig" xsi:type="array">
-                        <item name="indexField" xsi:type="string">id</item>
-                    </item>
-                </item>
-            </argument>
-        </argument>
-        <argument name="data" xsi:type="array">
-            <item name="js_config" xsi:type="array">
-                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
-            </item>
-        </argument>
+    <dataSource name="perfectevent_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <dataProvider class="Perfect\Event\Model\DataProvider\EventList" name="perfectevent_listing_data_source">
+            <settings>
+                <primaryFieldName>id</primaryFieldName>
+                <requestFieldName>id</requestFieldName>
+            </settings>
+        </dataProvider>
     </dataSource>
     <container name="listing_top">
         <argument name="data" xsi:type="array">
@@ -41,30 +33,94 @@
                 <item name="stickyTmpl" xsi:type="string">ui/grid/sticky/toolbar</item>
             </item>
         </argument>
+        <filterSearch name="name" provider="perfectevent_listing.perfectevent_listing_data_source">
+            <settings>
+                <chipsProvider>perfectevent_listing.perfectevent_listing.listing_top.listing_filters_chips</chipsProvider>
+            </settings>
+        </filterSearch>
+        <bookmark name="bookmarks"/>
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="columnsProvider" xsi:type="string">perfectevent_listing.perfectevent_listing.perfectevent_columns</item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">perfectevent_listing.perfectevent_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.filters</item>
+                    </item>
+                    <item name="childDefaults" xsi:type="array">
+                        <item name="provider" xsi:type="string">perfectevent_listing.perfectevent_listing.listing_top.listing_filters</item>
+                        <item name="imports" xsi:type="array">
+                            <item name="visible" xsi:type="string">perfectevent_listing.perfectevent_listing.perfectevent_columns.${ $.index }:visible</item>
+                        </item>
+                    </item>
+                </item>
+                <item name="observers" xsi:type="array">
+                    <item name="column" xsi:type="string">column</item>
+                </item>
+            </argument>
+        </filters>
+        <paging name="listing_paging">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">perfectevent_listing.perfectevent_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.paging</item>
+                    </item>
+                    <item name="selectProvider" xsi:type="string">perfectevent_listing.perfectevent_listing.perfectevent_columns.ids</item>
+                </item>
+            </argument>
+        </paging>
     </container>
     <columns name="perfectevent_columns">
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
         <column name="id" sortOrder="10">
             <settings>
                 <label translate="true">ID</label>
                 <sorting>asc</sorting>
+                <item name="visible" xsi:type="boolean">false</item>
             </settings>
         </column>
-        <column name="name" sortOrder="20">
+        <column name="subject" sortOrder="20">
             <settings>
-                <label translate="true">Name</label>
+                <label translate="true">Subject</label>
             </settings>
         </column>
-        <column name="enabled" component="Magento_Ui/js/grid/columns/select" sortOrder="40">
+        <column name="started_at" component="Magento_Ui/js/grid/columns/date" sortOrder="40"
+                class="Magento\Ui\Component\Listing\Columns\Date">
             <settings>
-                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                <dataType>date</dataType>
+                <label translate="true">Started At</label>
+            </settings>
+        </column>
+        <column name="finished_at" component="Magento_Ui/js/grid/columns/date" sortOrder="50"
+                class="Magento\Ui\Component\Listing\Columns\Date">
+            <settings>
+                <dataType>date</dataType>
+                <label translate="true">Finished At</label>
+            </settings>
+        </column>
+        <column name="worker_id" component="Magento_Ui/js/grid/columns/select" sortOrder="60">
+            <settings>
+                <options class="Perfect\Event\Model\Config\Source\Options\Worker"/>
+                <filter>select</filter>
                 <dataType>select</dataType>
-                <label translate="true">Enabled</label>
+                <label translate="true">Worker</label>
             </settings>
         </column>
         <actionsColumn name="actions" sortOrder="100" class="Perfect\Event\Ui\Component\Listing\Column\Action">
-            <settings>
-                <indexField>id</indexField>
-            </settings>
+            <argument name="data" xsi:type="array">
+                <item name="draggable" xsi:type="boolean">true</item>
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">id</item>
+                    <item name="sortOrder" xsi:type="number">200</item>
+                </item>
+            </argument>
         </actionsColumn>
     </columns>
 </listing>

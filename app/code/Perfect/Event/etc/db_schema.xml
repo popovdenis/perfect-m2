@@ -5,14 +5,40 @@
     <table name="perfect_event" resource="default" engine="innodb" comment="Perfect Event">
         <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true"
                 comment="Entity Id"/>
-        <column xsi:type="varchar" name="title" length="150" nullable="false"
-                comment="Title"/>
+        <column xsi:type="varchar" name="subject" length="150" nullable="false"
+                comment="Subject"/>
+        <column xsi:type="varchar" name="description" nullable="true"
+                comment="Description"/>
+        <column xsi:type="datetime" name="started_at" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Start At"/>
+        <column xsi:type="datetime" name="finished_at" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Finish At"/>
         <column xsi:type="smallint" name="enabled" padding="6" unsigned="true" nullable="false" identity="false"
                 default="0" comment="Enabled Status"/>
+        <column xsi:type="int" name="worker_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Worker Id"/>
 
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
+        <constraint xsi:type="foreign" referenceId="PERFECT_EVENT_WORKER_ID_CUSTOMER_ENTITY_ID"
+                    table="perfect_event"
+                    column="worker_id"
+                    referenceTable="customer_entity"
+                    referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="PERFECT_EVENT_SUBJECT" indexType="btree">
+            <column name="subject"/>
+        </index>
+        <index referenceId="PERFECT_EVENT_DESCRIPTION" indexType="btree">
+            <column name="description"/>
+        </index>
+        <index referenceId="PERFECT_EVENT_ENABLED" indexType="btree">
+            <column name="enabled"/>
+        </index>
+        <index referenceId="PERFECT_EVENT_WORKER_ID" indexType="btree">
+            <column name="worker_id"/>
+        </index>
     </table>
 
 </schema>

@@ -7,20 +7,20 @@
             <item name="provider" xsi:type="string">perfect_event_form.perfect_event_form_data_source</item>
         </item>
         <item name="label" xsi:type="string" translate="true">General Information</item>
-        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="reverseMetadataMerge" xsi:type="boolean">true</item>
     </argument>
     <settings>
         <buttons>
-<!--            <button name="back" class="Dhs\ImportProfile\Block\Adminhtml\ImportProfile\Edit\Buttons\Back"/>-->
-<!--            <button name="delete" class="Dhs\ImportProfile\Block\Adminhtml\ImportProfile\Edit\Buttons\Enable"/>-->
-<!--            <button name="delete" class="Dhs\ImportProfile\Block\Adminhtml\ImportProfile\Edit\Buttons\Disable"/>-->
-<!--            <button name="delete" class="Dhs\ImportProfile\Block\Adminhtml\ImportProfile\Edit\Buttons\Delete"/>-->
+            <button name="back" class="Perfect\Event\Block\Adminhtml\Edit\Buttons\Back"/>
+            <button name="delete" class="Perfect\Event\Block\Adminhtml\Edit\Buttons\Delete"/>
             <button name="save" class="Perfect\Event\Block\Adminhtml\Edit\Buttons\Save"/>
             <button name="save_and_continue"
                     class="Perfect\Event\Block\Adminhtml\Edit\Buttons\SaveAndContinue"/>
         </buttons>
-        <namespace>perfect_event_form</namespace>
-        <dataScope>data</dataScope>
+        <layout>
+            <navContainerName>left</navContainerName>
+            <type>tabs</type>
+        </layout>
         <deps>
             <dep>perfect_event_form.perfect_event_form_data_source</dep>
         </deps>
@@ -33,7 +33,7 @@
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="submit_url" xsi:type="url" path="perfect_event/index/save"/>
+                    <item name="submit_url" xsi:type="url" path="perfect_event/index/editPost"/>
                 </item>
             </argument>
         </argument>
@@ -43,43 +43,108 @@
             </item>
         </argument>
     </dataSource>
-    <fieldset name="general">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="label" xsi:type="string" translate="true">General Settings</item>
-                <item name="sortOrder" xsi:type="number">10</item>
-            </item>
-        </argument>
+    <fieldset name="appointment">
+        <settings>
+            <label translate="true">Appointment Info</label>
+        </settings>
         <field name="id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="visible" xsi:type="boolean">false</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>
-                    <item name="source" xsi:type="string">import</item>
+                    <item name="source" xsi:type="string">appointment</item>
                     <item name="dataScope" xsi:type="string">id</item>
                 </item>
             </argument>
         </field>
-        <field name="enabled">
+        <field name="subject">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">boolean</item>
-                    <item name="label" xsi:type="string" translate="true">Enable Event</item>
-                    <item name="formElement" xsi:type="string">checkbox</item>
-                    <item name="source" xsi:type="string">import</item>
-                    <item name="dataScope" xsi:type="string">enabled</item>
-                    <item name="prefer" xsi:type="string">toggle</item>
-                    <item name="valueMap" xsi:type="array">
-                        <item name="true" xsi:type="number">1</item>
-                        <item name="false" xsi:type="number">0</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Subject</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="dataScope" xsi:type="string">subject</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
-                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+        </field>
+        <field name="description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Description</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="dataScope" xsi:type="string">description</item>
+                </item>
+            </argument>
+        </field>
+        <field name="started_at">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Started At</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="dataScope" xsi:type="string">started_at</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item name="validate-optional-datetime" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">yyyy-MM-dd</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm</item>
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="storeTimeZone" xsi:type="string">string</item>
+                </item>
+            </argument>
+        </field>
+        <field name="finished_at">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Finished At</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="dataScope" xsi:type="string">finished_at</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item name="validate-optional-datetime" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">yyyy-MM-dd</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm</item>
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="storeTimeZone" xsi:type="string">string</item>
+                </item>
+            </argument>
+        </field>
+        <field name="worker">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Perfect\Event\Model\Config\Source\Options\Worker</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Worker</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="dataScope" xsi:type="string">worker_id</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
                 </item>
             </argument>
         </field>
     </fieldset>
-    <fieldset name="custom_tab">
+    <fieldset name="employees">
+        <settings>
+            <label translate="true">Employees</label>
+        </settings>
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="label" xsi:type="string" translate="true">Custom tab</item>
@@ -93,7 +158,7 @@
         <container name="custom_tab_container">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="sortOrder" xsi:type="string">1</item>
+                    <item name="sortOrder" xsi:type="string">2</item>
                 </item>
             </argument>
         </container>
