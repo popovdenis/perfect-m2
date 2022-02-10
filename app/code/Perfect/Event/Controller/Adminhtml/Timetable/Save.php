@@ -67,8 +67,6 @@ class Save extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->_resultPageFactory->create(ResultFactory::TYPE_JSON);
         $results = [];
 
         if ($postValues = $this->getRequest()->getPostValue()) {

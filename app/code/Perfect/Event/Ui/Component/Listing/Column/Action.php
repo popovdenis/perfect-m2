@@ -86,15 +86,7 @@ class Action extends Column
                     'title'   => __('Delete "${ $.$data.title }"'),
                     'message' => __('Are you sure you want to delete: "${ $.$data.title }"?')
                 ]
-            ],
-            'enable'   => [
-                'href'  => $this->getEnableUrl($item['id']),
-                'label' => __('Enable')
-            ],
-            'disable'   => [
-                'href'  => $this->getDisableUrl($item['id']),
-                'label' => __('Disable')
-            ],
+            ]
         ];
     }
 
@@ -120,29 +112,5 @@ class Action extends Column
     protected function getDeleteUrl(int $eventId)
     {
         return $this->urlBuilder->getUrl(static::URL_PATH_DELETE, ['id' => $eventId]);
-    }
-
-    /**
-     * Get Enable url.
-     *
-     * @param int $eventId
-     *
-     * @return string
-     */
-    protected function getEnableUrl(int $eventId)
-    {
-        return $this->urlBuilder->getUrl(static::URL_PATH_ENABLE, ['id' => $eventId]);
-    }
-
-    /**
-     * Get Disable url.
-     *
-     * @param int $eventId
-     *
-     * @return string
-     */
-    protected function getDisableUrl(int $eventId)
-    {
-        return $this->urlBuilder->getUrl(static::URL_PATH_DISABLE, ['id' => $eventId]);
     }
 }

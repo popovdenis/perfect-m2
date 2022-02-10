@@ -3,12 +3,19 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <css src="Perfect_Event::css/jqx.base.css"/>
-        <css src="Perfect_Event::css/jqx.light.css"/>
     </head>
     <referenceContainer name="content">
         <container name="timetable_load_js" htmlTag="div" htmlClass="timetable_load_js">
+            <block class="Perfect\Event\Block\Adminhtml\Timetable" name="timetablejs.filters"
+                   template="Perfect_Event::timetable/filters.phtml" />
             <block class="Perfect\Event\Block\Adminhtml\Timetable" name="timetablejs.init"
                    template="Perfect_Event::timetable.phtml" />
         </container>
     </referenceContainer>
+    <referenceBlock name="after.body.start">
+        <block class="Perfect\Event\Block\Adminhtml\TimetableConfig"
+               name="perfect.timetable_service_config"
+               template="Perfect_Event::timetable/config.phtml">
+        </block>
+    </referenceBlock>
 </page>

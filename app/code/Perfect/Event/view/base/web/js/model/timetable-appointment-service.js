@@ -1,4 +1,6 @@
 define([
+    'saveAppointment',
+    'deleteAppointment',
     'Perfect_Event/js/jqwidgets/jqxcore',
     'Perfect_Event/js/jqwidgets/jqxbuttons',
     'Perfect_Event/js/jqwidgets/jqxscrollbar',
@@ -19,9 +21,7 @@ define([
     'Perfect_Event/js/jqwidgets/jqxinput',
     'Perfect_Event/js/jqwidgets/globalization/globalize',
     'Perfect_Event/js/jqwidgets/globalization/globalize.culture.ru-RU',
-    'Perfect_Event/js/jqwidgets/demos',
-    'saveAppointment',
-    'deleteAppointment'
+    'Perfect_Event/js/jqwidgets/demos'
 ], function (saveAppointment, deleteAppointment) {
     return {
         sendAppointment: function (appointments) {

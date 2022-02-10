@@ -1,44 +1,46 @@
 <?php
 /** @var \Perfect\Event\Block\Adminhtml\Timetable $block */
-$customers = $block->getCustomers();
 $indexer = 0;
-if ($customers):
-?>
-<div class="timetable-controls-date-buttons">
-    <div class="y-timetable-controls-date-buttons-change">
-        <button class="button timetable-controls-date-buttons-change-prev" type="button" style="border: solid black;border-width: 0 3px 3px 0;display: inline-block;padding: 3px;transform: rotate(135deg);-webkit-transform: rotate(135deg);">
-            <i class="fa-chevron-left"></i>
-        </button>
-        <button class="button timetable-controls-date-buttons-change-next" type="button" style="border: solid black;border-width: 0 3px 3px 0;display: inline-block;padding: 3px;transform: rotate(-45deg);-webkit-transform: rotate(-45deg);">
-            <i class="fa-chevron-right"></i>
-        </button>
-    </div>
-</div>
-<div class="timetable" style="position: relative;width: 100%;">
-    <?php foreach ($customers as $customer): ?>
-    <div class="timetable-grid-<?= $indexer ?>" style="float: left;">
-        <div class="timetable-header-item" style="text-align: center;justify-content: center;">
-            <div class="popover timetable-header-item-master__container" disabled="false"
-                 data-locator="master_container_1872277" data-master-id="1872277">
-                <div class="popover__clickable">
-                    <div class="timetable-header-item-master">
-                        <div class="timetable-header-item-master__avatar">
-                            <img src="https://yclients.com/images/no-master-sm.png"></div>
-                        <div class="timetable-header-item-master__name"><?= $customer->getFirstname() ?></div>
-                        <div class="timetable-header-item-master__specialization">парикмахер</div>
-                    </div>
-                </div><!----></div>
+if ($customers = $block->getCustomers()):
+    ?>
+    <div class="timetable-controls-date-buttons">
+        <div class="y-timetable-controls-date-buttons-change">
+            <button class="button timetable-controls-date-buttons-change-prev" type="button"
+                    style="border: solid black;border-width: 0 3px 3px 0;display: inline-block;padding: 3px;transform: rotate(135deg);-webkit-transform: rotate(135deg);">
+                <i class="fa-chevron-left"></i>
+            </button>
+            <button class="button timetable-controls-date-buttons-change-next" type="button"
+                    style="border: solid black;border-width: 0 3px 3px 0;display: inline-block;padding: 3px;transform: rotate(-45deg);-webkit-transform: rotate(-45deg);">
+                <i class="fa-chevron-right"></i>
+            </button>
         </div>
-        <div id="scheduler<?= $indexer ?>"></div>
     </div>
+    <div class="timetable" style="position: relative;width: 100%;">
+        <?php foreach ($customers as $customer): ?>
+            <div class="timetable-grid-<?= $indexer ?>" style="float: left;">
+                <div class="timetable-header-item" style="text-align: center;justify-content: center;">
+                    <div class="popover timetable-header-item-master__container" disabled="false"
+                         data-locator="master_container_1872277" data-master-id="1872277">
+                        <div class="popover__clickable">
+                            <div class="timetable-header-item-master">
+                                <div class="timetable-header-item-master__avatar">
+                                    <img src="no-master-sm.png"></div>
+                                <div class="timetable-header-item-master__name"><?= $customer->getFirstname() ?></div>
+                                <div class="timetable-header-item-master__specialization">парикмахер</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="scheduler<?= $indexer ?>"></div>
+            </div>
 <script type="text/x-magento-init">
 {
     ".timetable-grid-<?= $indexer ?>": {
-        "Perfect_Event/js/timetable_widget": <?php echo  /* @noEscape */ $block->getConfig($indexer) ?>
+        "Perfect_Event/js/timetable_widget": <?php echo /* @noEscape */ $block->getConfig($indexer, $customer) ?>
     }
 }
 </script>
-    <?php $indexer++; ?>
-    <?php endforeach; ?>
-</div>
+            <?php $indexer++; ?>
+        <?php endforeach; ?>
+    </div>
 <?php endif; ?>
