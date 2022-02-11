@@ -202,7 +202,7 @@ function getWidth(name) {
 
                     return windowWidth;
                 }
-                return 850;
+                return 600;
             case "grid":
                 if (response.device.type === "Phone") {
                     var grid = document.getElementById('grid');

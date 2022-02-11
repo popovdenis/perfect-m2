@@ -1,5 +1,5 @@
 ﻿:root {
-    --jqx-grid-row-height: 25px;
+    --jqx-grid-row-height: 36px;
     --jqx-grid-column-height: 48px;
     --jqx-grid-show-column-lines: 1;
     --jqx-list-item-height: -1;
@@ -5718,7 +5718,7 @@ ol li .jqx-listmenu-item-label:before {
 }
 
 .jqx-ribbon-header-vertical {
-    min-width: 35px;
+    min-width: 75px;
     height: 100%;
     float: left;
     padding: 0px;

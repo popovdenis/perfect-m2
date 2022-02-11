@@ -1,5 +1,9 @@
 <?php
-/** @var \Perfect\Event\Block\Adminhtml\Timetable $block */
+/**
+ * @var \Perfect\Event\Block\Adminhtml\Timetable $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
 $indexer = 0;
 if ($customers = $block->getCustomers()):
     ?>
@@ -24,7 +28,9 @@ if ($customers = $block->getCustomers()):
                         <div class="popover__clickable">
                             <div class="timetable-header-item-master">
                                 <div class="timetable-header-item-master__avatar">
-                                    <img src="no-master-sm.png"></div>
+                                    <img src="<?= $escaper->escapeUrl($block->getViewFileUrl('images/magento-icon.svg')) ?>"
+                                         alt="<?= $escaper->escapeHtml(__('Master image')); ?>">
+                                </div>
                                 <div class="timetable-header-item-master__name"><?= $customer->getFirstname() ?></div>
                                 <div class="timetable-header-item-master__specialization">парикмахер</div>
                             </div>

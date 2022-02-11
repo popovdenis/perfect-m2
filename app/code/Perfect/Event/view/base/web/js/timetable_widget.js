@@ -104,9 +104,30 @@ define([
                 scheduler = $(this.options.scheduler),
                 source = new $.jqx.dataAdapter(this.getSource());
 
+            InitResponse();
+            var response = new $.jqx.response();
+            var width = 750;
+            if (response.device.type === "Phone") {
+                if (scheduler) {
+                    scheduler.css('marginLeft', '5%');
+                }
+                width = '90%';
+            } else if (response.device.type === "Tablet") {
+                var windowWidth = document.body.offsetWidth - 50;
+                if (windowWidth > 850) {
+                    windowWidth = 850;
+                }
+                if (scheduler) {
+                    scheduler.css('marginLeft', 'auto');
+                    scheduler.css('marginRight', 'auto');
+                }
+                width = windowWidth;
+            } else {
+                scheduler.css('margin-right', '5px');
+            }
             scheduler.jqxScheduler({
                 date: new $.jqx.date('todayDate'),
-                width: 600,
+                width: width,
                 height: 800,
                 source: source,
                 view: 'dayView',
@@ -115,7 +136,7 @@ define([
                 // showAllDayRow: false,
                 localization: self._getLocalization(),
                 ready: function () {
-                    scheduler.jqxScheduler('ensureAppointmentVisible', this.lastAppointmentId);
+                    scheduler.jqxScheduler('ensureAppointmentVisible', self.lastAppointmentId);
                 },
                 resources: {
                     colorScheme: "scheme04",
