@@ -78,6 +78,7 @@ class Save extends \Magento\Backend\App\Action
 
     /**
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|string
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function execute()
     {
@@ -106,6 +107,7 @@ class Save extends \Magento\Backend\App\Action
      * @param int   $eventId
      *
      * @return \Perfect\Event\Api\Data\EventInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function initEvent(array $appointmentData, int $eventId): EventInterface
     {
@@ -113,6 +115,7 @@ class Save extends \Magento\Backend\App\Action
             $appointment = $this->eventRepository->get($eventId);
         } catch (NoSuchEntityException $exception) {
             $appointment = $this->eventFactory->create();
+            unset($appointmentData['id']);
         }
 
         $this->dataObjectHelper->populateWithArray(
@@ -122,10 +125,14 @@ class Save extends \Magento\Backend\App\Action
         );
 
         if ($appointmentData['started_at']) {
-            $appointment->setStartedAt(preg_replace('/GMT.*$/', '', $appointmentData['started_at']));
+            $appointment->setStartedAt(
+                date('Y-m-d H:i:s', strtotime(preg_replace('/GMT.*$/', '', $appointmentData['started_at'])))
+            );
         }
         if ($appointmentData['finished_at']) {
-            $appointment->setFinishedAt(preg_replace('/GMT.*$/', '', $appointmentData['finished_at']));
+            $appointment->setFinishedAt(
+                date('Y-m-d H:i:s', strtotime(preg_replace('/GMT.*$/', '', $appointmentData['finished_at'])))
+            );
         }
         if ($appointmentData['master']) {
             $appointment->setWorkerId($this->getEmployer($appointmentData['master'])->getId());

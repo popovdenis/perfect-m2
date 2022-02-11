@@ -94,7 +94,10 @@ class CustomerAttribute implements \Magento\Framework\Setup\Patch\DataPatchInter
                 'system' => 0
             ]
         );
-        $this->createCustomerAttribute($customerAttribute, ['customer_account_create', 'customer_account_edit']);
+        $this->createCustomerAttribute(
+            $customerAttribute,
+            ['adminhtml_customer', 'customer_account_create', 'customer_account_edit']
+        );
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }

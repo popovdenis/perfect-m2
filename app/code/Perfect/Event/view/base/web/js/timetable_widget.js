@@ -12,7 +12,10 @@ define([
     $.widget('perfect.timetable',{
         options: {
             scheduler: null,
+            jqxBtn: null,
+            log: null,
             appointments: [],
+            clientIdElement: '#client_id',
             clientNameElement: '#client_name',
             clientPhoneElement: '#client_phone',
             clientEmailElement: '#client_email',
@@ -104,6 +107,7 @@ define([
             scheduler.jqxScheduler({
                 date: new $.jqx.date('todayDate'),
                 width: 600,
+                height: 800,
                 source: source,
                 view: 'dayView',
                 // showHeader: false,
@@ -129,8 +133,28 @@ define([
                     recurrenceException: "recurrenceException"
                 },
                 views: [
-                    {type: "dayView", showWeekends: true, timeRuler: {scaleStartHour: 9, scaleEndHour: 20}}
+                    {
+                        type: "dayView",
+                        showWeekends: true,
+                        timeRuler: {hidden: false,scaleStartHour: 8, scaleEndHour: 20},
+                        workTime: {fromDayOfWeek: 1, toDayOfWeek: 5, fromHour: 8, toHour: 20}
+                    }
                 ],
+                renderAppointment: function (info) {
+                    var startedAt = (new Date(Date.parse(info.appointment.from.toDate()))),
+                        finishedAt = (new Date(Date.parse(info.appointment.to.toDate())));
+
+                    var appointmentInfo = '<div><span>';
+                    appointmentInfo += startedAt.toLocaleString("en-GB", {hour: "numeric", minute: "2-digit"});
+                    appointmentInfo += ' - ';
+                    appointmentInfo += finishedAt.toLocaleString("en-GB", {hour: "numeric", minute: "2-digit"});
+                    appointmentInfo += '</span></div>';
+                    appointmentInfo += '<div><span>' + info.appointment.subject + '</span></div>';
+
+                    info.html = appointmentInfo;
+
+                    return info;
+                },
                 editDialogCreate: function (dialog, fields, editAppointment) {
                     fields.locationContainer.hide();
                     fields.timeZoneContainer.hide();
@@ -144,26 +168,37 @@ define([
                     fields.statusLabel.html("Статус");
                     fields.resourceLabel.html("Сотрудник");
 
-                    $(self.options.clientNameElement).val('');
-                    $(self.options.clientPhoneElement).val('');
-                    $(self.options.clientEmailElement).val('');
-
                     var clientContactContainer = "<div><div class='jqx-scheduler-edit-dialog-label'>Имя клиента</div>";
                     clientContactContainer += "<div class='jqx-scheduler-edit-dialog-field'>" +
-                        "<input type='text' id='client_name' autocomplete=\"off\" class='jqx-widget-content jqx-input-widget jqx-input jqx-widget jqx-rc-all'" +
+                        "<input type='text' id='client_name'" +
+                        " class='jqx-widget-content jqx-input-widget jqx-input jqx-widget jqx-rc-all'" +
                         " style='width: 100%; height: 25px; box-sizing: border-box;'></div>";
+                    clientContactContainer += '<input type=\'hidden\' id=\'client_id\'"/>';
 
                     clientContactContainer += "<div><div class='jqx-scheduler-edit-dialog-label'>Телефон</div>";
                     clientContactContainer += "<div class='jqx-scheduler-edit-dialog-field'>"
-                        + "<input type='text' id='client_phone' class='jqx-widget-content jqx-input-widget jqx-input jqx-widget jqx-rc-all' style='width: 100%; height: 25px; box-sizing: border-box;'></div>";
+                        + "<input type='text' id='client_phone'" +
+                        " class='jqx-widget-content jqx-input-widget jqx-input jqx-widget jqx-rc-all'" +
+                        " style='width: 100%; height: 25px; box-sizing: border-box;'></div>";
 
                     clientContactContainer += "<div><div class='jqx-scheduler-edit-dialog-label'>Email</div>";
                     clientContactContainer += "<div class='jqx-scheduler-edit-dialog-field'>" +
-                        "<input type='text' id='client_email' class='jqx-widget-content jqx-input-widget jqx-input jqx-widget jqx-rc-all' style='width: 100%; height: 25px; box-sizing: border-box;'></div>";
+                        "<input type='text' id='client_email'" +
+                        " class='jqx-widget-content jqx-input-widget jqx-input jqx-widget jqx-rc-all'" +
+                        " style='width: 100%; height: 25px; box-sizing: border-box;'></div>";
 
                     fields.subjectContainer.prepend(clientContactContainer);
 
                     self._initAutocomplete();
+                },
+                editDialogOpen: function (dialog, fields, editAppointment) {
+                    console.log('open dialog');
+                    $(self.options.clientIdElement).val('');
+                    $(self.options.clientNameElement).val('');
+                    $(self.options.clientPhoneElement).val('');
+                    $(self.options.clientEmailElement).val('');
+                },
+                editDialogClose: function (dialog, fields, editAppointment) {
                 }
             });
             scheduler.on('appointmentAdd', this._saveAppointment.bind(this));

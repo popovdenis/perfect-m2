@@ -66,11 +66,12 @@ class Search extends \Magento\Backend\App\Action
         if ($customers = $this->getCustomersBySearch($search)) {
             foreach ($customers as $customer) {
                 $results[] = [
-                    'firstname' => $customer->getFirstname(),
+                    'id' => $customer->getId(),
+                    'firstname' => sprintf('%s %s', $customer->getFirstname(), $customer->getLastname()),
                     'phone' => $customer->getPhone(),
                     'email' => $customer->getEmail(),
-                    'label' => $customer->getFirstname(),
-                    'value' => $customer->getFirstname()
+                    'label' => sprintf('%s %s', $customer->getFirstname(), $customer->getLastname()),
+                    'value' => sprintf('%s %s', $customer->getFirstname(), $customer->getLastname())
                 ];
             }
         }
@@ -80,12 +81,14 @@ class Search extends \Magento\Backend\App\Action
 
     /**
      * @return \Magento\Framework\DataObject[]
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function getCustomersBySearch($search)
     {
         $customerCollection = $this->customerCollection->create();
         $customerCollection->addFieldToFilter('firstname', ['like' => '%' . $search . '%']);
         $customerCollection->addFieldToFilter('group_id', ['eq' => $this->getClientGroup()]);
+        $customerCollection->addAttributeToSelect('phone');
 
         return $customerCollection->getItems();
     }
