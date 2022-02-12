@@ -7,7 +7,7 @@ define([
     var _saveAppointment = function (appointment, onSuccess) {
         $.ajax({
             url: config.getSaveAppointmentUrl(),
-            data: {form_key: window.FORM_KEY, appointment: appointment.originalData},
+            data: {form_key: window.FORM_KEY, appointment: appointment},
             type: 'post',
             dataType: 'json',
             showLoader: true,

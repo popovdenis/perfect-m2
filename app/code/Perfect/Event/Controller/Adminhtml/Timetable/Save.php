@@ -124,17 +124,17 @@ class Save extends \Magento\Backend\App\Action
             EventInterface::class
         );
 
-        if ($appointmentData['started_at']) {
+        if (!empty($appointmentData['start'])) {
             $appointment->setStartedAt(
-                date('Y-m-d H:i:s', strtotime(preg_replace('/GMT.*$/', '', $appointmentData['started_at'])))
+                date('Y-m-d H:i:s', strtotime(preg_replace('/GMT.*$/', '', $appointmentData['start'])))
             );
         }
-        if ($appointmentData['finished_at']) {
+        if (!empty($appointmentData['end'])) {
             $appointment->setFinishedAt(
-                date('Y-m-d H:i:s', strtotime(preg_replace('/GMT.*$/', '', $appointmentData['finished_at'])))
+                date('Y-m-d H:i:s', strtotime(preg_replace('/GMT.*$/', '', $appointmentData['end'])))
             );
         }
-        if ($appointmentData['master']) {
+        if (!empty($appointmentData['master'])) {
             $appointment->setWorkerId($this->getEmployer($appointmentData['master'])->getId());
         }
 

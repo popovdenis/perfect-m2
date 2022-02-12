@@ -7,7 +7,7 @@ define([
     var _deleteAppointment = function (appointment, onSuccess) {
         $.ajax({
             url: config.getDeleteAppointmentUrl(),
-            data: {form_key: window.FORM_KEY, appointment: appointment.originalData},
+            data: {form_key: window.FORM_KEY, appointment: appointment},
             type: 'post',
             dataType: 'json',
             showLoader: true,

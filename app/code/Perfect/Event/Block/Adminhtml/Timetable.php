@@ -79,11 +79,13 @@ class Timetable extends \Magento\Backend\Block\Template
     public function getConfig($schedulerId, $customer)
     {
         $config = [
-            'scheduler' => '#scheduler' . $schedulerId,
+            'scheduler' => 'scheduler' . $schedulerId,
             'appointments' => $this->getAppointments($customer),
             'searchConfig' => [
                 'url' => $this->getUrl('perfect_event/timetable/search', ['_secure' => true])
-            ]
+            ],
+            'popupModal' => '#modal-content' . $schedulerId,
+            'popupModalNew' => '#modal-content-new',
         ];
 
         return $this->jsonEncoder->serialize($config);
