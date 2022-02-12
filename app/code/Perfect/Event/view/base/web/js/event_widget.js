@@ -90,6 +90,14 @@ define([
                             self._saveAppointment(eventClickInfo.event);
                         }
                     },
+                    eventContent: function (eventInfo) {
+                        if (eventInfo.event.id === '{pointer}') {
+                            return eventInfo.timeText += ' Новая запись';
+                        }
+
+                        return '<div class="ec-event-time">' + eventInfo.timeText + '</div>' +
+                        '<div class="ec-event-title">' + eventInfo.event.title + '</div>';
+                    },
                     datesSet: function (info) {
                         console.log(info);
                     }
@@ -125,8 +133,9 @@ define([
                     id: appointment.id,
                     start: startedAt,
                     end: finishedAt,
-                    resourceId: 2,
-                    display: "auto"
+                    title: appointment.subject,
+                    color: "#FE6B64",
+                    resourceId: 2
                 });
 
                 this.appointmentSlots.push(
