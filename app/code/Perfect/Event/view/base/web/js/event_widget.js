@@ -71,12 +71,20 @@ define([
                             if (!self.appointmentSlots.includes(hash)) {
                                 console.log(dateClickInfo);
                                 self.activePopup = true;
+                                self._populatePopup({
+                                    id: '',
+                                    title: '',
+                                    extendedProps: {
+                                        master_name: ''
+                                    }
+                                });
                                 self._openPopup();
                             }
                         }
                     },
                     eventClick: function (eventClickInfo) {
                         self.activePopup = true;
+                        self._populatePopup(eventClickInfo.event);
                         self._openPopup();
                     },
                     eventDrop: function (eventClickInfo) {
@@ -92,7 +100,7 @@ define([
                     },
                     eventContent: function (eventInfo) {
                         if (eventInfo.event.id === '{pointer}') {
-                            return eventInfo.timeText += ' Новая запись';
+                            return '<div class="ec-event-time" style="background-color:#B29DD9;width:100%">' + eventInfo.timeText + ' Новая запись' + '</div>';
                         }
 
                         return '<div class="ec-event-time">' + eventInfo.timeText + '</div>' +
@@ -135,7 +143,11 @@ define([
                     end: finishedAt,
                     title: appointment.subject,
                     color: "#FE6B64",
-                    resourceId: 2
+                    resourceId: 2,
+                    extendedProps: {
+                        master_id: 2,
+                        master_name: 'Марина'
+                    }
                 });
 
                 this.appointmentSlots.push(
@@ -144,6 +156,12 @@ define([
             }
 
             return appointments;
+        },
+
+        _populatePopup: function (appointment) {
+            $('input[name="appointment[client-id]"]').val(appointment.id);
+            $('input[name="service[name]"]').val(appointment.title);
+            $('input[name="employer[name]"]').val(appointment.extendedProps.master_name);
         },
 
         createEvents: function () {

@@ -4,6 +4,7 @@
             <form id="appointment-validate-detail" class="form" novalidate method="post"
                   action=""
                   data-mage-init='{"validation": {"errorClass": "mage-error"}}'>
+                <input name="appointment[client-id]" type="hidden" id="client-id" value="" />
                 <fieldset class="fieldset">
                     <legend class="legend">
                         <span data-bind="i18n: 'Детали записи'"></span>
@@ -72,7 +73,20 @@
                             </div>
                         </div>
                     </div>
-                </div>
+
+                    <div class="fieldset" style="margin: 0 0 25px;">
+                        <h4 data-bind="i18n: 'Мастер'"></h4>
+                        <div class="field">
+                            <label class="label" for="employer-name">
+                                <span><?= $block->escapeHtml(__('Введите имя мастер')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input name="employer[name]" type="text" id="employer-name"
+                                       placeholder="<?= $block->escapeHtml(__('Введите имя мастера')) ?>" />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
             </form>
         </div>
     </div>
