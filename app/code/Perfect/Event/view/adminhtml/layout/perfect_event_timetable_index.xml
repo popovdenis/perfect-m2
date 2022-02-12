@@ -15,4 +15,10 @@
                    template="Perfect_Event::timetable.phtml" />
         </container>
     </referenceContainer>
+    <referenceBlock name="before.body.end">
+        <container htmlId="perfect.appointment.popup" htmlTag="div" htmlClass="appointment-popup hidden">
+            <block class="Perfect\Event\Block\Adminhtml\Appointment" name="appointment.popup"
+                   template="Perfect_Event::appointment/popup.phtml"/>
+        </container>
+    </referenceBlock>
 </page>

@@ -84,8 +84,7 @@ class Timetable extends \Magento\Backend\Block\Template
             'searchConfig' => [
                 'url' => $this->getUrl('perfect_event/timetable/search', ['_secure' => true])
             ],
-            'popupModal' => '#modal-content' . $schedulerId,
-            'popupModalNew' => '#modal-content-new',
+            'appointmentModal' => '.appointment-modal',
         ];
 
         return $this->jsonEncoder->serialize($config);

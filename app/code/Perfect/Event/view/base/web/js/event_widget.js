@@ -5,6 +5,7 @@ define([
     'Perfect_Event/js/lib/md5/core',
     'Perfect_Event/js/lib/md5/md5',
     'eventCalendarLib',
+    'jquery/ui',
     'domReady!'
 ], function ($, modal, timetableAppointment, CryptoJS) {
     'use strict';
@@ -13,8 +14,7 @@ define([
         options: {
             scheduler: null,
             appointments: [],
-            popupModal: null,
-            popupModalNew: null,
+            appointmentModal: null,
             searchConfig: {}
         },
         lastAppointmentId: null,
@@ -27,7 +27,6 @@ define([
          */
         _create: function() {
             this._initScheduler();
-            this._initModal();
         },
 
         /**
@@ -72,13 +71,13 @@ define([
                             if (!self.appointmentSlots.includes(hash)) {
                                 console.log(dateClickInfo);
                                 self.activePopup = true;
-                                $(self.options.popupModalNew).modal("openModal");
+                                self._openPopup();
                             }
                         }
                     },
                     eventClick: function (eventClickInfo) {
                         self.activePopup = true;
-                        $(self.options.popupModal).modal("openModal");
+                        self._openPopup();
                     },
                     eventDrop: function (eventClickInfo) {
                         var hash = CryptoJS.MD5((new Date(eventClickInfo.oldEvent.start)).toLocaleString()).toString();
@@ -183,42 +182,61 @@ define([
             return (norm < 10 ? '0' : '') + norm;
         },
 
-        _initModal: function () {
+        _openPopup: function () {
             var self = this;
 
             modal({
                 type: 'popup',
                 responsive: true,
                 innerScroll: true,
-                title: 'Edit Appointment',
+                title: '',
+                clickableOverlay: true,
                 buttons: [{
-                    text: $.mage.__('Close'),
-                    class: 'modal-close',
-                    click: function () {
-                        self.activePopup = false;
+                    text: $.mage.__('Save'),
+                    class: 'action primary',
+                    click: function (event) {
                         this.closeModal();
+                        self._createAppointment(event);
                     }
                 }]
-            }, $(this.options.popupModal));
+            }, $(this.options.appointmentModal));
 
-            modal({
-                type: 'popup',
-                responsive: true,
-                innerScroll: true,
-                title: 'Add New Appointment',
-                buttons: [{
-                    text: $.mage.__('Close'),
-                    class: 'modal-close',
-                    click: function () {
-                        self.activePopup = false;
-                        this.closeModal();
-                    }
-                }]
-            }, $(this.options.popupModalNew));
+            $(this.options.appointmentModal).on('modalclosed', function() {
+                self.activePopup = false;
+            });
+
+            let subscribeForm = $('.form.subscribe');
+
+            $(subscribeForm).on('submit', function(e) {
+                e.preventDefault();
+                let email = $('#newsletter').val();
+
+                if ($(subscribeForm).valid()) {
+                    $.ajax({
+                        url: 'newsletter/subscriber/new/',
+                        type: 'POST',
+                        data: {
+                            'email' : email
+                        },
+                        dataType: 'json',
+                        showLoader: true,
+                        complete: function(data, status) {
+                            let response = JSON.parse(data.responseText);
+                            $('.newsletter-modal').text(response.message).modal('openModal');
+                        }
+                    });
+                }
+            });
+
+            $(this.options.appointmentModal).modal("openModal");
         },
 
         _saveAppointment: function (appointment) {
             timetableAppointment.sendAppointment(appointment);
+        },
+
+        _createAppointment: function (event) {
+            console.log(event);
         }
     });
 
