@@ -11,7 +11,6 @@
                       action=""
                       data-mage-init='{"validation": {"errorClass": "mage-error"}}'>
                     <input name="id" type="hidden" id="appointment-id" value="" />
-                    <input name="client_id" type="hidden" id="client-id" value="" />
 
                     <fieldset class="admin__fieldset" style="padding: 0;">
                         <div class="fieldset-wrapper _show">
@@ -32,6 +31,7 @@
                                             <div class="admin__field-control">
                                                 <input class="admin__control-text" type="text" name="client_name"
                                                        id="client-name" maxlength="255" data-validate="{required:true}">
+                                                <input name="client_id" type="hidden" id="client-id" value="" />
                                             </div>
                                         </div>
                                         <div class="admin__field _required" data-index="client-phone" style="margin-bottom: 0;">
@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <?php if ($customers = $block->getEmployees()): ?>
                         <div class="fieldset-wrapper _show">
                             <div data-level="0" data-index="employee">
                                 <div class="fieldset-wrapper-title" style="border-bottom: none;">
@@ -128,20 +128,26 @@
                                     <fieldset class="admin__fieldset">
                                         <div class="admin__field" data-index="appointment-employee-name" style="margin-bottom: 0;">
                                             <div class="admin__field-label">
-                                                <label for="appointment-employee-name">
-                                                    <span data-bind="i18n: 'Введите имя мастера'"></span>
+                                                <label for="employee_id">
+                                                    <span data-bind="i18n: 'Мастер'"></span>
                                                 </label>
                                             </div>
                                             <div class="admin__field-control">
-                                                <input class="admin__control-text" type="text" maxlength="255" name="employee_name"
-                                                       id="appointment-employee-name" />
-                                                <input type="hidden" name="employee_id" id="appointment-employee-id" />
+                                                <select class="admin__control-select" name="employee_id" id="employee_id">
+                                                    <option value=""><?= __('Выберите мастера') ?></option>
+                                                    <?php foreach ($customers as $customer): ?>
+                                                        <option data-title="<?= $customer->getFirstname() ?>" value="<?= $customer->getId() ?>">
+                                                            <?= sprintf('%s %s', $customer->getFirstname(), $customer->getLastname()) ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
                                             </div>
                                         </div>
                                     </fieldset>
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </fieldset>
                 </form>
             </div>

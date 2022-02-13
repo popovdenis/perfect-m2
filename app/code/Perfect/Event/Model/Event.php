@@ -135,16 +135,32 @@ class Event extends AbstractModel implements EventInterface
     /**
      * @inheritdoc
      */
-    public function setWorkerId($workerId): EventInterface
+    public function setEmployeeId($employeeId): EventInterface
     {
-        return $this->setData(self::WORKER_ID, $workerId);
+        return $this->setData(self::EMPLOYEE_ID, $employeeId);
     }
 
     /**
      * @inheritdoc
      */
-    public function getWorkerId()
+    public function getEmployeeId()
     {
-        return $this->getData(self::WORKER_ID);
+        return $this->getData(self::EMPLOYEE_ID);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setClientId($clientId): EventInterface
+    {
+        return $this->setData(self::CLIENT_ID, $clientId);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getClientId()
+    {
+        return $this->getData(self::CLIENT_ID);
     }
 }

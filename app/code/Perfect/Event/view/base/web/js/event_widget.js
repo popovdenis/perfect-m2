@@ -175,8 +175,8 @@ define([
                     color: "#FE6B64",
                     resourceId: 2,
                     extendedProps: {
-                        master_id: 2,
-                        master_name: 'Марина'
+                        employee_id: appointment.employee_id,
+                        client: appointment.client
                     }
                 });
 
@@ -262,15 +262,19 @@ define([
         },
 
         populatePopup: function (appointment) {
-            // client
+            // appointment
             $('input[name="id"]').val(appointment.id);
+            // client
+            $('input[name="client_id"]').val(appointment.extendedProps.client.client_id);
+            $('input[name="client_name"]').val(appointment.extendedProps.client.client_name);
+            $('input[name="client_phone"]').val(appointment.extendedProps.client.client_phone);
+            $('input[name="client_email"]').val(appointment.extendedProps.client.client_email);
 
             // services
             $('input[name="service_name"]').val(appointment.title);
 
-            // employee
-            $('input[name="employee_id"]').val(appointment.extendedProps.master_id);
-            $('input[name="employee_name"]').val(appointment.extendedProps.master_name);
+            // master
+            $('#employee_id option[value="' + appointment.extendedProps.employee_id + '"]').prop('selected', true);
         },
 
         openPopup: function () {
@@ -304,11 +308,10 @@ define([
                     }
                 },
                 select: function (event, ui) {
-                    var item = ui.item;
-
-                    $('input[name="client_name"]').val(item.firstname);
-                    $('input[name="client_phone"]').val(item.phone);
-                    $('input[name="client_email"]').val(item.email);
+                    $('input[name="client_id"]').val(ui.item.client_id);
+                    $('input[name="client_name"]').val(ui.item.client_name);
+                    $('input[name="client_phone"]').val(ui.item.client_phone);
+                    $('input[name="client_email"]').val(ui.item.client_email);
                 }
             });
         }

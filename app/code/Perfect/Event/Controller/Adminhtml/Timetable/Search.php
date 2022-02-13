@@ -66,10 +66,10 @@ class Search extends \Magento\Backend\App\Action
         if ($customers = $this->getCustomersBySearch($search)) {
             foreach ($customers as $customer) {
                 $results[] = [
-                    'id' => $customer->getId(),
-                    'firstname' => sprintf('%s %s', $customer->getFirstname(), $customer->getLastname()),
-                    'phone' => $customer->getPhone(),
-                    'email' => $customer->getEmail(),
+                    'client_id' => $customer->getId(),
+                    'client_name' => sprintf('%s %s', $customer->getFirstname(), $customer->getLastname()),
+                    'client_phone' => $customer->getPhone(),
+                    'client_email' => $customer->getEmail(),
                     'label' => sprintf('%s %s', $customer->getFirstname(), $customer->getLastname()),
                     'value' => sprintf('%s %s', $customer->getFirstname(), $customer->getLastname())
                 ];

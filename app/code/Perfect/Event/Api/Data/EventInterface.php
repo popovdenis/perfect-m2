@@ -18,7 +18,8 @@ interface EventInterface
     const STARTED_AT = 'started_at';
     const FINISHED_AT = 'finished_at';
     const ENABLED = 'enabled';
-    const WORKER_ID = 'worker_id';
+    const EMPLOYEE_ID = 'employee_id';
+    const CLIENT_ID = 'client_id';
 
     /**
      * @inheritdoc
@@ -83,10 +84,20 @@ interface EventInterface
     /**
      * @inheritdoc
      */
-    public function setWorkerId($workerId): EventInterface;
+    public function setEmployeeId($employeeId): EventInterface;
 
     /**
      * @inheritdoc
      */
-    public function getWorkerId();
+    public function getEmployeeId();
+
+    /**
+     * @inheritdoc
+     */
+    public function setClientId($clientId): EventInterface;
+
+    /**
+     * @inheritdoc
+     */
+    public function getClientId();
 }

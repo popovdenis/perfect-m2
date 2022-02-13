@@ -105,7 +105,7 @@
                 <label translate="true">Finished At</label>
             </settings>
         </column>
-        <column name="worker_id" component="Magento_Ui/js/grid/columns/select" sortOrder="60">
+        <column name="employee_id" component="Magento_Ui/js/grid/columns/select" sortOrder="60">
             <settings>
                 <options class="Perfect\Event\Model\Config\Source\Options\Worker"/>
                 <filter>select</filter>

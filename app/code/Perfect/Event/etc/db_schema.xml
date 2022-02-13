@@ -15,15 +15,23 @@
                 comment="Finish At"/>
         <column xsi:type="smallint" name="enabled" padding="6" unsigned="true" nullable="false" identity="false"
                 default="0" comment="Enabled Status"/>
-        <column xsi:type="int" name="worker_id" padding="10" unsigned="true" nullable="false" identity="false"
-                comment="Worker Id"/>
+        <column xsi:type="int" name="employee_id" onCreate="migrateDataFrom(worker_id)" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Employee Id"/>
+        <column xsi:type="int" name="client_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Client Id"/>
 
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
-        <constraint xsi:type="foreign" referenceId="PERFECT_EVENT_WORKER_ID_CUSTOMER_ENTITY_ID"
+        <constraint xsi:type="foreign" referenceId="PERFECT_EVENT_EMPLOYEE_ID_CUSTOMER_ENTITY_ID"
                     table="perfect_event"
-                    column="worker_id"
+                    column="employee_id"
+                    referenceTable="customer_entity"
+                    referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="PERFECT_EVENT_CLIENT_ID_CUSTOMER_ENTITY_ID"
+                    table="perfect_event"
+                    column="client_id"
                     referenceTable="customer_entity"
                     referenceColumn="entity_id"
                     onDelete="CASCADE"/>
@@ -36,8 +44,11 @@
         <index referenceId="PERFECT_EVENT_ENABLED" indexType="btree">
             <column name="enabled"/>
         </index>
-        <index referenceId="PERFECT_EVENT_WORKER_ID" indexType="btree">
-            <column name="worker_id"/>
+        <index referenceId="PERFECT_EVENT_EMPLOYEE_ID" indexType="btree">
+            <column name="employee_id"/>
+        </index>
+        <index referenceId="PERFECT_EVENT_CLIENT_ID" indexType="btree">
+            <column name="client_id"/>
         </index>
     </table>
 

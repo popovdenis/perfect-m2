@@ -36,6 +36,10 @@ class Timetable extends \Magento\Backend\Block\Template
      * @var \Perfect\Event\Helper\Customer
      */
     private $customerHelper;
+    /**
+     * @var \Magento\Customer\Api\CustomerRepositoryInterface
+     */
+    private $customerRepository;
 
     /**
      * Timetable constructor.
@@ -46,9 +50,7 @@ class Timetable extends \Magento\Backend\Block\Template
      * @param \Magento\Framework\Api\SearchCriteriaBuilder                     $searchCriteriaBuilder
      * @param \Perfect\Event\Api\EventRepositoryInterface                      $eventRepository
      * @param \Perfect\Event\Helper\Customer                                   $customerHelper
-     * @param array                                                            $data
-     * @param \Magento\Framework\Json\Helper\Data|null                         $jsonHelper
-     * @param \Magento\Directory\Helper\Data|null                              $directoryHelper
+     * @param \Magento\Customer\Api\CustomerRepositoryInterface                $customerRepository
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
@@ -57,6 +59,7 @@ class Timetable extends \Magento\Backend\Block\Template
         \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
         \Perfect\Event\Api\EventRepositoryInterface $eventRepository,
         \Perfect\Event\Helper\Customer $customerHelper,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
         array $data = [],
         ?JsonHelper $jsonHelper = null,
         ?DirectoryHelper $directoryHelper = null
@@ -68,6 +71,7 @@ class Timetable extends \Magento\Backend\Block\Template
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->eventRepository = $eventRepository;
         $this->customerHelper = $customerHelper;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -97,11 +101,13 @@ class Timetable extends \Magento\Backend\Block\Template
      * @param \Magento\Customer\Api\Data\CustomerInterface $customer
      *
      * @return \Magento\Framework\Api\ExtensibleDataInterface[]
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getAppointments($customer)
     {
         $searchBuilder = $this->searchCriteriaBuilder;
-        $searchBuilder->addFilter(EventInterface::WORKER_ID, $customer->getId(), 'eq');
+        $searchBuilder->addFilter(EventInterface::EMPLOYEE_ID, $customer->getId(), 'eq');
 
         $entities = $this->eventRepository->getEntities($searchBuilder->create())->getItems();
         $appointments = [];
@@ -110,6 +116,14 @@ class Timetable extends \Magento\Backend\Block\Template
             foreach ($entities as $entity) {
                 $appointments[$entity->getId()] = $entity->getData();
                 $appointments[$entity->getId()]['master'] = $customer->getFirstname();
+
+                $client = $this->getClientInfo($entity->getClientId());
+                $appointments[$entity->getId()]['client'] = [
+                    'client_id' => $client->getId(),
+                    'client_name' => $client->getFirstname() . ' ' . $client->getLastname(),
+                    'client_phone' => $client->getCustomAttribute('phone')->getValue(),
+                    'client_email' => $client->getEmail(),
+                ];
             }
         }
 
@@ -117,9 +131,21 @@ class Timetable extends \Magento\Backend\Block\Template
     }
 
     /**
-     * Get customer collection
+     * @param $clientId
+     *
+     * @return \Magento\Customer\Api\Data\CustomerInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getCustomers()
+    public function getClientInfo($clientId)
+    {
+        return $this->customerRepository->getById($clientId);
+    }
+
+    /**
+     * Get employees collection
+     */
+    public function getEmployees()
     {
         if ($customerGroupId = $this->getEmployeeGroup()) {
             $customerCollection = $this->collectionFactory->create();
