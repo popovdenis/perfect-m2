@@ -2,7 +2,7 @@
     "perfect_event": {
         "column": {
             "id": true,
-            "subject": true,
+            "service_name": true,
             "description": true,
             "started_at": true,
             "finished_at": true,
@@ -10,7 +10,7 @@
             "worker_id": true
         },
         "index": {
-            "PERFECT_EVENT_SUBJECT": true,
+            "PERFECT_EVENT_SERVICE_NAME": true,
             "PERFECT_EVENT_DESCRIPTION": true,
             "PERFECT_EVENT_ENABLED": true,
             "PERFECT_EVENT_WORKER_ID": true

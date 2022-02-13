@@ -79,6 +79,7 @@ class Timetable extends \Magento\Backend\Block\Template
     public function getConfig($schedulerId, $customer)
     {
         $config = [
+            'schedulerId' => $schedulerId,
             'scheduler' => 'scheduler' . $schedulerId,
             'appointments' => $this->getAppointments($customer),
             'searchConfig' => [

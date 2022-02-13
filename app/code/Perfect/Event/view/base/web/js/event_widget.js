@@ -1,34 +1,61 @@
 define([
     'jquery',
+    'Magento_Ui/js/modal/modal',
     'timetableAppointmentService',
-    'Perfect_Event/js/model/appointment-popup',
     'Perfect_Event/js/model/md5',
     'eventCalendarLib',
     'jquery/ui',
     'domReady!'
-], function ($, timetableAppointment, popup, CryptoJS) {
+], function ($, modal, timetableAppointment, CryptoJS) {
     'use strict';
 
     $.widget('perfect.event',{
         options: {
+            schedulerId: null,
             scheduler: null,
             appointments: [],
             appointmentModal: null,
+            appointmentForm: '.form.appointment',
             searchConfig: {}
         },
         lastAppointmentId: null,
         eventCalendarObject: null,
+        eventCalendarObjects: [],
         appointmentSlots: [],
-        activePopup: false,
-
-        appointmentPopup: null,
+        isPopupActive: false,
+        popupObject: null,
 
         /**
          * Initialize widget
          */
         _create: function() {
+            this.initPopup();
             this._initScheduler();
-            this.appointmentPopup = popup(this.options);
+            this.initEvents();
+            this._initAutocomplete();
+        },
+
+        initPopup: function () {
+            var self = this;
+
+            self.popupObject = modal({
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: '',
+                clickableOverlay: true,
+                buttons: [{
+                    text: $.mage.__('Save'),
+                    class: 'action primary',
+                    click: function (event) {
+                        $(self.options.appointmentForm).trigger('submit');
+                    }
+                }]
+            }, $(this.options.appointmentModal));
+
+            $(this.options.appointmentModal).on('modalclosed', function() {
+                self.isPopupActive = false;
+            });
         },
 
         /**
@@ -68,26 +95,26 @@ define([
                         resourceTimeGridWeek: {pointer: true}
                     },
                     dateClick: function (dateClickInfo) {
-                        if (!self.activePopup) {
+                        if (!self.isPopupActive) {
                             var hash = CryptoJS().hash((new Date(dateClickInfo.date)).toLocaleString());
                             if (!self.appointmentSlots.includes(hash)) {
                                 console.log(dateClickInfo);
-                                self.activePopup = true;
-                                self.appointmentPopup.populatePopup({
+                                self.isPopupActive = true;
+                                self.populatePopup({
                                     id: '',
                                     title: '',
                                     extendedProps: {
                                         master_name: ''
                                     }
                                 });
-                                self.appointmentPopup.openPopup();
+                                self.openPopup();
                             }
                         }
                     },
                     eventClick: function (eventClickInfo) {
-                        self.activePopup = true;
-                        self.appointmentPopup.populatePopup(eventClickInfo.event);
-                        self.appointmentPopup.openPopup();
+                        self.isPopupActive = true;
+                        self.populatePopup(eventClickInfo.event);
+                        self.openPopup();
                     },
                     eventDrop: function (eventClickInfo) {
                         var hash = CryptoJS().hash((new Date(eventClickInfo.oldEvent.start)).toLocaleString());
@@ -115,6 +142,7 @@ define([
 
             return new Promise(function() {
                 self.eventCalendarObject = new EventCalendar(scheduler, options);
+                self.eventCalendarObjects.push(self.eventCalendarObject);
             });
         },
 
@@ -143,7 +171,7 @@ define([
                     id: appointment.id,
                     start: startedAt,
                     end: finishedAt,
-                    title: appointment.subject,
+                    title: appointment.service_name,
                     color: "#FE6B64",
                     resourceId: 2,
                     extendedProps: {
@@ -201,11 +229,88 @@ define([
         },
 
         _saveAppointment: function (appointment) {
-            timetableAppointment.sendAppointment(appointment);
+            var self = this;
+            timetableAppointment.sendAppointment(appointment)
+                .then(function (appointmentData) {
+                    console.log(appointmentData);
+                    for (const calendar of self.eventCalendarObjects) {
+                         var event = calendar.getEventById(appointmentData.id);
+                         if (typeof event !== "undefined" && Number.isInteger(parseInt(event.id))) {
+                             event.title = appointmentData.service_name;
+                             calendar.updateEvent(event);
+                             break;
+                         }
+                    }
+                });
         },
 
-        _createAppointment: function (event) {
-            console.log(event);
+        initEvents: function () {
+            let self = this,
+                subscribeForm = $('.form.appointment');
+
+            $(subscribeForm).off('submit').on('submit', function(e) {
+                e.preventDefault();
+                if ($(subscribeForm).valid()) {
+                    var formData = {};
+                    for (const field of $(subscribeForm).serializeArray()) {
+                        formData[field.name] = field.value;
+                    }
+                    self._saveAppointment(formData);
+                    self.popupObject.closeModal();
+                }
+            });
+        },
+
+        populatePopup: function (appointment) {
+            // client
+            $('input[name="id"]').val(appointment.id);
+
+            // services
+            $('input[name="service_name"]').val(appointment.title);
+
+            // employee
+            $('input[name="employee_id"]').val(appointment.extendedProps.master_id);
+            $('input[name="employee_name"]').val(appointment.extendedProps.master_name);
+        },
+
+        openPopup: function () {
+            $(this.options.appointmentModal).modal("openModal");
+        },
+
+        _initAutocomplete: function () {
+            var self = this;
+            $('input[name="client_name"]').autocomplete({
+                minLength: 2,
+                source: function(request, response) {
+                    $.ajax( {
+                        url: self.options.searchConfig.url,
+                        dataType: 'json',
+                        data: {search: request.term},
+                        success: function(results) {
+                            if (!results.length) {
+                                $("#no-results").text("Клиенты не найдены");
+                            } else {
+                                $("#no-results").empty();
+                            }
+
+                            response(results);
+                        }
+                    });
+                },
+                messages: {
+                    noResults: 'Клиенты не найдены',
+                    results: function (amount) {
+                        return '';
+                    }
+                },
+                select: function (event, ui) {
+                    var item = ui.item;
+
+                    $('input[name="client_name"]').val(item.firstname);
+                    $('input[name="client_phone"]').val(item.phone);
+                    $('input[name="client_email"]').val(item.email);
+                }
+            });
         }
     });
 

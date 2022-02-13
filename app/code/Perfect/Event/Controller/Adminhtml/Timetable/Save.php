@@ -86,10 +86,10 @@ class Save extends \Magento\Backend\App\Action
 
         if ($postValues = $this->getRequest()->getPostValue()) {
             $appointment = $postValues['appointment'];
-            $eventId = (int) $appointment['id'];
+            $appointmentId = (int) $appointment['id'];
 
             try {
-                $event = $this->initEvent($appointment, $eventId);
+                $event = $this->initEvent($appointment, $appointmentId);
 
                 $this->eventRepository->save($event);
 

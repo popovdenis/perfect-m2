@@ -203,14 +203,6 @@ define([
                         }
                     });
                 },
-                // source: self.options.searchConfig.url,
-                // select: function (event, ui) {
-                //     $('#customer_id').val(ui.item.customerId);
-                //     $('#customer_change').show();
-                //     $('#customer_comments').hide();
-                //     $('#customer').val(ui.item.label);
-                //     $('#customer').prop('disabled', true);
-                // },
                 messages: {
                     noResults: 'Клиенты не найдены',
                     results: function (amount) {
@@ -223,13 +215,6 @@ define([
                     $(self.options.clientNameElement).val(item.firstname);
                     $(self.options.clientPhoneElement).val(item.phone);
                     $(self.options.clientEmailElement).val(item.email);
-
-                    // // reset the term after the select event
-                    // // this allows custom select handling to work properly
-                    // this.term = this._value();
-                    //
-                    // this.close( event );
-                    // this.selectedItem = item;
                 }
             });
         },

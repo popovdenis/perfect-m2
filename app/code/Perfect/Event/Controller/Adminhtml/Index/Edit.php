@@ -59,7 +59,7 @@ class Edit extends Action
             try {
                 $entity = $this->getEntityById($entityId);
 
-                $resultPage->getConfig()->getTitle()->prepend(__('Edit %1', $entity->getSubject()));
+                $resultPage->getConfig()->getTitle()->prepend(__('Edit %1', $entity->getServiceName()));
             } catch (NoSuchEntityException | LocalizedException $e) {
                 $this->getMessageManager()->addErrorMessage($e->getMessage());
 

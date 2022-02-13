@@ -13,7 +13,7 @@ interface EventInterface
      * Constants defined for keys of array
      */
     const ID = 'id';
-    const SUBJECT = 'subject';
+    const SERVICE_NAME = 'service_name';
     const DESCRIPTION = 'description';
     const STARTED_AT = 'started_at';
     const FINISHED_AT = 'finished_at';
@@ -33,12 +33,12 @@ interface EventInterface
     /**
      * @inheritdoc
      */
-    public function setSubject($subject): EventInterface;
+    public function setServiceName($serviceName): EventInterface;
 
     /**
      * @inheritdoc
      */
-    public function getSubject();
+    public function getServiceName();
 
     /**
      * @inheritdoc

@@ -55,17 +55,17 @@ class Event extends AbstractModel implements EventInterface
     /**
      * @inheritdoc
      */
-    public function setSubject($subject): EventInterface
+    public function setServiceName($serviceName): EventInterface
     {
-        return $this->setData(self::SUBJECT, $subject);
+        return $this->setData(self::SERVICE_NAME, $serviceName);
     }
 
     /**
      * @inheritdoc
      */
-    public function getSubject()
+    public function getServiceName()
     {
-        return $this->getData(self::SUBJECT);
+        return $this->getData(self::SERVICE_NAME);
     }
 
     /**

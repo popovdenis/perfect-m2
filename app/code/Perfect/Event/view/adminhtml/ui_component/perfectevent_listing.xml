@@ -86,9 +86,9 @@
                 <item name="visible" xsi:type="boolean">false</item>
             </settings>
         </column>
-        <column name="subject" sortOrder="20">
+        <column name="service_name" sortOrder="20">
             <settings>
-                <label translate="true">Subject</label>
+                <label translate="true">Service Name</label>
             </settings>
         </column>
         <column name="started_at" component="Magento_Ui/js/grid/columns/date" sortOrder="40"
