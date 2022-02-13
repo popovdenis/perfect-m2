@@ -104,7 +104,13 @@ define([
                                     id: '',
                                     title: '',
                                     extendedProps: {
-                                        master_name: ''
+                                        employee_id: null,
+                                        client: {
+                                            client_id: null,
+                                            client_name: null,
+                                            client_phone: null,
+                                            client_email: null
+                                        }
                                     }
                                 });
                                 self.openPopup();
