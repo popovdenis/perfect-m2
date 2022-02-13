@@ -1,13 +1,12 @@
 define([
     'jquery',
-    'Magento_Ui/js/modal/modal',
     'timetableAppointmentService',
-    'Perfect_Event/js/lib/md5/core',
-    'Perfect_Event/js/lib/md5/md5',
+    'Perfect_Event/js/model/appointment-popup',
+    'Perfect_Event/js/model/md5',
     'eventCalendarLib',
     'jquery/ui',
     'domReady!'
-], function ($, modal, timetableAppointment, CryptoJS) {
+], function ($, timetableAppointment, popup, CryptoJS) {
     'use strict';
 
     $.widget('perfect.event',{
@@ -22,11 +21,14 @@ define([
         appointmentSlots: [],
         activePopup: false,
 
+        appointmentPopup: null,
+
         /**
          * Initialize widget
          */
         _create: function() {
             this._initScheduler();
+            this.appointmentPopup = popup(this.options);
         },
 
         /**
@@ -67,32 +69,32 @@ define([
                     },
                     dateClick: function (dateClickInfo) {
                         if (!self.activePopup) {
-                            var hash = CryptoJS.MD5((new Date(dateClickInfo.date)).toLocaleString()).toString();
+                            var hash = CryptoJS().hash((new Date(dateClickInfo.date)).toLocaleString());
                             if (!self.appointmentSlots.includes(hash)) {
                                 console.log(dateClickInfo);
                                 self.activePopup = true;
-                                self._populatePopup({
+                                self.appointmentPopup.populatePopup({
                                     id: '',
                                     title: '',
                                     extendedProps: {
                                         master_name: ''
                                     }
                                 });
-                                self._openPopup();
+                                self.appointmentPopup.openPopup();
                             }
                         }
                     },
                     eventClick: function (eventClickInfo) {
                         self.activePopup = true;
-                        self._populatePopup(eventClickInfo.event);
-                        self._openPopup();
+                        self.appointmentPopup.populatePopup(eventClickInfo.event);
+                        self.appointmentPopup.openPopup();
                     },
                     eventDrop: function (eventClickInfo) {
-                        var hash = CryptoJS.MD5((new Date(eventClickInfo.oldEvent.start)).toLocaleString()).toString();
+                        var hash = CryptoJS().hash((new Date(eventClickInfo.oldEvent.start)).toLocaleString());
                         if (self.appointmentSlots.includes(hash)) {
                             self.appointmentSlots.splice(self.appointmentSlots.indexOf(hash), 1);
 
-                            hash = CryptoJS.MD5((new Date(eventClickInfo.event.start)).toLocaleString()).toString();
+                            hash = CryptoJS().hash((new Date(eventClickInfo.event.start)).toLocaleString());
                             self.appointmentSlots.push(hash);
 
                             self._saveAppointment(eventClickInfo.event);
@@ -151,23 +153,11 @@ define([
                 });
 
                 this.appointmentSlots.push(
-                    CryptoJS.MD5(startedAt.toLocaleString()).toString()
+                    CryptoJS().hash(startedAt.toLocaleString())
                 );
             }
 
             return appointments;
-        },
-
-        _populatePopup: function (appointment) {
-            // client
-            $('input[name="appointment[client-id]"]').val(appointment.id);
-
-            // services
-            $('input[name="appointment[service-name]"]').val(appointment.title);
-
-            // employee
-            $('input[name="appointment[employee-id]"]').val(appointment.extendedProps.master_id);
-            $('input[name="appointment[employee-name]"]').val(appointment.extendedProps.master_name);
         },
 
         createEvents: function () {
@@ -176,7 +166,7 @@ define([
                 let day = new Date();
                 let diff = i - day.getDay();
                 day.setDate(day.getDate() + diff);
-                days[i] = day.getFullYear() + "-" + this._pad(day.getMonth()+1) + "-" + this._pad(day.getDate());
+                days[i] = day.getFullYear() + "-" + day.getMonth()+1 + "-" + day.getDate();
             }
 
             return [
@@ -208,60 +198,6 @@ define([
                 title: "Стрижка",
                 color: "#779ECB"
             });
-        },
-
-        _pad: function (num) {
-            let norm = Math.floor(Math.abs(num));
-            return (norm < 10 ? '0' : '') + norm;
-        },
-
-        _openPopup: function () {
-            var self = this;
-
-            modal({
-                type: 'popup',
-                responsive: true,
-                innerScroll: true,
-                title: '',
-                clickableOverlay: true,
-                buttons: [{
-                    text: $.mage.__('Save'),
-                    class: 'action primary',
-                    click: function (event) {
-                        this.closeModal();
-                        self._createAppointment(event);
-                    }
-                }]
-            }, $(this.options.appointmentModal));
-
-            $(this.options.appointmentModal).on('modalclosed', function() {
-                self.activePopup = false;
-            });
-
-            let subscribeForm = $('.form.subscribe');
-
-            $(subscribeForm).on('submit', function(e) {
-                e.preventDefault();
-                let email = $('#newsletter').val();
-
-                if ($(subscribeForm).valid()) {
-                    $.ajax({
-                        url: 'newsletter/subscriber/new/',
-                        type: 'POST',
-                        data: {
-                            'email' : email
-                        },
-                        dataType: 'json',
-                        showLoader: true,
-                        complete: function(data, status) {
-                            let response = JSON.parse(data.responseText);
-                            $('.newsletter-modal').text(response.message).modal('openModal');
-                        }
-                    });
-                }
-            });
-
-            $(this.options.appointmentModal).modal("openModal");
         },
 
         _saveAppointment: function (appointment) {
