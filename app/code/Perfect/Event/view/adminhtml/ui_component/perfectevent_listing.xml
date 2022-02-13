@@ -113,6 +113,14 @@
                 <label translate="true">Worker</label>
             </settings>
         </column>
+        <column name="client_id" component="Magento_Ui/js/grid/columns/select" sortOrder="70">
+            <settings>
+                <options class="Perfect\Event\Model\Config\Source\Options\Client"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Client</label>
+            </settings>
+        </column>
         <actionsColumn name="actions" sortOrder="100" class="Perfect\Event\Ui\Component\Listing\Column\Action">
             <argument name="data" xsi:type="array">
                 <item name="draggable" xsi:type="boolean">true</item>
