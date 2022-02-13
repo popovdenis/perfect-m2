@@ -1,93 +1,149 @@
 <div class="appointment-modal">
-    <div class="block appointment">
-        <div class="content">
-            <form id="appointment-validate-detail" class="form" novalidate method="post"
-                  action=""
-                  data-mage-init='{"validation": {"errorClass": "mage-error"}}'>
-                <input name="appointment[client-id]" type="hidden" id="client-id" value="" />
-                <fieldset class="fieldset">
-                    <legend class="legend">
-                        <span data-bind="i18n: 'Детали записи'"></span>
-                    </legend>
-                    <div class="fieldset" style="margin: 0 0 25px;">
-                        <h4 data-bind="i18n: 'Детали клиента'"></h4>
-                        <div class="field">
-                            <label class="label" for="client-name">
-                                <span><?= $block->escapeHtml(__('Имя клиента')) ?></span>
-                            </label>
-                            <div class="control">
-                                <input name="appointment[client-name]" type="text" id="client-name"
-                                       placeholder="<?= $block->escapeHtml(__('Введите имя клиента')) ?>"
-                                       data-validate="{required:true}"/>
+    <div class="entry-edit form-inline">
+        <div class="fieldset-wrapper">
+            <div class="fieldset-wrapper-title" style="border-bottom: none;">
+                <strong class="title">
+                    <span data-bind="i18n: 'Детали записи'"></span>
+                </strong>
+            </div>
+            <div class="admin__fieldset-wrapper-content _show">
+                <form id="appointment-validate-detail" class="form" novalidate method="post"
+                      action=""
+                      data-mage-init='{"validation": {"errorClass": "mage-error"}}'>
+                    <input name="appointment[client-id]" type="hidden" id="client-id" value="" />
+                    <fieldset class="admin__fieldset" style="padding: 0;">
+                        <div class="fieldset-wrapper _show">
+                            <div data-level="0" data-index="client_info">
+                                <div class="fieldset-wrapper-title" style="border-bottom: none;">
+                                    <strong class="title">
+                                        <span data-bind="i18n: 'Детали клиента'"></span>
+                                    </strong>
+                                </div>
+                                <div class="admin__fieldset-wrapper-content _show">
+                                    <fieldset class="admin__fieldset">
+                                        <div class="admin__field _required" data-index="client-name" style="margin-bottom: 0;">
+                                            <div class="admin__field-label">
+                                                <label for="client-name">
+                                                    <span data-bind="i18n: 'Имя клиента'"></span>
+                                                </label>
+                                            </div>
+                                            <div class="admin__field-control">
+                                                <input class="admin__control-text" type="text" name="appointment[client-name]"
+                                                       id="client-name" maxlength="255" data-validate="{required:true}">
+                                            </div>
+                                        </div>
+                                        <div class="admin__field _required" data-index="client-phone" style="margin-bottom: 0;">
+                                            <div class="admin__field-label">
+                                                <label for="client-phone">
+                                                    <span data-bind="i18n: 'Телефон'"></span>
+                                                </label>
+                                            </div>
+                                            <div class="admin__field-control">
+                                                <input class="admin__control-text" type="text" name="appointment[client-phone]"
+                                                       id="client-phone" maxlength="255" data-validate="{required:true}">
+                                            </div>
+                                        </div>
+                                        <div class="admin__field _required" data-index="client-email" style="margin-bottom: 0;">
+                                            <div class="admin__field-label">
+                                                <label for="client-email">
+                                                    <span data-bind="i18n: 'Email'"></span>
+                                                </label>
+                                            </div>
+                                            <div class="admin__field-control">
+                                                <input class="admin__control-text" type="text" name="appointment[client-email]"
+                                                       id="client-email" maxlength="255" data-validate="{required:true}">
+                                            </div>
+                                        </div>
+                                        <div class="admin__field" data-index="client-recommendation_checkbox" style="margin-bottom: 0;">
+                                            <div class="admin__field-label">
+                                                <label for="client-recommendation_checkbox">
+                                                    <span data-bind="i18n: 'Записывает другого посетителя'"></span>
+                                                </label>
+                                            </div>
+                                            <div class="admin__field-control">
+                                                <div class="admin__actions-switch" data-role="switcher">
+                                                    <input type="checkbox" class="admin__actions-switch-checkbox"
+                                                           id="client-recommendation_checkbox"
+                                                           name="appointment[client-recommendation_checkbox]" value="0">
+                                                    <label class="admin__actions-switch-label" for="client-recommendation_checkbox">
+                                                        <span class="admin__actions-switch-text" data-text-on="Yes" data-text-off="No"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="admin__field hidden" data-index="client-recommendation-name" style="margin-bottom: 0;">
+                                            <div class="admin__field-label">
+                                                <label for="client-recommendation-name">
+                                                    <span data-bind="i18n: 'Имя посетителя'"></span>
+                                                </label>
+                                            </div>
+                                            <div class="admin__field-control">
+                                                <input class="admin__control-text" type="text"
+                                                       name="appointment[client-recommendation-name]"
+                                                       id="client-recommendation-name"
+                                                       maxlength="255">
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
                             </div>
                         </div>
-                        <div class="field">
-                            <label class="label" for="client-phone">
-                                <span><?= $block->escapeHtml(__('Телефон')) ?></span>
-                            </label>
-                            <div class="control">
-                                <input name="appointment[client-phone]" type="text" id="client-phone"
-                                       placeholder="<?= $block->escapeHtml(__('Введите телефон клиента')) ?>"
-                                       data-validate="{required:true}"/>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="client-email">
-                                <span><?= $block->escapeHtml(__('Email')) ?></span>
-                            </label>
-                            <div class="control">
-                                <input name="appointment[client-email]" type="email" id="client-email"
-                                       placeholder="<?= $block->escapeHtml(__('Введите email клиента')) ?>"
-                                       data-validate="{required:true, 'validate-email':true}"/>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control" style="padding-left: 40px;">
-                                <input name="appointment[client-recommendation_checkbox]"
-                                       type="checkbox" id="client-recommendation" />
-                            </div>
-                            <label class="label" for="client-recommendation">
-                                <span><?= $block->escapeHtml(__('Записывает другого посетителя')) ?></span>
-                            </label>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="client-recommendation-name">
-                                <span><?= $block->escapeHtml(__('Имя посетителя')) ?></span>
-                            </label>
-                            <div class="control">
-                                <input name="appointment[client-recommendation-name]"
-                                       type="input" id="client-recommendation-name" />
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="fieldset" style="margin: 0 0 25px;">
-                        <h4 data-bind="i18n: 'Услуги'"></h4>
-                        <div class="field">
-                            <label class="label" for="service-name">
-                                <span><?= $block->escapeHtml(__('Введите название услуги')) ?></span>
-                            </label>
-                            <div class="control">
-                                <input name="service[name]" type="text" id="service-name"
-                                       placeholder="<?= $block->escapeHtml(__('Введите название услуги')) ?>" />
+                        <div class="fieldset-wrapper _show">
+                            <div data-level="0" data-index="services">
+                                <div class="fieldset-wrapper-title" style="border-bottom: none;">
+                                    <strong class="title">
+                                        <span data-bind="i18n: 'Услуги'"></span>
+                                    </strong>
+                                </div>
+                                <div class="admin__fieldset-wrapper-content _show">
+                                    <fieldset class="admin__fieldset">
+                                        <div class="admin__field" data-index="appointment-service-name" style="margin-bottom: 0;">
+                                            <div class="admin__field-label">
+                                                <label for="appointment-service-name">
+                                                    <span data-bind="i18n: 'Введите название услуги'"></span>
+                                                </label>
+                                            </div>
+                                            <div class="admin__field-control">
+                                                <input class="admin__control-text" type="text" maxlength="255"
+                                                       name="appointment[service-name]"
+                                                       id="appointment-service-name" />
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="fieldset" style="margin: 0 0 25px;">
-                        <h4 data-bind="i18n: 'Мастер'"></h4>
-                        <div class="field">
-                            <label class="label" for="employer-name">
-                                <span><?= $block->escapeHtml(__('Введите имя мастер')) ?></span>
-                            </label>
-                            <div class="control">
-                                <input name="employer[name]" type="text" id="employer-name"
-                                       placeholder="<?= $block->escapeHtml(__('Введите имя мастера')) ?>" />
+                        <div class="fieldset-wrapper _show">
+                            <div data-level="0" data-index="employee">
+                                <div class="fieldset-wrapper-title" style="border-bottom: none;">
+                                    <strong class="title">
+                                        <span data-bind="i18n: 'Мастер'"></span>
+                                    </strong>
+                                </div>
+                                <div class="admin__fieldset-wrapper-content _show">
+                                    <fieldset class="admin__fieldset">
+                                        <div class="admin__field" data-index="appointment-employee-name" style="margin-bottom: 0;">
+                                            <div class="admin__field-label">
+                                                <label for="appointment-employee-name">
+                                                    <span data-bind="i18n: 'Введите имя мастера'"></span>
+                                                </label>
+                                            </div>
+                                            <div class="admin__field-control">
+                                                <input class="admin__control-text" type="text" maxlength="255"
+                                                       name="appointment[employee-name]"
+                                                       id="appointment-employee-name" />
+                                                <input type="hidden" name="appointment[employee-id]" id="appointment-employee-id" />
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </fieldset>
-            </form>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     </div>
 </div>

@@ -159,9 +159,15 @@ define([
         },
 
         _populatePopup: function (appointment) {
+            // client
             $('input[name="appointment[client-id]"]').val(appointment.id);
-            $('input[name="service[name]"]').val(appointment.title);
-            $('input[name="employer[name]"]').val(appointment.extendedProps.master_name);
+
+            // services
+            $('input[name="appointment[service-name]"]').val(appointment.title);
+
+            // employee
+            $('input[name="appointment[employee-id]"]').val(appointment.extendedProps.master_id);
+            $('input[name="appointment[employee-name]"]').val(appointment.extendedProps.master_name);
         },
 
         createEvents: function () {

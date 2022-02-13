@@ -481,7 +481,7 @@
 
 .ec-now-indicator {
     position: absolute;
-    z-index: 1005;
+    z-index: 700;
     width: 100%;
     border-top: #ea4335 solid 2px;
     pointer-events: none
