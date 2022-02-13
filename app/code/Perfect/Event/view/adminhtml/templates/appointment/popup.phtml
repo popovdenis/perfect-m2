@@ -86,6 +86,67 @@
                                                        maxlength="255">
                                             </div>
                                         </div>
+                                        <div class="admin__field _required" data-index="client-started-at" style="margin-bottom: 0;">
+                                            <div class="admin__field-label">
+                                                <label for="appointment_date">
+                                                    <span data-bind="i18n: 'Дата и время'"></span>
+                                                </label>
+                                            </div>
+                                            <div class="admin__field-control">
+                                                <input class="admin__control-text" type="text" name="appointment_date"
+                                                       id="appointment_date" data-validate="{required:true}" value="15/02/2022">
+
+                                                <select class="admin__control-select" name="appointment_time_start">
+                                                    <option value="09:00">09:00</option>
+                                                    <option value="09:05">09:05</option>
+                                                    <option value="09:10">09:10</option>
+                                                    <option value="09:15">09:15</option>
+                                                </select>
+                                                <span> - </span>
+                                                <select class="admin__control-select" name="appointment_time_end">
+                                                    <option value="09:00">09:00</option>
+                                                    <option value="09:05">09:05</option>
+                                                    <option value="09:10">09:10</option>
+                                                    <option value="09:15">09:15</option>
+                                                </select>
+                                                <script>
+                                                    require(["jquery", "mage/calendar"], function ($) {
+                                                        $("#appointment_date").calendar({
+                                                            dateFormat: 'dd/mm/yy',
+                                                            changeMonth: true,
+                                                            changeYear: true,
+                                                            showMonthAfterYear: false,
+                                                            showButtonPanel: true
+                                                        })
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                        <div class="admin__field" data-index="client-comment" style="margin-bottom: 0;">
+                                            <div class="admin__field-label">
+                                                <label for="client-comment">
+                                                    <span data-bind="i18n: 'Комментарий'"></span>
+                                                </label>
+                                            </div>
+                                            <div class="admin__field-control">
+                                                <textarea class="admin__control-textarea" rows="3" cols="5"
+                                                          name="client_comment" id="client-comment"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="admin__field" data-index="appointment-status" style="margin-bottom: 0;">
+                                            <div class="admin__field-label">
+                                                <label for="appointment-status">
+                                                    <span data-bind="i18n: 'Категория'"></span>
+                                                </label>
+                                            </div>
+                                            <div class="admin__field-control">
+                                                <select class="admin__control-select" name="appointment-status" id="appointment-status">
+                                                    <option value="" data-bind="i18n: 'Выберите статус'"></option>
+                                                    <option value="full-paid" data-bind="i18n: 'Полностью оплачен'"></option>
+                                                    <option value="partially-paid" data-bind="i18n: 'Частично оплачен'"></option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </fieldset>
                                 </div>
                             </div>
@@ -121,7 +182,7 @@
                             <div data-level="0" data-index="employee">
                                 <div class="fieldset-wrapper-title" style="border-bottom: none;">
                                     <strong class="title">
-                                        <span data-bind="i18n: 'Мастер'"></span>
+                                        <span data-bind="i18n: 'Сотрудник'"></span>
                                     </strong>
                                 </div>
                                 <div class="admin__fieldset-wrapper-content _show">
@@ -129,7 +190,7 @@
                                         <div class="admin__field" data-index="appointment-employee-name" style="margin-bottom: 0;">
                                             <div class="admin__field-label">
                                                 <label for="employee_id">
-                                                    <span data-bind="i18n: 'Мастер'"></span>
+                                                    <span data-bind="i18n: 'Сотрудник'"></span>
                                                 </label>
                                             </div>
                                             <div class="admin__field-control">

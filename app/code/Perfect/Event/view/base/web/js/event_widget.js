@@ -100,9 +100,12 @@ define([
                             if (!self.appointmentSlots.includes(hash)) {
                                 console.log(dateClickInfo);
                                 self.isPopupActive = true;
+
+                                var startedAt = new Date(dateClickInfo.date);
                                 self.populatePopup({
                                     id: '',
                                     title: '',
+                                    appointment_date: startedAt.getDate() + '/' + startedAt.getMonth() + '/' + startedAt.getFullYear(),
                                     extendedProps: {
                                         employee_id: null,
                                         client: {
@@ -275,6 +278,7 @@ define([
             $('input[name="client_name"]').val(appointment.extendedProps.client.client_name);
             $('input[name="client_phone"]').val(appointment.extendedProps.client.client_phone);
             $('input[name="client_email"]').val(appointment.extendedProps.client.client_email);
+            $('input[name="appointment_date"]').val(appointment.appointment_date);
 
             // services
             $('input[name="service_name"]').val(appointment.title);
