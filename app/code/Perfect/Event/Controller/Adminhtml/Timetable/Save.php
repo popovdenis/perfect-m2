@@ -135,7 +135,21 @@ class Save extends \Magento\Backend\App\Action
             );
         }
         if (!empty($appointmentData['master'])) {
-            $appointment->setWorkerId($this->getEmployer($appointmentData['master'])->getId());
+            $appointment->setEmployeeId($this->getEmployer($appointmentData['master'])->getId());
+        }
+        if (!empty($appointmentData['appointment_date'])
+            && !empty($appointmentData['appointment_time_start'])
+            && !empty($appointmentData['appointment_time_end'])
+        ) {
+            $appointmentDate = explode('/', $appointmentData['appointment_date']);
+            $appointmentDate = sprintf('%s-%s-%s', $appointmentDate[2], $appointmentDate[1], $appointmentDate[0]);
+
+            $appointment->setStartedAt(
+                $appointmentDate . ' ' . $appointmentData['appointment_time_start']
+            );
+            $appointment->setFinishedAt(
+                $appointmentDate . ' ' . $appointmentData['appointment_time_end']
+            );
         }
 
         return $appointment;

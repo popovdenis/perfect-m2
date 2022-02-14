@@ -4,6 +4,7 @@ define([
     'timetableAppointmentService',
     'Perfect_Event/js/model/md5',
     'eventCalendarLib',
+    'qcTimepicker',
     'jquery/ui',
     'domReady!'
 ], function ($, modal, timetableAppointment, CryptoJS) {
@@ -159,27 +160,13 @@ define([
             var appointments = [];
 
             for (var entityId in this.options.appointments) {
-                var appointment = this.options.appointments[entityId];
-
-                var regex = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/,
-                    startedAt, finishedAt;
-
-                startedAt = new Date(appointment.started_at.replace(regex, '$1-$2-$3'));
-                finishedAt = new Date(appointment.finished_at.replace(regex, '$1-$2-$3'));
-
-                startedAt.setHours(
-                    appointment.started_at.replace(regex, '$4'),
-                    appointment.started_at.replace(regex, '$5')
-                );
-                finishedAt.setHours(
-                    appointment.finished_at.replace(regex, '$4'),
-                    appointment.finished_at.replace(regex, '$5')
-                );
+                var appointment = this.options.appointments[entityId],
+                    startedAt = this._convertDateToEventFormat(appointment.started_at);
 
                 appointments.push({
                     id: appointment.id,
-                    start: startedAt,
-                    end: finishedAt,
+                    start: this._convertDateToEventFormat(appointment.started_at),
+                    end: this._convertDateToEventFormat(appointment.finished_at),
                     title: appointment.service_name,
                     color: "#FE6B64",
                     resourceId: 2,
@@ -241,11 +228,13 @@ define([
             var self = this;
             timetableAppointment.sendAppointment(appointment)
                 .then(function (appointmentData) {
-                    console.log(appointmentData);
                     for (const calendar of self.eventCalendarObjects) {
                          var event = calendar.getEventById(appointmentData.id);
                          if (typeof event !== "undefined" && Number.isInteger(parseInt(event.id))) {
                              event.title = appointmentData.service_name;
+                             event.start = self._convertDateToEventFormat(appointmentData.started_at);
+                             event.end = self._convertDateToEventFormat(appointmentData.finished_at);
+
                              calendar.updateEvent(event);
                              break;
                          }
@@ -253,32 +242,55 @@ define([
                 });
         },
 
+        _convertDateToEventFormat: function (datetime) {
+            var regex = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/,
+                datetimeFormatted;
+
+            datetimeFormatted = new Date(datetime.replace(regex, '$1-$2-$3'));
+
+            datetimeFormatted.setHours(
+                datetime.replace(regex, '$4'),
+                datetime.replace(regex, '$5')
+            );
+
+            return datetimeFormatted;
+        },
+
         initEvents: function () {
             let self = this,
-                subscribeForm = $('.form.appointment');
+                appointmentForm = $('.form.appointment');
 
-            $(subscribeForm).off('submit').on('submit', function(e) {
+            $(appointmentForm).off('submit').on('submit', function(e) {
                 e.preventDefault();
-                if ($(subscribeForm).valid()) {
+                // if ($(appointmentForm).valid()) {
                     var formData = {};
-                    for (const field of $(subscribeForm).serializeArray()) {
+                    for (const field of $(appointmentForm).serializeArray()) {
                         formData[field.name] = field.value;
                     }
                     self._saveAppointment(formData);
                     self.popupObject.closeModal();
-                }
+                // }
             });
+
+            $('#appointment_time_start').qcTimepicker({classes: 'admin__control-select'});
+            $('#appointment_time_end').qcTimepicker({classes: 'admin__control-select'});
         },
 
         populatePopup: function (appointment) {
             // appointment
             $('input[name="id"]').val(appointment.id);
+
+            var start = new Date(appointment.start);
+            $('#appointment_date').val(start.toLocaleDateString("en-GB"));
+            $('#appointment_time_start-qcTimepicker option[value="' + start.toLocaleTimeString("en-GB") + '"]').prop('selected', true).trigger('change');
+            var end = new Date(appointment.end);
+            $('#appointment_time_end-qcTimepicker option[value="' + end.toLocaleTimeString("en-GB") + '"]').prop('selected', true).trigger('change');
+
             // client
             $('input[name="client_id"]').val(appointment.extendedProps.client.client_id);
             $('input[name="client_name"]').val(appointment.extendedProps.client.client_name);
             $('input[name="client_phone"]').val(appointment.extendedProps.client.client_phone);
             $('input[name="client_email"]').val(appointment.extendedProps.client.client_email);
-            $('input[name="appointment_date"]').val(appointment.appointment_date);
 
             // services
             $('input[name="service_name"]').val(appointment.title);

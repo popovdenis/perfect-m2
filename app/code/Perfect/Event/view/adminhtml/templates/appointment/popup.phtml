@@ -21,7 +21,7 @@
                                     </strong>
                                 </div>
                                 <div class="admin__fieldset-wrapper-content _show">
-                                    <fieldset class="admin__fieldset">
+                                    <fieldset class="admin__fieldset" style="padding-bottom: 1rem; padding-top: 1rem;">
                                         <div class="admin__field _required" data-index="client-name" style="margin-bottom: 0;">
                                             <div class="admin__field-label">
                                                 <label for="client-name">
@@ -94,21 +94,16 @@
                                             </div>
                                             <div class="admin__field-control">
                                                 <input class="admin__control-text" type="text" name="appointment_date"
-                                                       id="appointment_date" data-validate="{required:true}" value="15/02/2022">
-
-                                                <select class="admin__control-select" name="appointment_time_start">
-                                                    <option value="09:00">09:00</option>
-                                                    <option value="09:05">09:05</option>
-                                                    <option value="09:10">09:10</option>
-                                                    <option value="09:15">09:15</option>
-                                                </select>
+                                                       id="appointment_date" value="">
+                                                <input type="time"
+                                                       class="timepicker admin__control-text"
+                                                       name="appointment_time_start"
+                                                       id="appointment_time_start" min="09:00" max="20:00" step="300">
                                                 <span> - </span>
-                                                <select class="admin__control-select" name="appointment_time_end">
-                                                    <option value="09:00">09:00</option>
-                                                    <option value="09:05">09:05</option>
-                                                    <option value="09:10">09:10</option>
-                                                    <option value="09:15">09:15</option>
-                                                </select>
+                                                <input type="time"
+                                                       class="timepicker admin__control-text"
+                                                       name="appointment_time_end"
+                                                       id="appointment_time_end" min="09:00" max="20:00" step="300">
                                                 <script>
                                                     require(["jquery", "mage/calendar"], function ($) {
                                                         $("#appointment_date").calendar({
@@ -160,7 +155,7 @@
                                     </strong>
                                 </div>
                                 <div class="admin__fieldset-wrapper-content _show">
-                                    <fieldset class="admin__fieldset">
+                                    <fieldset class="admin__fieldset" style="padding-bottom: 1rem; padding-top: 1rem;">
                                         <div class="admin__field" data-index="appointment-service-name" style="margin-bottom: 0;">
                                             <div class="admin__field-label">
                                                 <label for="appointment-service-name">
@@ -186,7 +181,7 @@
                                     </strong>
                                 </div>
                                 <div class="admin__fieldset-wrapper-content _show">
-                                    <fieldset class="admin__fieldset">
+                                    <fieldset class="admin__fieldset" style="padding-bottom: 1rem; padding-top: 1rem;">
                                         <div class="admin__field" data-index="appointment-employee-name" style="margin-bottom: 0;">
                                             <div class="admin__field-label">
                                                 <label for="employee_id">
