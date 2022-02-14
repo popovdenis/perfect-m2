@@ -2,13 +2,12 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <!--  Import Profiles  -->
+        <!--  Perfect  -->
         <add id="Perfect_Event::perfect_event"
-             title="Events Management"
+             title="Perfect"
              translate="title"
              module="Perfect_Event"
-             sortOrder="100"
-             parent="Magento_Backend::stores"
+             sortOrder="35"
              resource="Perfect_Event::perfect_event" />
 
         <add id="Perfect_Event::perfect_event_list"
@@ -24,7 +23,7 @@
              title="Timetable"
              translate="title"
              module="Perfect_Event"
-             sortOrder="10"
+             sortOrder="20"
              parent="Perfect_Event::perfect_event"
              action="perfect_event/timetable"
              resource="Perfect_Event::perfect_timetable" />
