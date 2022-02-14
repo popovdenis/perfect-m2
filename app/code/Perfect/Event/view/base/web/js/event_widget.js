@@ -177,7 +177,8 @@ define([
                     resourceId: 2,
                     extendedProps: {
                         employee_id: appointment.employee_id,
-                        client: appointment.client
+                        client: appointment.client,
+                        appointment_color: appointment.appointment_color
                     }
                 });
 
@@ -307,7 +308,7 @@ define([
 
             $('#appointment_time_start').qcTimepicker({classes: 'admin__control-select'});
             $('#appointment_time_end').qcTimepicker({classes: 'admin__control-select'});
-            $('#appointment-color').spectrum({
+            $('#appointment_color').spectrum({
                 showPaletteOnly: true,
                 showPalette: true,
                 color: 'blanchedalmond',
@@ -327,6 +328,17 @@ define([
             $('#appointment_time_start-qcTimepicker option[value="' + start.toLocaleTimeString("en-GB") + '"]').prop('selected', true).trigger('change');
             var end = new Date(appointment.end);
             $('#appointment_time_end-qcTimepicker option[value="' + end.toLocaleTimeString("en-GB") + '"]').prop('selected', true).trigger('change');
+
+            var color = _.isEmpty(appointment.extendedProps.appointment_color) ? 'rgb(255, 235, 205)' : appointment.extendedProps.appointment_color;
+            $('#appointment_color').spectrum({
+                showPaletteOnly: true,
+                showPalette: true,
+                color: color,
+                palette: [
+                    ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50'],
+                    ['red', 'yellow', 'green', 'blue', 'violet']
+                ]
+            });
 
             // client
             $('input[name="client_id"]').val(appointment.extendedProps.client.client_id);
