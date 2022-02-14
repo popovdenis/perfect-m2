@@ -20,6 +20,7 @@ interface EventInterface
     const ENABLED = 'enabled';
     const EMPLOYEE_ID = 'employee_id';
     const CLIENT_ID = 'client_id';
+    const APPOINTMENT_COLOR = 'appointment_color';
 
     /**
      * @inheritdoc
@@ -100,4 +101,14 @@ interface EventInterface
      * @inheritdoc
      */
     public function getClientId();
+
+    /**
+     * @inheritdoc
+     */
+    public function setAppointmentColor($color): EventInterface;
+
+    /**
+     * @inheritdoc
+     */
+    public function getAppointmentColor();
 }

@@ -3,7 +3,7 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <css src="Perfect_Event::css/event-calendar.min.css"/>
-        <css src="jquery/colorpicker/css/colorpicker.css"/>
+        <css src="Perfect_Event::css/spectrum.css"/>
     </head>
     <referenceBlock name="after.body.start">
         <block class="Perfect\Event\Block\Adminhtml\TimetableConfig" name="perfect.timetable_service_config"

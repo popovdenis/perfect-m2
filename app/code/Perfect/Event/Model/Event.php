@@ -163,4 +163,20 @@ class Event extends AbstractModel implements EventInterface
     {
         return $this->getData(self::CLIENT_ID);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function setAppointmentColor($color): EventInterface
+    {
+        return $this->setData(self::APPOINTMENT_COLOR, $color);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAppointmentColor()
+    {
+        return $this->getData(self::APPOINTMENT_COLOR);
+    }
 }

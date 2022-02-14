@@ -3,11 +3,13 @@ define([
     'Magento_Ui/js/modal/modal',
     'timetableAppointmentService',
     'Perfect_Event/js/model/md5',
+    'underscore',
     'eventCalendarLib',
     'qcTimepicker',
+    'spectrum',
     'jquery/ui',
     'domReady!'
-], function ($, modal, timetableAppointment, CryptoJS) {
+], function ($, modal, timetableAppointment, CryptoJS, _) {
     'use strict';
 
     $.widget('perfect.event',{
@@ -161,14 +163,17 @@ define([
 
             for (var entityId in this.options.appointments) {
                 var appointment = this.options.appointments[entityId],
-                    startedAt = this._convertDateToEventFormat(appointment.started_at);
+                    startedAt = this._convertDateToEventFormat(appointment.started_at),
+                    color = _.isEmpty(appointment.appointment_color)
+                        ? "#FE6B64"
+                        : this.rgbToHex(appointment.appointment_color);
 
                 appointments.push({
                     id: appointment.id,
                     start: this._convertDateToEventFormat(appointment.started_at),
                     end: this._convertDateToEventFormat(appointment.finished_at),
                     title: appointment.service_name,
-                    color: "#FE6B64",
+                    color: color,
                     resourceId: 2,
                     extendedProps: {
                         employee_id: appointment.employee_id,
@@ -231,9 +236,18 @@ define([
                     for (const calendar of self.eventCalendarObjects) {
                          var event = calendar.getEventById(appointmentData.id);
                          if (typeof event !== "undefined" && Number.isInteger(parseInt(event.id))) {
-                             event.title = appointmentData.service_name;
-                             event.start = self._convertDateToEventFormat(appointmentData.started_at);
-                             event.end = self._convertDateToEventFormat(appointmentData.finished_at);
+                             if (!_.isEmpty(appointmentData.service_name)) {
+                                 event.title = appointmentData.service_name;
+                             }
+                             if (!_.isEmpty(appointmentData.started_at)) {
+                                 event.start = self._convertDateToEventFormat(appointmentData.started_at);
+                             }
+                             if (!_.isEmpty(appointmentData.finished_at)) {
+                                 event.end = self._convertDateToEventFormat(appointmentData.finished_at);
+                             }
+                             if (!_.isEmpty(appointmentData.appointment_color)) {
+                                 event.backgroundColor = self.rgbToHex(appointmentData.appointment_color);
+                             }
 
                              calendar.updateEvent(event);
                              break;
@@ -256,6 +270,25 @@ define([
             return datetimeFormatted;
         },
 
+        rgbToHex: function (rgb) {
+            let sep = rgb.indexOf(",") > -1 ? "," : " ";
+            // Turn "rgb(r,g,b)" into [r,g,b]
+            rgb = rgb.substr(4).split(")")[0].split(sep);
+
+            let r = (+rgb[0]).toString(16),
+                g = (+rgb[1]).toString(16),
+                b = (+rgb[2]).toString(16);
+
+            if (r.length == 1)
+                r = "0" + r;
+            if (g.length == 1)
+                g = "0" + g;
+            if (b.length == 1)
+                b = "0" + b;
+
+            return "#" + r + g + b;
+        },
+
         initEvents: function () {
             let self = this,
                 appointmentForm = $('.form.appointment');
@@ -274,6 +307,15 @@ define([
 
             $('#appointment_time_start').qcTimepicker({classes: 'admin__control-select'});
             $('#appointment_time_end').qcTimepicker({classes: 'admin__control-select'});
+            $('#appointment-color').spectrum({
+                showPaletteOnly: true,
+                showPalette: true,
+                color: 'blanchedalmond',
+                palette: [
+                    ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50'],
+                    ['red', 'yellow', 'green', 'blue', 'violet']
+                ]
+            });
         },
 
         populatePopup: function (appointment) {

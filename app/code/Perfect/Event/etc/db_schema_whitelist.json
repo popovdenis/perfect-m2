@@ -7,21 +7,20 @@
             "started_at": true,
             "finished_at": true,
             "enabled": true,
-            "worker_id": true,
             "employee_id": true,
-            "client_id": true
+            "client_id": true,
+            "appointment_color": true
         },
         "index": {
             "PERFECT_EVENT_SERVICE_NAME": true,
             "PERFECT_EVENT_DESCRIPTION": true,
             "PERFECT_EVENT_ENABLED": true,
-            "PERFECT_EVENT_WORKER_ID": true,
             "PERFECT_EVENT_EMPLOYEE_ID": true,
-            "PERFECT_EVENT_CLIENT_ID": true
+            "PERFECT_EVENT_CLIENT_ID": true,
+            "PERFECT_EVENT_APPOINTMENT_COLOR": true
         },
         "constraint": {
             "PRIMARY": true,
-            "PERFECT_EVENT_WORKER_ID_CUSTOMER_ENTITY_ENTITY_ID": true,
             "PERFECT_EVENT_EMPLOYEE_ID_CUSTOMER_ENTITY_ENTITY_ID": true,
             "PERFECT_EVENT_CLIENT_ID_CUSTOMER_ENTITY_ENTITY_ID": true
         }
