@@ -5,6 +5,7 @@ define([
     'Perfect_Event/js/model/md5',
     'underscore',
     'Perfect_Event/js/storage',
+    'Perfect_Event/js/event',
     'Magento_Ui/js/modal/confirm',
     'eventCalendarLib',
     'qcTimepicker',
@@ -12,7 +13,7 @@ define([
     'mage/calendar',
     'jquery/ui',
     'domReady!'
-], function ($, modal, timetableAppointment, md5, _, storage, confirm) {
+], function ($, modal, timetableAppointment, md5, _, storage, Event, confirm) {
     'use strict';
 
     $.widget('perfect.event',{
@@ -121,27 +122,15 @@ define([
                         timeGridWeek: {pointer: true},
                         resourceTimeGridWeek: {pointer: true}
                     },
-                    dateClick: function (dateClickInfo) {
+                    dateClick: function (dateClickInfo) { // event triggers on click on both an empty slot and an event
                         if (!self.isPopupActive) {
                             var hash = md5().hash((new Date(dateClickInfo.date)).toLocaleString());
+                            // check we clicked on the an empty slot
                             if (!self.appointmentSlots.includes(hash)) {
                                 self.isPopupActive = true;
-
-                                var startedAt = new Date(dateClickInfo.date);
-                                self.populatePopup({
-                                    id: '',
-                                    title: '',
-                                    appointment_date: startedAt.getDate() + '/' + startedAt.getMonth() + '/' + startedAt.getFullYear(),
-                                    extendedProps: {
-                                        employee_id: null,
-                                        client: {
-                                            client_id: null,
-                                            client_name: null,
-                                            client_phone: null,
-                                            client_email: null
-                                        }
-                                    }
-                                });
+                                // var event = $.extend(Event.newEvent(dateClickInfo), dateClickInfo);
+                                storage.currentEvent(Event.newEvent(dateClickInfo));
+                                self.populatePopup(storage.currentEvent());
                                 self.openPopup();
                             }
                         }
@@ -222,7 +211,13 @@ define([
             timetableAppointment.sendAppointment(appointment)
                 .then(function (appointmentData) {
                     var event = storage.currentEvent(),
-                        eventEmployeeHash = event.extendedProps.employeeHash,
+                        isEventNew = false;
+
+                    if (_.isEmpty(event.id)) {
+                        isEventNew = true;
+                        event = $.extend(event, appointmentData);
+                    }
+                    var eventEmployeeHash = event.extendedProps.employeeHash,
                         calendar = storage.searchEventCalendar(eventEmployeeHash),
                         appointmentEmployeeHash = md5().hash(appointment.employee_id);
 
@@ -248,7 +243,9 @@ define([
                         if (eventEmployeeHash === appointmentEmployeeHash) {
                             calendar.updateEvent(event);
                         } else {
-                            calendar.removeEventById(event.id);
+                            if (!isEventNew) {
+                                calendar.removeEventById(event.id);
+                            }
                             calendar = storage.searchEventCalendar(appointmentEmployeeHash);
                             calendar.addEvent(event);
                         }
@@ -257,8 +254,18 @@ define([
         },
 
         _deleteAppointment: function (appointment) {
-            var eventEmployeeHash = appointment.extendedProps.employeeHash,
-                calendar = storage.searchEventCalendar(eventEmployeeHash);
+            var self = this;
+            timetableAppointment.deleteAppointment(appointment)
+                .then(function () {
+                    if (!_.isEmpty(appointment.extendedProps.employeeHash)) {
+                        var calendar = storage.searchEventCalendar(appointment.extendedProps.employeeHash);
+                        if (!_.isEmpty(calendar)) {
+                            calendar.removeEventById(appointment.id);
+                            var hash = md5().hash((new Date(appointment.start)).toLocaleString());
+                            self.appointmentSlots.splice(self.appointmentSlots.indexOf(hash), 1);
+                        }
+                    }
+                });
         },
 
         _convertDateToEventFormat: function (datetime) {
