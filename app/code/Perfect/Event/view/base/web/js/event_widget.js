@@ -5,13 +5,14 @@ define([
     'Perfect_Event/js/model/md5',
     'underscore',
     'Perfect_Event/js/storage',
+    'Magento_Ui/js/modal/confirm',
     'eventCalendarLib',
     'qcTimepicker',
     'spectrum',
     'mage/calendar',
     'jquery/ui',
     'domReady!'
-], function ($, modal, timetableAppointment, md5, _, storage) {
+], function ($, modal, timetableAppointment, md5, _, storage, confirm) {
     'use strict';
 
     $.widget('perfect.event',{
@@ -51,8 +52,28 @@ define([
                 title: '',
                 clickableOverlay: true,
                 buttons: [{
+                    text: $.mage.__('Delete'),
+                    class: 'action secondary delete-appointment',
+                    click: function (event) {
+                        confirm({
+                            title: $.mage.__('Delete appointment'),
+                            content: $.mage.__('Are you sure you want to delete this appointment?'),
+                            actions: {
+                                confirm: function () {
+                                    self._deleteAppointment(storage.currentEvent());
+                                },
+                                cancel: function () {
+                                    return false;
+                                },
+                                always: function () {
+                                    self.popupObject.closeModal();
+                                }
+                            }
+                        });
+                    }
+                }, {
                     text: $.mage.__('Save'),
-                    class: 'action primary',
+                    class: 'action primary save-appointment',
                     click: function (event) {
                         $(self.options.appointmentForm).trigger('submit');
                     }
@@ -104,7 +125,6 @@ define([
                         if (!self.isPopupActive) {
                             var hash = md5().hash((new Date(dateClickInfo.date)).toLocaleString());
                             if (!self.appointmentSlots.includes(hash)) {
-                                console.log(dateClickInfo);
                                 self.isPopupActive = true;
 
                                 var startedAt = new Date(dateClickInfo.date);
@@ -152,7 +172,6 @@ define([
                         '<div class="ec-event-title">' + eventInfo.event.title + '</div>';
                     },
                     datesSet: function (info) {
-                        console.log(info);
                     }
                 };
 
@@ -235,6 +254,11 @@ define([
                         }
                     }
                 });
+        },
+
+        _deleteAppointment: function (appointment) {
+            var eventEmployeeHash = appointment.extendedProps.employeeHash,
+                calendar = storage.searchEventCalendar(eventEmployeeHash);
         },
 
         _convertDateToEventFormat: function (datetime) {
@@ -331,8 +355,8 @@ define([
                 color: color,
                 palette: [
                     ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],
-                    ["#181818","#d6d94d","#646177","#8c9999", "#b0cbcc","#dfeee8","#e0f3d9","#fff"],
-                    ["#f00","#f90","#ff0","#0f0","#0ff","#00f","#90f","#f0f"],
+                    ["#181818","#d4d101","#646177","#8c9999", "#b0cbcc","#dfeee8","#e0f3d9","#fff"],
+                    ["#f00","#f90","#ff0","#00c400","#0ff","#00f","#90f","#f0f"],
                     ["#f4cccc","#fce5cd","#fff2cc","#d9ead3","#d0e0e3","#cfe2f3","#d9d2e9","#ead1dc"],
                     ["#ea9999","#f9cb9c","#ffe599","#b6d7a8","#a2c4c9","#9fc5e8","#b4a7d6","#d5a6bd"],
                     ["#e06666","#f6b26b","#ffd966","#93c47d","#76a5af","#6fa8dc","#8e7cc3","#c27ba0"],
