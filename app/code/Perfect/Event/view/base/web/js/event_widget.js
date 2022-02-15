@@ -356,9 +356,7 @@ define([
         getSpectrumOptions: function (color) {
             return {
                 showPaletteOnly: true,
-                togglePaletteOnly: true,
-                togglePaletteMoreText: 'more',
-                togglePaletteLessText: 'less',
+                showPalette: true,
                 color: color,
                 palette: [
                     ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],
