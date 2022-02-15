@@ -7,7 +7,12 @@
 $indexer = 0;
 if ($customers = $block->getEmployees()):
     $count = count($customers);
-    ?>
+    $employeesHash = [];
+    foreach ($customers as $customer) {
+        $hash = md5($customer->getId());
+        $employeesHash[$hash] = $hash;
+    }
+?>
 <!--    <div class="timetable-controls-date-buttons">-->
 <!--        <div class="y-timetable-controls-date-buttons-change">-->
 <!--            <button class="button timetable-controls-date-buttons-change-prev" type="button"-->
@@ -42,10 +47,14 @@ if ($customers = $block->getEmployees()):
                     <div id="scheduler<?= $indexer ?>" class="col"></div>
                 </div>
             </div>
+        <?php $config = $block->getConfig($indexer) ?>
+        <?php $config['appointments'] = $this->getAppointments($customer) ?>
+        <?php $config['employeesHash'] = $employeesHash ?>
+        <?php $config['employeeHash'] = md5($customer->getId()) ?>
 <script type="text/x-magento-init">
 {
     ".timetable-grid-<?= $indexer ?>": {
-        "Perfect_Event/js/event_widget": <?php echo /* @noEscape */ $block->getConfig($indexer, $customer) ?>
+        "Perfect_Event/js/event_widget": <?php echo /* @noEscape */ $block->encodeJson($config) ?>
     }
 }
 </script>

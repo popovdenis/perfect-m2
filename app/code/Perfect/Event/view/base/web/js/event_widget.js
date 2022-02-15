@@ -4,12 +4,13 @@ define([
     'timetableAppointmentService',
     'Perfect_Event/js/model/md5',
     'underscore',
+    'Perfect_Event/js/storage',
     'eventCalendarLib',
     'qcTimepicker',
     'spectrum',
     'jquery/ui',
     'domReady!'
-], function ($, modal, timetableAppointment, CryptoJS, _) {
+], function ($, modal, timetableAppointment, md5, _, storage) {
     'use strict';
 
     $.widget('perfect.event',{
@@ -19,11 +20,12 @@ define([
             appointments: [],
             appointmentModal: null,
             appointmentForm: '.form.appointment',
-            searchConfig: {}
+            searchConfig: {},
+            employeeHash: {},
+            employeesHash: {}
         },
         lastAppointmentId: null,
         eventCalendarObject: null,
-        eventCalendarObjects: [],
         appointmentSlots: [],
         isPopupActive: false,
         popupObject: null,
@@ -99,7 +101,7 @@ define([
                     },
                     dateClick: function (dateClickInfo) {
                         if (!self.isPopupActive) {
-                            var hash = CryptoJS().hash((new Date(dateClickInfo.date)).toLocaleString());
+                            var hash = md5().hash((new Date(dateClickInfo.date)).toLocaleString());
                             if (!self.appointmentSlots.includes(hash)) {
                                 console.log(dateClickInfo);
                                 self.isPopupActive = true;
@@ -125,15 +127,16 @@ define([
                     },
                     eventClick: function (eventClickInfo) {
                         self.isPopupActive = true;
+                        storage.currentEvent(eventClickInfo.event);
                         self.populatePopup(eventClickInfo.event);
                         self.openPopup();
                     },
                     eventDrop: function (eventClickInfo) {
-                        var hash = CryptoJS().hash((new Date(eventClickInfo.oldEvent.start)).toLocaleString());
+                        var hash = md5().hash((new Date(eventClickInfo.oldEvent.start)).toLocaleString());
                         if (self.appointmentSlots.includes(hash)) {
                             self.appointmentSlots.splice(self.appointmentSlots.indexOf(hash), 1);
 
-                            hash = CryptoJS().hash((new Date(eventClickInfo.event.start)).toLocaleString());
+                            hash = md5().hash((new Date(eventClickInfo.event.start)).toLocaleString());
                             self.appointmentSlots.push(hash);
 
                             self._saveAppointment(eventClickInfo.event);
@@ -154,7 +157,11 @@ define([
 
             return new Promise(function() {
                 self.eventCalendarObject = new EventCalendar(scheduler, options);
-                self.eventCalendarObjects.push(self.eventCalendarObject);
+                storage.eventCalendars().push({
+                    employeeHash: self.options.employeeHash,
+                    calendar: self.eventCalendarObject
+                });
+                self.options.employeesHash[self.options.employeeHash] = self.eventCalendarObject;
             });
         },
 
@@ -177,13 +184,14 @@ define([
                     resourceId: 2,
                     extendedProps: {
                         employee_id: appointment.employee_id,
+                        employeeHash: md5().hash(appointment.employee_id),
                         client: appointment.client,
                         appointment_color: appointment.appointment_color
                     }
                 });
 
                 this.appointmentSlots.push(
-                    CryptoJS().hash(startedAt.toLocaleString())
+                    md5().hash(startedAt.toLocaleString())
                 );
             }
 
@@ -234,25 +242,36 @@ define([
             var self = this;
             timetableAppointment.sendAppointment(appointment)
                 .then(function (appointmentData) {
-                    for (const calendar of self.eventCalendarObjects) {
-                         var event = calendar.getEventById(appointmentData.id);
-                         if (typeof event !== "undefined" && Number.isInteger(parseInt(event.id))) {
-                             if (!_.isEmpty(appointmentData.service_name)) {
-                                 event.title = appointmentData.service_name;
-                             }
-                             if (!_.isEmpty(appointmentData.started_at)) {
-                                 event.start = self._convertDateToEventFormat(appointmentData.started_at);
-                             }
-                             if (!_.isEmpty(appointmentData.finished_at)) {
-                                 event.end = self._convertDateToEventFormat(appointmentData.finished_at);
-                             }
-                             if (!_.isEmpty(appointmentData.appointment_color)) {
-                                 event.backgroundColor = self.rgbToHex(appointmentData.appointment_color);
-                             }
+                    var event = storage.currentEvent(),
+                        eventEmployeeHash = event.extendedProps.employeeHash,
+                        calendar = storage.searchEventCalendar(eventEmployeeHash),
+                        appointmentEmployeeHash = md5().hash(appointment.employee_id);
 
-                             calendar.updateEvent(event);
-                             break;
-                         }
+                    if (typeof event !== "undefined" && !_.isEmpty(event) && Number.isInteger(parseInt(event.id))) {
+                        if (!_.isEmpty(appointmentData.service_name)) {
+                            event.title = appointmentData.service_name;
+                        }
+                        if (!_.isEmpty(appointmentData.started_at)) {
+                            event.start = self._convertDateToEventFormat(appointmentData.started_at);
+                        }
+                        if (!_.isEmpty(appointmentData.finished_at)) {
+                            event.end = self._convertDateToEventFormat(appointmentData.finished_at);
+                        }
+                        if (!_.isEmpty(appointmentData.appointment_color)) {
+                            event.backgroundColor = self.rgbToHex(appointmentData.appointment_color);
+                        }
+                        if (!_.isEmpty(appointmentData.employee_id)) {
+                            event.extendedProps.employee_id = appointmentData.employee_id;
+                            event.extendedProps.employeeHash = md5().hash(appointmentData.employee_id);
+                        }
+
+                        if (eventEmployeeHash === appointmentEmployeeHash) {
+                            calendar.updateEvent(event);
+                        } else {
+                            calendar.removeEventById(event.id);
+                            calendar = storage.searchEventCalendar(appointmentEmployeeHash);
+                            calendar.addEvent(event);
+                        }
                     }
                 });
         },

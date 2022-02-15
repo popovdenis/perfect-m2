@@ -75,24 +75,30 @@ class Timetable extends \Magento\Backend\Block\Template
     }
 
     /**
-     * @param                                              $schedulerId
-     * @param \Magento\Customer\Api\Data\CustomerInterface $customer
+     * @param array $data
      *
      * @return bool|false|string
      */
-    public function getConfig($schedulerId, $customer)
+    public function encodeJson(array $data)
     {
-        $config = [
+        return $this->jsonEncoder->serialize($data);
+    }
+
+    /**
+     * @param                                              $schedulerId
+     *
+     * @return array
+     */
+    public function getConfig($schedulerId)
+    {
+        return [
             'schedulerId' => $schedulerId,
             'scheduler' => 'scheduler' . $schedulerId,
-            'appointments' => $this->getAppointments($customer),
             'searchConfig' => [
                 'url' => $this->getUrl('perfect_event/timetable/search', ['_secure' => true])
             ],
-            'appointmentModal' => '.appointment-modal',
+            'appointmentModal' => '.appointment-modal'
         ];
-
-        return $this->jsonEncoder->serialize($config);
     }
 
     /**
