@@ -29,7 +29,6 @@ define([
         },
         lastAppointmentId: null,
         eventCalendarObject: null,
-        appointmentSlots: [],
         isPopupActive: false,
         popupObject: null,
 
@@ -122,17 +121,12 @@ define([
                         timeGridWeek: {pointer: true},
                         resourceTimeGridWeek: {pointer: true}
                     },
-                    dateClick: function (dateClickInfo) { // event triggers on click on both an empty slot and an event
+                    dateClick: function (dateClickInfo) {
                         if (!self.isPopupActive) {
-                            var hash = md5().hash((new Date(dateClickInfo.date)).toLocaleString());
-                            // check we clicked on the an empty slot
-                            if (!self.appointmentSlots.includes(hash)) {
-                                self.isPopupActive = true;
-                                // var event = $.extend(Event.newEvent(dateClickInfo), dateClickInfo);
-                                storage.currentEvent(Event.newEvent(dateClickInfo));
-                                self.populatePopup(storage.currentEvent());
-                                self.openPopup();
-                            }
+                            self.isPopupActive = true;
+                            storage.currentEvent(Event.newEvent(dateClickInfo));
+                            self.populatePopup(storage.currentEvent());
+                            self.openPopup();
                         }
                     },
                     eventClick: function (eventClickInfo) {
@@ -142,15 +136,8 @@ define([
                         self.openPopup();
                     },
                     eventDrop: function (eventClickInfo) {
-                        var hash = md5().hash((new Date(eventClickInfo.oldEvent.start)).toLocaleString());
-                        if (self.appointmentSlots.includes(hash)) {
-                            self.appointmentSlots.splice(self.appointmentSlots.indexOf(hash), 1);
-
-                            hash = md5().hash((new Date(eventClickInfo.event.start)).toLocaleString());
-                            self.appointmentSlots.push(hash);
-
-                            self._saveAppointment(eventClickInfo.event);
-                        }
+                        storage.currentEvent(eventClickInfo.event);
+                        self._saveAppointment(eventClickInfo.event);
                     },
                     eventContent: function (eventInfo) {
                         if (eventInfo.event.id === '{pointer}') {
@@ -197,10 +184,6 @@ define([
                         client: appointment.client
                     }
                 });
-
-                this.appointmentSlots.push(
-                    md5().hash(startedAt.toLocaleString())
-                );
             }
 
             return appointments;
@@ -219,7 +202,7 @@ define([
                     }
                     var eventEmployeeHash = event.extendedProps.employeeHash,
                         calendar = storage.searchEventCalendar(eventEmployeeHash),
-                        appointmentEmployeeHash = md5().hash(appointment.employee_id);
+                        appointmentEmployeeHash = md5().hash(appointmentData.employee_id);
 
                     if (typeof event !== "undefined" && !_.isEmpty(event) && Number.isInteger(parseInt(event.id))) {
                         if (!_.isEmpty(appointmentData.service_name)) {
@@ -261,8 +244,6 @@ define([
                         var calendar = storage.searchEventCalendar(appointment.extendedProps.employeeHash);
                         if (!_.isEmpty(calendar)) {
                             calendar.removeEventById(appointment.id);
-                            var hash = md5().hash((new Date(appointment.start)).toLocaleString());
-                            self.appointmentSlots.splice(self.appointmentSlots.indexOf(hash), 1);
                         }
                     }
                 });
