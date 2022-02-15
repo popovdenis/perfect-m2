@@ -8,6 +8,7 @@ define([
     'eventCalendarLib',
     'qcTimepicker',
     'spectrum',
+    'mage/calendar',
     'jquery/ui',
     'domReady!'
 ], function ($, modal, timetableAppointment, md5, _, storage) {
@@ -172,7 +173,7 @@ define([
                 var appointment = this.options.appointments[entityId],
                     startedAt = this._convertDateToEventFormat(appointment.started_at),
                     color = _.isEmpty(appointment.appointment_color)
-                        ? "#FE6B64"
+                        ? "#fe7b62"
                         : this.rgbToHex(appointment.appointment_color);
 
                 appointments.push({
@@ -185,8 +186,7 @@ define([
                     extendedProps: {
                         employee_id: appointment.employee_id,
                         employeeHash: md5().hash(appointment.employee_id),
-                        client: appointment.client,
-                        appointment_color: appointment.appointment_color
+                        client: appointment.client
                     }
                 });
 
@@ -196,46 +196,6 @@ define([
             }
 
             return appointments;
-        },
-
-        createEvents: function () {
-            let days = [];
-            for (let i = 0; i < 7; ++i) {
-                let day = new Date();
-                let diff = i - day.getDay();
-                day.setDate(day.getDate() + diff);
-                days[i] = day.getFullYear() + "-" + day.getMonth()+1 + "-" + day.getDate();
-            }
-
-            return [
-                {start: days[0] + " 00:00", end: days[0] + " 09:00", resourceId: 1, display: "background"},
-                {start: days[1] + " 12:00", end: days[1] + " 14:00", resourceId: 2, display: "background"},
-                {start: days[2] + " 17:00", end: days[2] + " 24:00", resourceId: 1, display: "background"},
-                {start: days[0] + " 10:00", end: days[0] + " 14:00", resourceId: 1, title: "The calendar can display background and regular events", color: "#FE6B64"},
-                {start: days[1] + " 16:00", end: days[2] + " 08:00", resourceId: 2, title: "An event may span to another day", color: "#B29DD9"},
-                {start: days[2] + " 09:00", end: days[2] + " 13:00", resourceId: 2, title: "Events can be assigned to resources and the calendar has the resources view built-in", color: "#779ECB"},
-                {start: days[3] + " 14:00", end: days[3] + " 20:00", resourceId: 1, title: "", color: "#FE6B64"},
-                {start: days[3] + " 15:00", end: days[3] + " 18:00", resourceId: 1, title: "Overlapping events are positioned properly", color: "#779ECB"},
-                {start: days[5] + " 10:00", end: days[5] + " 16:00", resourceId: 2, title: "You have complete control over the <i><b>display</b></i> of events…", color: "#779ECB"},
-                {start: days[5] + " 14:00", end: days[5] + " 19:00", resourceId: 2, title: "…and you can drag and drop the events!", color: "#FE6B64"},
-                {start: days[5] + " 18:00", end: days[5] + " 21:00", resourceId: 2, title: "", color: "#B29DD9"}
-            ];
-        },
-
-        createEvent: function (data, object) {
-            var startedAt = new Date(data.date),
-                finishedAt = new Date(data.date);
-
-            finishedAt.setHours(startedAt.getHours() + 1);
-
-            this.eventCalendarObject.addEvent({
-                start: startedAt,
-                end:  finishedAt,
-                resourceId: 2,
-                display: "auto",
-                title: "Стрижка",
-                color: "#779ECB"
-            });
         },
 
         _saveAppointment: function (appointment) {
@@ -259,6 +219,7 @@ define([
                         }
                         if (!_.isEmpty(appointmentData.appointment_color)) {
                             event.backgroundColor = self.rgbToHex(appointmentData.appointment_color);
+                            event.extendedProps.appointment_color = event.backgroundColor;
                         }
                         if (!_.isEmpty(appointmentData.employee_id)) {
                             event.extendedProps.employee_id = appointmentData.employee_id;
@@ -327,14 +288,13 @@ define([
 
             $('#appointment_time_start').qcTimepicker({classes: 'admin__control-select'});
             $('#appointment_time_end').qcTimepicker({classes: 'admin__control-select'});
-            $('#appointment_color').spectrum({
-                showPaletteOnly: true,
-                showPalette: true,
-                color: 'blanchedalmond',
-                palette: [
-                    ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50'],
-                    ['red', 'yellow', 'green', 'blue', 'violet']
-                ]
+            $('#appointment_color').spectrum(this.getSpectrumOptions('blanchedalmond'));
+            $("#appointment_date").calendar({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true,
+                showMonthAfterYear: false,
+                showButtonPanel: true
             });
         },
 
@@ -347,17 +307,7 @@ define([
             $('#appointment_time_start-qcTimepicker option[value="' + start.toLocaleTimeString("en-GB") + '"]').prop('selected', true).trigger('change');
             var end = new Date(appointment.end);
             $('#appointment_time_end-qcTimepicker option[value="' + end.toLocaleTimeString("en-GB") + '"]').prop('selected', true).trigger('change');
-
-            var color = _.isEmpty(appointment.extendedProps.appointment_color) ? 'rgb(255, 235, 205)' : appointment.extendedProps.appointment_color;
-            $('#appointment_color').spectrum({
-                showPaletteOnly: true,
-                showPalette: true,
-                color: color,
-                palette: [
-                    ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50'],
-                    ['red', 'yellow', 'green', 'blue', 'violet']
-                ]
-            });
+            $('#appointment_color').spectrum(this.getSpectrumOptions(appointment.backgroundColor));
 
             // client
             $('input[name="client_id"]').val(appointment.extendedProps.client.client_id);
@@ -370,6 +320,27 @@ define([
 
             // master
             $('#employee_id option[value="' + appointment.extendedProps.employee_id + '"]').prop('selected', true);
+        },
+
+        getSpectrumOptions: function (color) {
+            return {
+                showPaletteOnly: true,
+                togglePaletteOnly: true,
+                togglePaletteMoreText: 'more',
+                togglePaletteLessText: 'less',
+                color: color,
+                palette: [
+                    ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],
+                    ["#181818","#d6d94d","#646177","#8c9999", "#b0cbcc","#dfeee8","#e0f3d9","#fff"],
+                    ["#f00","#f90","#ff0","#0f0","#0ff","#00f","#90f","#f0f"],
+                    ["#f4cccc","#fce5cd","#fff2cc","#d9ead3","#d0e0e3","#cfe2f3","#d9d2e9","#ead1dc"],
+                    ["#ea9999","#f9cb9c","#ffe599","#b6d7a8","#a2c4c9","#9fc5e8","#b4a7d6","#d5a6bd"],
+                    ["#e06666","#f6b26b","#ffd966","#93c47d","#76a5af","#6fa8dc","#8e7cc3","#c27ba0"],
+                    ["#c00","#e69138","#f1c232","#6aa84f","#45818e","#3d85c6","#674ea7","#a64d79"],
+                    ["#900","#b45f06","#bf9000","#38761d","#134f5c","#0b5394","#351c75","#741b47"],
+                    ["#600","#783f04","#7f6000","#274e13","#0c343d","#073763","#20124d","#4c1130"]
+                ]
+            }
         },
 
         openPopup: function () {
