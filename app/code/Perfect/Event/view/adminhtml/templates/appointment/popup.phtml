@@ -150,87 +150,9 @@
                                     <span data-bind="i18n: 'Услуги'"></span>
                                 </strong>
                             </div>
-                            <div class="admin__fieldset-wrapper-content">
-                                <fieldset class="admin__fieldset" style="padding-top: 2rem;">
-                                    <div class="admin__field-complex">
-                                        <div class="admin__field-complex-elements">
-                                            <button type="button" class="action-basic" data-index="button_add">
-                                                <span data-bind="text: 'Добавить услугу'"></span>
-                                            </button>
-                                        </div>
-                                        <div class="admin__field-complex-content">
-                                            <div class="service_container_info">
-                                                <div class="col-xs-6 m-b" style="float: left; width: 50%; margin-bottom: 15px;">
-                                                    <i class="fa fa-money" style="vertical-align: middle;"></i>
-                                                    <b><small data-rec-services__total-price="">1200 ₴</small></b>
-                                                </div>
-                                                <div class="col-xs-6 text-right m-b">
-                                                    <i class="fa fa-clock-o" style="vertical-align: middle;"></i>
-                                                    <b><small data-rec-services__total-length="">2 ч.  (10:45 - 12:45)</small></b>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="admin__field" data-index="appointment-service-name" style="margin-bottom: 0;">
-                                        <div class="appointment-admin__field-control" style="margin-left: 30px;float: left;">
-                                            <table class="admin__dynamic-rows admin__control-collapsible">
-                                                <tbody>
-                                                    <tr class="data-row">
-                                                        <td class="admin__collapsible-block-wrapper _show _no-header">
-                                                            <div class="fieldset-wrapper admin__collapsible-block-wrapper _show">
-                                                                <div class="fieldset-wrapper-title">
-                                                                    <div class="admin__collapsible-title">
-                                                                        <div class="draggable-handle"></div>
-                                                                        <span data-bind="i18n: 'Новая услуга'"></span>
-                                                                    </div>
-                                                                    <button class="action-delete"><span data-bind="i18n: 'Delete'"></span></button>
-                                                                </div>
-                                                                <div class="admin__collapsible-content _show">
-                                                                    <div class="fieldset-wrapper admin__collapsible-block-wrapper _show _no-header">
-                                                                        <div class="admin__fieldset-wrapper-content admin__collapsible-content _show">
-                                                                            <fieldset class="admin__fieldset">
-                                                                                <fieldset class="admin__field">
-                                                                                    <div class="admin__field-control admin__field-group-columns admin__control-group-equal admin__control-grouped">
-                                                                                        <div class="admin__field">
-                                                                                            <div class="admin__field-label">
-                                                                                                <label for="JELIY6D">
-                                                                                                    <span data-bind="i18n: 'Название услуги'"></span>
-                                                                                                </label>
-                                                                                            </div>
-                                                                                            <div class="admin__field-control">
-                                                                                                <input class="admin__control-text" type="text"
-                                                                                                       name="product[options][0][title]"
-                                                                                                       aria-describedby="notice-JELIY6D"
-                                                                                                       id="JELIY6D" maxlength="255">
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="admin__field">
-                                                                                            <div class="admin__field-label">
-                                                                                                <label for="JELIY5M">
-                                                                                                    <span data-bind="i18n: 'Количество'"></span>
-                                                                                                </label>
-                                                                                            </div>
-                                                                                            <div class="admin__field-control">
-                                                                                                <input class="admin__control-text" type="text"
-                                                                                                       name="product[options][0][quantity]"
-                                                                                                       aria-describedby="notice-JELIY6D"
-                                                                                                       id="JELIY5M" maxlength="255">
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </fieldset>
-                                                                            </fieldset>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </fieldset>
+                            <div class="admin__fieldset-wrapper-content appointment-service"
+                                 data-bind="scope: 'appointment-service-component'">
+                                <!-- ko template: getTemplate() --><!-- /ko -->
                             </div>
                         </div>
 
@@ -270,3 +192,17 @@
         </div>
     </div>
 </div>
+<script type="text/x-magento-init">
+{
+   "*": {
+       "Magento_Ui/js/core/app": {
+           "components": {
+               "appointment-service-component": {
+                   "component": "Perfect_Event/js/appointment-service",
+                   "template": "Perfect_Event/form/appointment/service_new"
+               }
+           }
+       }
+   }
+}
+</script>

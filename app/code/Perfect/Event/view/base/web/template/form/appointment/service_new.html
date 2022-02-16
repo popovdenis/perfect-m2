@@ -1,0 +1,29 @@
+<fieldset class="admin__fieldset" style="padding-top: 2rem;">
+    <div class="admin__field-complex">
+        <div class="admin__field-complex-elements">
+            <button type="button" class="action-basic" data-bind="click: addService" data-index="button_add">
+                <span data-bind="text: 'Добавить услугу'"></span>
+            </button>
+        </div>
+        <div class="admin__field-complex-content">
+            <div class="service_container_info">
+                <div class="col-xs-6 m-b" style="float: left; width: 50%; margin-bottom: 15px;">
+                    <i class="fa fa-money" style="vertical-align: middle;"></i>
+                    <b><small data-rec-services__total-price="">1200 ₴</small></b>
+                </div>
+                <div class="col-xs-6 text-right m-b">
+                    <i class="fa fa-clock-o" style="vertical-align: middle;"></i>
+                    <b><small data-rec-services__total-length="">2 ч.  (10:45 - 12:45)</small></b>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="admin__field" data-index="appointment-service-name" style="margin-bottom: 0;">
+        <div class="appointment-admin__field-control" style="margin-left: 30px;float: left;">
+            <table class="admin__dynamic-rows admin__control-collapsible appointment-service-table">
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</fieldset>
