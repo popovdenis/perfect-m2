@@ -30,7 +30,7 @@ define(['mage/translate', 'Perfect_Event/js/appointment-service'], function ($t,
                                                     '<div class="admin__field">\n' +
                                                         '<div class="admin__field-label">\n' +
                                                             '<label for="JELIY5M">\n' +
-                                                                '<span>' + $t('Service Quantity') + '</span>\n' +
+                                                                '<span>' + $t('Quantity') + '</span>\n' +
                                                             '</label>\n' +
                                                         '</div>\n' +
                                                     '<div class="admin__field-control">\n' +

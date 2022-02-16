@@ -24,7 +24,8 @@ define([
             return this;
         },
         deleteService: function (appointment) {
-            jQuery(appointment.target).closest('.data-row').remove();
+            var target = $(appointment.target).closest('.data-row');
+            target.fadeOut(200, function() { target.remove(); });
             return this;
         },
         initEvents: function () {

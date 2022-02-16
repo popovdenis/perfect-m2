@@ -5,6 +5,7 @@
         <css src="Perfect_Event::css/timetable.css"/>
         <css src="Perfect_Event::css/event-calendar.min.css"/>
         <css src="Perfect_Event::css/spectrum.css"/>
+        <css src="Perfect_Event::css/font-awesome.min.css"/>
     </head>
     <referenceBlock name="after.body.start">
         <block class="Perfect\Event\Block\Adminhtml\TimetableConfig" name="perfect.timetable_service_config"
