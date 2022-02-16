@@ -6,200 +6,261 @@
                     <span data-bind="i18n: 'Детали записи'"></span>
                 </strong>
             </div>
-            <div class="admin__fieldset-wrapper-content _show">
+            <div class="admin__fieldset-wrapper-content">
                 <form id="appointment-validate-detail" class="form appointment" novalidate method="post"
                       action=""
                       data-mage-init='{"validation": {"errorClass": "mage-error"}}'>
                     <input name="id" type="hidden" id="appointment-id" value="" />
 
-                    <fieldset class="admin__fieldset" style="padding: 0;">
-                        <div class="fieldset-wrapper _show">
-                            <div data-level="0" data-index="client_info">
-                                <div class="fieldset-wrapper-title" style="border-bottom: none;">
-                                    <strong class="title">
-                                        <span data-bind="i18n: 'Детали клиента'"></span>
-                                    </strong>
-                                </div>
-                                <div class="admin__fieldset-wrapper-content _show">
-                                    <fieldset class="admin__fieldset" style="padding-bottom: 1rem; padding-top: 1rem;">
-                                        <div class="admin__field _required" data-index="client-name" style="margin-bottom: 0;">
-                                            <div class="admin__field-label">
-                                                <label for="client-name">
-                                                    <span data-bind="i18n: 'Имя клиента'"></span>
+                    <fieldset class="admin__fieldset">
+                        <div class="fieldset-wrapper admin__collapsible-block-wrapper">
+                            <div class="fieldset-wrapper-title">
+                                <strong class="title admin__collapsible-title" style="padding-bottom: 5px;">
+                                    <span data-bind="i18n: 'Детали клиента'"></span>
+                                </strong>
+                            </div>
+                            <div class="admin__fieldset-wrapper-content">
+                                <fieldset class="admin__fieldset" style="padding-top: 2rem;">
+                                    <div class="admin__field _required" data-index="client-name">
+                                        <div class="admin__field-label">
+                                            <label for="client-name">
+                                                <span data-bind="i18n: 'Имя клиента'"></span>
+                                            </label>
+                                        </div>
+                                        <div class="admin__field-control _with-tooltip">
+                                            <input class="admin__control-text" type="text" name="client_name"
+                                                   id="client-name" maxlength="255" data-validate="{required:true}">
+                                            <input name="client_id" type="hidden" id="client-id" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="admin__field _required" data-index="client-phone" style="margin-bottom: 0;">
+                                        <div class="admin__field-label">
+                                            <label for="client-phone">
+                                                <span data-bind="i18n: 'Телефон'"></span>
+                                            </label>
+                                        </div>
+                                        <div class="admin__field-control">
+                                            <input class="admin__control-text" type="text" name="client_phone"
+                                                   id="client-phone" maxlength="255" data-validate="{required:true}">
+                                        </div>
+                                    </div>
+                                    <div class="admin__field _required" data-index="client-email" style="margin-bottom: 0;">
+                                        <div class="admin__field-label">
+                                            <label for="client-email">
+                                                <span data-bind="i18n: 'Email'"></span>
+                                            </label>
+                                        </div>
+                                        <div class="admin__field-control">
+                                            <input class="admin__control-text" type="text" name="client_email"
+                                                   id="client-email" maxlength="255" data-validate="{required:true}">
+                                        </div>
+                                    </div>
+                                    <div class="admin__field" data-index="client-recommendation_checkbox" style="margin-bottom: 0;">
+                                        <div class="admin__field-label">
+                                            <label for="client-recommendation_checkbox">
+                                                <span data-bind="i18n: 'Записывает другого посетителя'"></span>
+                                            </label>
+                                        </div>
+                                        <div class="admin__field-control">
+                                            <div class="admin__actions-switch" data-role="switcher">
+                                                <input type="checkbox" class="admin__actions-switch-checkbox"
+                                                       id="client-recommendation_checkbox"
+                                                       name="client-recommendation_checkbox" value="0">
+                                                <label class="admin__actions-switch-label" for="client-recommendation_checkbox">
+                                                    <span class="admin__actions-switch-text" data-text-on="Yes" data-text-off="No"></span>
                                                 </label>
                                             </div>
-                                            <div class="admin__field-control">
-                                                <input class="admin__control-text" type="text" name="client_name"
-                                                       id="client-name" maxlength="255" data-validate="{required:true}">
-                                                <input name="client_id" type="hidden" id="client-id" value="" />
-                                            </div>
                                         </div>
-                                        <div class="admin__field _required" data-index="client-phone" style="margin-bottom: 0;">
-                                            <div class="admin__field-label">
-                                                <label for="client-phone">
-                                                    <span data-bind="i18n: 'Телефон'"></span>
-                                                </label>
-                                            </div>
-                                            <div class="admin__field-control">
-                                                <input class="admin__control-text" type="text" name="client_phone"
-                                                       id="client-phone" maxlength="255" data-validate="{required:true}">
-                                            </div>
+                                    </div>
+                                    <div class="admin__field hidden" data-index="client-recommendation-name" style="margin-bottom: 0;">
+                                        <div class="admin__field-label">
+                                            <label for="client-recommendation-name">
+                                                <span data-bind="i18n: 'Имя посетителя'"></span>
+                                            </label>
                                         </div>
-                                        <div class="admin__field _required" data-index="client-email" style="margin-bottom: 0;">
-                                            <div class="admin__field-label">
-                                                <label for="client-email">
-                                                    <span data-bind="i18n: 'Email'"></span>
-                                                </label>
-                                            </div>
-                                            <div class="admin__field-control">
-                                                <input class="admin__control-text" type="text" name="client_email"
-                                                       id="client-email" maxlength="255" data-validate="{required:true}">
-                                            </div>
+                                        <div class="admin__field-control">
+                                            <input class="admin__control-text" type="text"
+                                                   name="client-recommendation-name"
+                                                   id="client-recommendation-name"
+                                                   maxlength="255">
                                         </div>
-                                        <div class="admin__field" data-index="client-recommendation_checkbox" style="margin-bottom: 0;">
-                                            <div class="admin__field-label">
-                                                <label for="client-recommendation_checkbox">
-                                                    <span data-bind="i18n: 'Записывает другого посетителя'"></span>
-                                                </label>
-                                            </div>
-                                            <div class="admin__field-control">
-                                                <div class="admin__actions-switch" data-role="switcher">
-                                                    <input type="checkbox" class="admin__actions-switch-checkbox"
-                                                           id="client-recommendation_checkbox"
-                                                           name="client-recommendation_checkbox" value="0">
-                                                    <label class="admin__actions-switch-label" for="client-recommendation_checkbox">
-                                                        <span class="admin__actions-switch-text" data-text-on="Yes" data-text-off="No"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="admin__field _required" data-index="client-started-at" style="margin-bottom: 0;">
+                                        <div class="admin__field-label">
+                                            <label for="appointment_date">
+                                                <span data-bind="i18n: 'Дата и время'"></span>
+                                            </label>
                                         </div>
-                                        <div class="admin__field hidden" data-index="client-recommendation-name" style="margin-bottom: 0;">
-                                            <div class="admin__field-label">
-                                                <label for="client-recommendation-name">
-                                                    <span data-bind="i18n: 'Имя посетителя'"></span>
-                                                </label>
-                                            </div>
-                                            <div class="admin__field-control">
-                                                <input class="admin__control-text" type="text"
-                                                       name="client-recommendation-name"
-                                                       id="client-recommendation-name"
-                                                       maxlength="255">
-                                            </div>
+                                        <div class="admin__field-control">
+                                            <input class="admin__control-text" type="text" name="appointment_date"
+                                                   id="appointment_date" value="">
+                                            <input type="time"
+                                                   class="timepicker admin__control-text"
+                                                   name="appointment_time_start"
+                                                   id="appointment_time_start" min="09:00" max="20:00" step="300">
+                                            <span> - </span>
+                                            <input type="time"
+                                                   class="timepicker admin__control-text"
+                                                   name="appointment_time_end"
+                                                   id="appointment_time_end" min="09:00" max="20:00" step="300">
                                         </div>
-                                        <div class="admin__field _required" data-index="client-started-at" style="margin-bottom: 0;">
-                                            <div class="admin__field-label">
-                                                <label for="appointment_date">
-                                                    <span data-bind="i18n: 'Дата и время'"></span>
-                                                </label>
-                                            </div>
-                                            <div class="admin__field-control">
-                                                <input class="admin__control-text" type="text" name="appointment_date"
-                                                       id="appointment_date" value="">
-                                                <input type="time"
-                                                       class="timepicker admin__control-text"
-                                                       name="appointment_time_start"
-                                                       id="appointment_time_start" min="09:00" max="20:00" step="300">
-                                                <span> - </span>
-                                                <input type="time"
-                                                       class="timepicker admin__control-text"
-                                                       name="appointment_time_end"
-                                                       id="appointment_time_end" min="09:00" max="20:00" step="300">
-                                            </div>
+                                    </div>
+                                    <div class="admin__field" data-index="appointment_color" style="margin-bottom: 0;">
+                                        <div class="admin__field-label">
+                                            <label for="client-color">
+                                                <span data-bind="i18n: 'Цвет записи'"></span>
+                                            </label>
                                         </div>
-                                        <div class="admin__field" data-index="appointment_color" style="margin-bottom: 0;">
-                                            <div class="admin__field-label">
-                                                <label for="client-color">
-                                                    <span data-bind="i18n: 'Цвет записи'"></span>
-                                                </label>
-                                            </div>
-                                            <div class="admin__field-control">
-                                                <input class="admin__control-text" type="text" name="appointment_color" id="appointment_color">
-                                            </div>
+                                        <div class="admin__field-control">
+                                            <input class="admin__control-text" type="text" name="appointment_color" id="appointment_color">
                                         </div>
-                                        <div class="admin__field" data-index="client-comment" style="margin-bottom: 0;">
-                                            <div class="admin__field-label">
-                                                <label for="client-comment">
-                                                    <span data-bind="i18n: 'Комментарий'"></span>
-                                                </label>
-                                            </div>
-                                            <div class="admin__field-control">
-                                                <textarea class="admin__control-textarea" rows="3" cols="5"
-                                                          name="client_comment" id="client-comment"></textarea>
-                                            </div>
+                                    </div>
+                                    <div class="admin__field" data-index="client-comment" style="margin-bottom: 0;">
+                                        <div class="admin__field-label">
+                                            <label for="client-comment">
+                                                <span data-bind="i18n: 'Комментарий'"></span>
+                                            </label>
                                         </div>
-                                        <div class="admin__field" data-index="appointment-status" style="margin-bottom: 0;">
-                                            <div class="admin__field-label">
-                                                <label for="appointment-status">
-                                                    <span data-bind="i18n: 'Категория'"></span>
-                                                </label>
-                                            </div>
-                                            <div class="admin__field-control">
-                                                <select class="admin__control-select" name="appointment-status" id="appointment-status">
-                                                    <option value="" data-bind="i18n: 'Выберите статус'"></option>
-                                                    <option value="full-paid" data-bind="i18n: 'Полностью оплачен'"></option>
-                                                    <option value="partially-paid" data-bind="i18n: 'Частично оплачен'"></option>
-                                                </select>
-                                            </div>
+                                        <div class="admin__field-control">
+                                            <textarea class="admin__control-textarea" rows="3" cols="5"
+                                                      name="client_comment" id="client-comment"></textarea>
                                         </div>
-                                    </fieldset>
-                                </div>
+                                    </div>
+                                    <div class="admin__field" data-index="appointment-status" style="margin-bottom: 0;">
+                                        <div class="admin__field-label">
+                                            <label for="appointment-status">
+                                                <span data-bind="i18n: 'Категория'"></span>
+                                            </label>
+                                        </div>
+                                        <div class="admin__field-control">
+                                            <select class="admin__control-select" name="appointment-status" id="appointment-status">
+                                                <option value="" data-bind="i18n: 'Выберите статус'"></option>
+                                                <option value="full-paid" data-bind="i18n: 'Полностью оплачен'"></option>
+                                                <option value="partially-paid" data-bind="i18n: 'Частично оплачен'"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
 
-                        <div class="fieldset-wrapper _show">
-                            <div data-level="0" data-index="services">
-                                <div class="fieldset-wrapper-title" style="border-bottom: none;">
-                                    <strong class="title">
-                                        <span data-bind="i18n: 'Услуги'"></span>
-                                    </strong>
-                                </div>
-                                <div class="admin__fieldset-wrapper-content _show">
-                                    <fieldset class="admin__fieldset" style="padding-bottom: 1rem; padding-top: 1rem;">
-                                        <div class="admin__field" data-index="appointment-service-name" style="margin-bottom: 0;">
-                                            <div class="admin__field-label">
-                                                <label for="appointment-service-name">
-                                                    <span data-bind="i18n: 'Введите название услуги'"></span>
-                                                </label>
-                                            </div>
-                                            <div class="admin__field-control">
-                                                <input class="admin__control-text" type="text" maxlength="255"
-                                                       name="service_name"
-                                                       id="appointment-service-name" />
+                        <div class="fieldset-wrapper admin__collapsible-block-wrapper">
+                            <div class="fieldset-wrapper-title">
+                                <strong class="title admin__collapsible-title" style="padding-bottom: 5px;">
+                                    <span data-bind="i18n: 'Услуги'"></span>
+                                </strong>
+                            </div>
+                            <div class="admin__fieldset-wrapper-content">
+                                <fieldset class="admin__fieldset" style="padding-top: 2rem;">
+                                    <div class="admin__field-complex">
+                                        <div class="admin__field-complex-elements">
+                                            <button type="button" class="action-basic" data-index="button_add">
+                                                <span data-bind="text: 'Добавить услугу'"></span>
+                                            </button>
+                                        </div>
+                                        <div class="admin__field-complex-content">
+                                            <div class="service_container_info">
+                                                <div class="col-xs-6 m-b" style="float: left; width: 50%; margin-bottom: 15px;">
+                                                    <i class="fa fa-money" style="vertical-align: middle;"></i>
+                                                    <b><small data-rec-services__total-price="">1200 ₴</small></b>
+                                                </div>
+                                                <div class="col-xs-6 text-right m-b">
+                                                    <i class="fa fa-clock-o" style="vertical-align: middle;"></i>
+                                                    <b><small data-rec-services__total-length="">2 ч.  (10:45 - 12:45)</small></b>
+                                                </div>
                                             </div>
                                         </div>
-                                    </fieldset>
-                                </div>
+                                    </div>
+                                    <div class="admin__field" data-index="appointment-service-name" style="margin-bottom: 0;">
+                                        <div class="appointment-admin__field-control" style="margin-left: 30px;float: left;">
+                                            <table class="admin__dynamic-rows admin__control-collapsible">
+                                                <tbody>
+                                                    <tr class="data-row">
+                                                        <td class="admin__collapsible-block-wrapper _show _no-header">
+                                                            <div class="fieldset-wrapper admin__collapsible-block-wrapper _show">
+                                                                <div class="fieldset-wrapper-title">
+                                                                    <div class="admin__collapsible-title">
+                                                                        <div class="draggable-handle"></div>
+                                                                        <span data-bind="i18n: 'Новая услуга'"></span>
+                                                                    </div>
+                                                                    <button class="action-delete"><span data-bind="i18n: 'Delete'"></span></button>
+                                                                </div>
+                                                                <div class="admin__collapsible-content _show">
+                                                                    <div class="fieldset-wrapper admin__collapsible-block-wrapper _show _no-header">
+                                                                        <div class="admin__fieldset-wrapper-content admin__collapsible-content _show">
+                                                                            <fieldset class="admin__fieldset">
+                                                                                <fieldset class="admin__field">
+                                                                                    <div class="admin__field-control admin__field-group-columns admin__control-group-equal admin__control-grouped">
+                                                                                        <div class="admin__field">
+                                                                                            <div class="admin__field-label">
+                                                                                                <label for="JELIY6D">
+                                                                                                    <span data-bind="i18n: 'Название услуги'"></span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                            <div class="admin__field-control">
+                                                                                                <input class="admin__control-text" type="text"
+                                                                                                       name="product[options][0][title]"
+                                                                                                       aria-describedby="notice-JELIY6D"
+                                                                                                       id="JELIY6D" maxlength="255">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="admin__field">
+                                                                                            <div class="admin__field-label">
+                                                                                                <label for="JELIY5M">
+                                                                                                    <span data-bind="i18n: 'Количество'"></span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                            <div class="admin__field-control">
+                                                                                                <input class="admin__control-text" type="text"
+                                                                                                       name="product[options][0][quantity]"
+                                                                                                       aria-describedby="notice-JELIY6D"
+                                                                                                       id="JELIY5M" maxlength="255">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </fieldset>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
+
                         <?php if ($customers = $block->getEmployees()): ?>
-                        <div class="fieldset-wrapper _show">
-                            <div data-level="0" data-index="employee">
-                                <div class="fieldset-wrapper-title" style="border-bottom: none;">
-                                    <strong class="title">
-                                        <span data-bind="i18n: 'Сотрудник'"></span>
-                                    </strong>
-                                </div>
-                                <div class="admin__fieldset-wrapper-content _show">
-                                    <fieldset class="admin__fieldset" style="padding-bottom: 1rem; padding-top: 1rem;">
-                                        <div class="admin__field" data-index="appointment-employee-name" style="margin-bottom: 0;">
-                                            <div class="admin__field-label">
-                                                <label for="employee_id">
-                                                    <span data-bind="i18n: 'Сотрудник'"></span>
-                                                </label>
-                                            </div>
-                                            <div class="admin__field-control">
-                                                <select class="admin__control-select" name="employee_id" id="employee_id">
-                                                    <option value=""><?= __('Выберите мастера') ?></option>
-                                                    <?php foreach ($customers as $customer): ?>
-                                                        <option data-title="<?= $customer->getFirstname() ?>" value="<?= $customer->getId() ?>">
-                                                            <?= sprintf('%s %s', $customer->getFirstname(), $customer->getLastname()) ?>
-                                                        </option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
+                        <div class="fieldset-wrapper admin__collapsible-block-wrapper">
+                            <div class="fieldset-wrapper-title">
+                                <strong class="title admin__collapsible-title" style="padding-bottom: 5px;">
+                                    <span data-bind="i18n: 'Сотрудник'"></span>
+                                </strong>
+                            </div>
+                            <div class="admin__fieldset-wrapper-content">
+                                <fieldset class="admin__fieldset" style="padding-top: 2rem;">
+                                    <div class="admin__field" data-index="appointment-employee-name" style="margin-bottom: 0;">
+                                        <div class="admin__field-label">
+                                            <label for="employee_id">
+                                                <span data-bind="i18n: 'Сотрудник'"></span>
+                                            </label>
                                         </div>
-                                    </fieldset>
-                                </div>
+                                        <div class="admin__field-control">
+                                            <select class="admin__control-select" name="employee_id" id="employee_id">
+                                                <option value=""><?= __('Выберите мастера') ?></option>
+                                                <?php foreach ($customers as $customer): ?>
+                                                    <option data-title="<?= $customer->getFirstname() ?>" value="<?= $customer->getId() ?>">
+                                                        <?= sprintf('%s %s', $customer->getFirstname(), $customer->getLastname()) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
                         <?php endif; ?>

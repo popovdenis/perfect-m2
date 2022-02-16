@@ -11,6 +11,7 @@ define([
     'qcTimepicker',
     'spectrum',
     'mage/calendar',
+    'mage/collapsible',
     'jquery/ui',
     'domReady!'
 ], function ($, modal, timetableAppointment, md5, _, storage, Event, confirm) {
@@ -307,6 +308,13 @@ define([
                 changeYear: true,
                 showMonthAfterYear: false,
                 showButtonPanel: true
+            });
+            $(".fieldset-wrapper").collapsible({
+                "header": ".fieldset-wrapper-title",
+                "content": ".admin__fieldset-wrapper-content",
+                "openedState": "_show",
+                "closedState": "_hide",
+                "active": true
             });
         },
 

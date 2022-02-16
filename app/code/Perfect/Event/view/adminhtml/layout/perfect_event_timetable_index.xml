@@ -12,6 +12,7 @@
         </block>
     </referenceBlock>
     <referenceContainer name="content">
+        <uiComponent name="events_listing"/>
         <container name="timetable" htmlTag="div" htmlClass="timetable">
             <block class="Perfect\Event\Block\Adminhtml\Timetable" name="timetablejs.init"
                    template="Perfect_Event::timetable.phtml" />

@@ -1,3 +1,15 @@
 .delete-appointment {
     float: left;
 }
+.admin__data-grid-wrap {
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    margin: 0;
+}
+.fa.fa-money:before {
+    content: "\f3d1";
+}
+.fa.fa-clock-o:before {
+    content: "\f017";
+}
