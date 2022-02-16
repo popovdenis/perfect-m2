@@ -3,7 +3,8 @@ define([
     'uiElement',
     'ko',
     'mage/template',
-    'Perfect_Event/js/view/appointment-template/service/default'
+    'Perfect_Event/js/view/appointment-template/service/default',
+    'mage/collapsible'
 ], function($, Component, ko, mageTemplate, defaultTemplate) {
     'use strict';
 
@@ -30,6 +31,13 @@ define([
         },
         initEvents: function () {
             $('.action-delete').off('click').on('click', this.deleteService.bind(this));
+            $(".fieldset-wrapper").collapsible({
+                "header": ".fieldset-wrapper-title",
+                "content": ".admin__fieldset-wrapper-content",
+                "openedState": "_show",
+                "closedState": "_hide",
+                "active": true
+            });
         }
     });
 });
