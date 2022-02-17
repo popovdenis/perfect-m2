@@ -20,7 +20,7 @@ define([
 
             $(this.appointmentTableContainer).append(templateText);
 
-            this.initEvents();
+            this.initEvents(templateText);
 
             return this;
         },
@@ -73,10 +73,10 @@ define([
                 plusElement.prop('disabled', false);
             }
         },
-        initEvents: function () {
-            $('.action-delete').off('click').on('click', this.deleteService.bind(this));
-            $('.btn-qty-plus').off('click').on('click', this.increaseServiceQty.bind(this));
-            $('.btn-qty-minus').off('click').on('click', this.decreaseServiceQty.bind(this));
+        initEvents: function (target) {
+            $('.action-delete', target).on('click', this.deleteService.bind(this));
+            $('.btn-qty-plus', target).on('click', this.increaseServiceQty.bind(this));
+            $('.btn-qty-minus', target).on('click', this.decreaseServiceQty.bind(this));
             /*$(this.appointmentTableContainer).find(".fieldset-wrapper").collapsible({
                 "header": ".fieldset-wrapper-title",
                 "content": ".admin__collapsible-content",
