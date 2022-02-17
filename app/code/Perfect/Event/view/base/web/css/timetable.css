@@ -13,3 +13,73 @@
 .fa.fa-clock-o:before {
     content: "\f017";
 }
+.minus-plus-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    width: 25%
+}
+.input-group-btn {
+    width: 1%;
+    vertical-align: middle;
+    display: table-cell;
+    position: relative;
+    font-size: 0;
+    white-space: nowrap;
+}
+.input-group-btn:first-child>.btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.input-group-btn:first-child>.btn {
+    margin-right: -1px;
+    font-size: 10px;
+}
+.input-group-btn:last-child>.btn {
+    margin-left: -1px;
+    font-size: 10px;
+}
+.btn.input-sm {
+    height: 33px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+.input-group-btn>.btn {
+    position: relative;
+}
+.btn-default {
+    color: inherit;
+    background: #fff;
+    border: 1px solid #adadad;
+}
+.input-group .form-control {
+    display: table-cell;
+}
+.input-group .form-control {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+}
+.input-number {
+    border-radius: 0;
+    display: table-cell;
+    position: relative;
+    z-index: 2;
+    float: left;
+    margin-bottom: 0;
+    padding: 6px 8px;
+    background-color: #fff;
+    border: 1px solid #adadad;
+    color: inherit;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    font-size: 14px;
+    box-shadow: none;
+    height: 33px;
+    line-height: 1.5;
+    font-family: inherit;
+    text-align: center;
+}

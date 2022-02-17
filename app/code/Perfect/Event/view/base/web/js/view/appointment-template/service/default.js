@@ -34,8 +34,19 @@ define(['mage/translate', 'Perfect_Event/js/appointment-service'], function ($t,
                                                         '</label>\n' +
                                                     '</div>\n' +
                                                 '<div class="admin__field-control">\n' +
-                                                    '<input class="admin__control-text" type="text"\n' +
-                                                    'name="product[options][0][quantity]" id="JELIY5M" maxlength="255">\n' +
+                                                    '<div class="minus-plus-group">\n' +
+                                                        '<span class="input-group-btn">\n' +
+                                                            '<button type="button" class="btn btn-default input-sm">\n' +
+                                                                '<i class="fa fa-minus"></i>\n' +
+                                                            '</button>\n' +
+                                                        '</span>\n' +
+                                                        '<input type="text" class="form-control input-number admin__control-text" min="0" max="1000" name="amount" value="1" placeholder="Кол-во">\n' +
+                                                        '<span class="input-group-btn">\n' +
+                                                            '<button type="button" class="btn btn-default input-sm">\n' +
+                                                                '<i class="fa fa-plus"></i>\n' +
+                                                            '</button>\n' +
+                                                        '</span>\n' +
+                                                    '</div>\n' +
                                                 '</div>\n' +
                                             '</div>\n' +
                                         '</fieldset>\n' +
