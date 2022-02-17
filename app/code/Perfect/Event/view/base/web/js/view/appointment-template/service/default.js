@@ -36,13 +36,13 @@ define(['mage/translate', 'Perfect_Event/js/appointment-service'], function ($t,
                                                 '<div class="admin__field-control">\n' +
                                                     '<div class="minus-plus-group">\n' +
                                                         '<span class="input-group-btn">\n' +
-                                                            '<button type="button" class="btn btn-default input-sm">\n' +
+                                                            '<button type="button" class="btn btn-default input-sm btn-qty-minus">\n' +
                                                                 '<i class="fa fa-minus"></i>\n' +
                                                             '</button>\n' +
                                                         '</span>\n' +
-                                                        '<input type="text" class="form-control input-number admin__control-text" min="0" max="1000" name="amount" value="1" placeholder="Кол-во">\n' +
+                                                        '<input type="text" class="form-control input-qty admin__control-text" min="0" max="1000" name="amount" value="1" placeholder="' + $t('Quantity-short') + '">\n' +
                                                         '<span class="input-group-btn">\n' +
-                                                            '<button type="button" class="btn btn-default input-sm">\n' +
+                                                            '<button type="button" class="btn btn-default input-sm btn-qty-plus">\n' +
                                                                 '<i class="fa fa-plus"></i>\n' +
                                                             '</button>\n' +
                                                         '</span>\n' +
