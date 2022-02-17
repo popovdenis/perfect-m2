@@ -3,19 +3,19 @@ define([
     'underscore',
     'ko',
     'Perfect_Event/js/form/element/abstract',
-    'Perfect_Event/js/model/services',
+    'Perfect_Event/js/model/clients',
     'mage/translate',
     'Magento_Ui/js/lib/key-codes'
-], function ($, _, ko, Abstract, ServiceCollection, $t, keyCodes) {
+], function ($, _, ko, Abstract, ClientCollection, $t, keyCodes) {
     'use strict';
 
     return Abstract.extend({
         defaults: {
             _sequence: null,
-            elementTmpl: 'Perfect_Event/form/service/input',
-            services: ko.observable(),
-            servicesEmpty: ko.observable(),
-            servicesDefault: ko.observable(),
+            elementTmpl: 'Perfect_Event/form/client/input',
+            clients: ko.observable(),
+            clientsEmpty: ko.observable(),
+            clientsDefault: ko.observable(),
             listVisible: ko.observable(false),
             showFilteredQuantity: true,
             itemsQuantity: '',
@@ -33,7 +33,7 @@ define([
             filterRateLimitMethod: 'notifyAtFixedRate',
             listens: {
                 listVisible: 'cleanHoveredElement',
-                inputValue: 'searchServices',
+                inputValue: 'searchClients',
                 options: 'checkOptionsList'
             },
             selectedPlaceholders: {
@@ -52,16 +52,17 @@ define([
                     search: ''
                 }
             },
-            serviceFields: {
-                serviceIdFieldName: ''
+            clientFields: {
+                clientIdFieldName: '',
+                clientPhoneFieldName: ''
             }
         },
 
         initialize: function () {
             this._super();
 
-            var service = new ServiceCollection({items: this.servicesDefault});
-            this.services = ko.observable(service.getList());
+            var client = new ClientCollection({items: this.clientsDefault});
+            this.clients = ko.observable(client.getList());
 
             return this;
         },
@@ -116,9 +117,9 @@ define([
         },
 
         /**
-         * Search services
+         * Search clients
          */
-        searchServices: function () {
+        searchClients: function () {
             var value = this.inputValue().trim().toLowerCase(),
                 array = [],
                 self = this;
@@ -137,7 +138,7 @@ define([
             }
 
             if (this.inputValue()) {
-                // search services
+                // search clients
                 self.searchConfig.formOptions.search = this.inputValue();
                 self._sequence = self._getXHRPromise(true);
 
@@ -173,11 +174,16 @@ define([
          * @returns {Object} Chainable
          */
         toggleOptionSelected: function (data, event) {
-            if (!this.isSelected(data.service)) {
-                this.value(data.service);
-                var serviceField = $('[name="' + this.serviceFields.serviceIdFieldName + '"]');
-                if (serviceField.length) {
-                    serviceField.val(data.service_id).trigger("change");
+            if (!this.isSelected(data.client)) {
+                this.value(data.client);
+                var clientIdField = $('[name="' + this.clientFields.clientIdFieldName + '"]');
+                var clientPhoneField = $('[name="' + this.clientFields.clientPhoneFieldName + '"]');
+
+                if (clientIdField.length) {
+                    clientIdField.val(data.client_id).trigger("change");
+                }
+                if (clientPhoneField.length) {
+                    clientPhoneField.val(data.client_phone).trigger("change");
                 }
             }
 
@@ -268,20 +274,20 @@ define([
 
         _onDone: function (items) {
             if (Object.entries(items).length) {
-                this.servicesEmpty('');
-                this.services(items);
+                this.clientsEmpty('');
+                this.clients(items);
                 this._setItemsQuantity(Object.entries(items).length);
             } else {
-                this.services([]);
+                this.clients([]);
                 this._setItemsQuantity(0);
-                this.servicesEmpty($t('Nothing found, please try to change your search keyword'));
+                this.clientsEmpty($t('Nothing found, please try to change your search keyword'));
             }
         },
 
         _setDefaultResults: function () {
-            this.servicesEmpty('');
-            this.services(this.servicesDefault);
-            this._setItemsQuantity(this.services().length);
+            this.clientsEmpty('');
+            this.clients(this.clientsDefault);
+            this._setItemsQuantity(this.client().length);
         },
 
         _onFail: function (jqXHR, textStatus, errorThrown, options) {

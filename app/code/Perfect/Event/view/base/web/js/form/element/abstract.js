@@ -40,7 +40,7 @@ define([
             showFallbackReset: false,
             additionalClasses: {},
             isUseDefault: '',
-            serviceDisabled: false,
+            clientDisabled: false,
             valueUpdate: false, // ko binding valueUpdate
 
             switcherConfig: {
@@ -101,7 +101,7 @@ define([
             this._super();
 
             this.observe('error disabled focused preview visible value warn notice isDifferedFromDefault')
-                .observe('isUseDefault serviceDisabled')
+                .observe('isUseDefault clientDisabled')
                 .observe({
                     'required': !!rules['required-entry']
                 });
@@ -329,12 +329,12 @@ define([
         },
 
         /**
-         * Checks if element has service setting
+         * Checks if element has client setting
          *
          * @returns {Boolean}
          */
-        hasService: function () {
-            return this.service && this.service.template;
+        hasClient: function () {
+            return this.client && this.client.template;
         },
 
         /**
@@ -459,7 +459,7 @@ define([
         toggleUseDefault: function (state) {
             this.disabled(state);
 
-            if (this.source && this.hasService()) {
+            if (this.source && this.hasClient()) {
                 this.source.set('data.use_default.' + this.index, Number(state));
             }
         },

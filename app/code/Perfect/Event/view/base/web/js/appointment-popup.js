@@ -30,7 +30,6 @@ define([
         init: function () {
             this.initPopup();
             this.initEvents();
-            // this.initAutocomplete();
         },
         initPopup: function () {
             var self = this,
@@ -93,39 +92,6 @@ define([
                 "active": true
             });
         },
-        initAutocomplete: function () {
-            $('input[name="client_name"]').autocomplete({
-                minLength: 2,
-                source: function(request, response) {
-                    $.ajax( {
-                        url: config.getSearchClientUrl(),
-                        dataType: 'json',
-                        data: {search: request.term},
-                        success: function(results) {
-                            if (!results.length) {
-                                $("#no-results").text("Клиенты не найдены");
-                            } else {
-                                $("#no-results").empty();
-                            }
-
-                            response(results);
-                        }
-                    });
-                },
-                messages: {
-                    noResults: 'Клиенты не найдены',
-                    results: function (amount) {
-                        return '';
-                    }
-                },
-                select: function (event, ui) {
-                    $('input[name="client_id"]').val(ui.item.client_id);
-                    $('input[name="client_name"]').val(ui.item.client_name);
-                    $('input[name="client_phone"]').val(ui.item.client_phone);
-                    $('input[name="client_email"]').val(ui.item.client_email);
-                }
-            });
-        },
         initAppointmentListener: function (appointment) {
             storage.currentEvent(appointment);
         },
@@ -149,7 +115,6 @@ define([
             $('input[name="client_id"]').val(appointment.extendedProps.client.client_id);
             $('input[name="client_name"]').val(appointment.extendedProps.client.client_name);
             $('input[name="client_phone"]').val(appointment.extendedProps.client.client_phone);
-            $('input[name="client_email"]').val(appointment.extendedProps.client.client_email);
 
             // services
             $('input[name="service_name"]').val(appointment.title);

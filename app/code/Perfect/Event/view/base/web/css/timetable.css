@@ -83,6 +83,7 @@
     font-family: inherit;
     text-align: center;
 }
-.service-detail:hover {
+.client-item-details:hover,
+.service-item-details:hover {
     background-color: #e3e3e3;
 }

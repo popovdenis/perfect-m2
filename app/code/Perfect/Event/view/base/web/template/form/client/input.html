@@ -20,7 +20,7 @@
                 toggleListVisible(data, event)
             }
     ">
-        <div class="admin__action-multiselect-text" data-bind="text: value"></div>
+        <div class="admin__action-multiselect-text client-name-select" data-bind="text: value"></div>
     </div>
     <div class="action-menu" data-bind="css:{_active: listVisible}">
         <div class="admin__action-multiselect-search-wrap">
@@ -34,16 +34,15 @@
             <label class="admin__action-multiselect-search-label" data-action="advanced-select-search"></label>
             <div if="itemsQuantity" data-bind="text: itemsQuantity" class="admin__action-multiselect-search-count"></div>
         </div>
-        <div class="service-detail-empty" data-bind="text: servicesEmpty()"></div>
-        <ul data-bind="foreach: services()"
-            class="services-search-items services-search-items admin__action-multiselect-menu-inner _root">
+        <div class="client-detail-empty" data-bind="text: clientsEmpty()"></div>
+        <ul data-bind="foreach: clients()"
+            class="clients-search-items clients-search-items admin__action-multiselect-menu-inner _root">
             <li class="admin__action-multiselect-menu-inner-item _root" data-role="option-group">
-                <div class="action-menu-item service-detail"
-                     data-bind="
-                     click: function(data, event) {
+                <div class="action-menu-item client-item-details"
+                     data-bind="click: function(data, event) {
                         $parent.toggleOptionSelected($data, event);
                      }">
-                    <span data-bind="text: service"></span>
+                    <span data-bind="text: client"></span>
                 </div>
             </li>
         </ul>

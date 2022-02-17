@@ -1,8 +1,8 @@
 define([
     'ko',
     'uiClass',
-    'Perfect_Event/js/model/service'
-], function (ko, Class, Service) {
+    'Perfect_Event/js/model/client'
+], function (ko, Class, Client) {
     'use strict';
 
     return Class.extend({
@@ -13,8 +13,8 @@ define([
         },
 
         initObservable: function () {
-            this.items = ko.observableArray(ko.utils.arrayMap(this.items, function (service) {
-                return new Service(service);
+            this.items = ko.observableArray(ko.utils.arrayMap(this.items, function (client) {
+                return new Client(client);
             }));
 
             return this;

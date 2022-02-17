@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var \Perfect\Event\Block\Adminhtml\Timetable $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
 <div class="appointment-modal">
     <div class="entry-edit form-inline">
         <div class="fieldset-wrapper">
@@ -26,9 +32,7 @@
                                             </label>
                                         </div>
                                         <div class="admin__field-control _with-tooltip">
-<!--                                            <input class="admin__control-text" type="text" name="client_name"-->
-<!--                                                   id="client-name" maxlength="255" data-validate="{required:true}">-->
-                                            <input name="client_id" type="hidden" id="client-id" value="" />
+                                            <input name="client_id" type="hidden" id="client_id" value="" />
                                             <div data-bind="scope: 'client-name-element'">
                                                 <!-- ko template: getTemplate() --><!-- /ko -->
                                             </div>
@@ -43,17 +47,6 @@
                                         <div class="admin__field-control">
                                             <input class="admin__control-text" type="text" name="client_phone"
                                                    id="client-phone" maxlength="255" data-validate="{required:true}">
-                                        </div>
-                                    </div>
-                                    <div class="admin__field _required" data-index="client-email" style="margin-bottom: 0;">
-                                        <div class="admin__field-label">
-                                            <label for="client-email">
-                                                <span data-bind="i18n: 'Email'"></span>
-                                            </label>
-                                        </div>
-                                        <div class="admin__field-control">
-                                            <input class="admin__control-text" type="text" name="client_email"
-                                                   id="client-email" maxlength="255" data-validate="{required:true}">
                                         </div>
                                     </div>
                                     <div class="admin__field" data-index="client-recommendation_checkbox" style="margin-bottom: 0;">
@@ -203,17 +196,19 @@
                     "template": "Perfect_Event/appointment/popup/service_new"
                 },
                 "client-name-element": {
-                    "component": "Perfect_Event/js/form/service-search",
-                    "template": "Perfect_Event/form/service/input",
+                    "component": "Perfect_Event/js/form/client-search",
+                    "template": "Perfect_Event/form/client/input",
                     "config": {
                         "searchConfig": {
-                            "url": "<?= $block->getSearchServicesUrl() ?>"
+                            "url": "<?= $block->getSearchClientsUrl() ?>"
                         },
-                        "serviceFields": {
-                            "serviceIdFieldName": "client-id"
+                        "clientFields": {
+                            "clientIdFieldName": "client_id",
+                            "clientPhoneFieldName": "client_phone"
                         },
-                        "servicesDefault": <?= $block->encodeJson($block->getTopClientsList()) ?>
-                    }
+                        "clientsDefault": <?= $block->encodeJson($block->getTopClientsList()) ?>
+                    },
+                    "value": "Денис Попов"
                 }
             }
         }

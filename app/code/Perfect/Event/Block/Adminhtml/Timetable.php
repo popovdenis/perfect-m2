@@ -165,28 +165,33 @@ class Timetable extends \Magento\Backend\Block\Template
     /**
      * @return string
      */
-    public function getSearchServicesUrl()
+    public function getSearchClientsUrl()
     {
         return $this->getUrl(
-            'perfect_event/search/services',
+            'perfect_event/search/clients',
             [
                 '_secure' => true
             ]
         );
     }
 
+    /**
+     * @return array
+     */
     public function getTopClientsList()
     {
         $clients = [];
         if ($customerGroupId = $this->getClientGroup()) {
             $customerCollection = $this->collectionFactory->create();
             $customerCollection->addFieldToFilter('group_id', ['eq' => $customerGroupId]);
+            $customerCollection->addAttributeToSelect('phone');
             $customerCollection->getSelect()->limit(10);
 
             foreach ($customerCollection->getItems() as $customer) {
                 $clients[] = [
-                    'service' => $customer->getFirstname(),
-                    'service_id' => $customer->getId()
+                    'client_id' => $customer->getId(),
+                    'client' => sprintf('%s %s', $customer->getFirstname(), $customer->getLastname()),
+                    'client_phone' => $customer->getPhone()
                 ];
             }
         }

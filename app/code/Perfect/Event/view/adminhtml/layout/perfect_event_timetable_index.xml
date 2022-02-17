@@ -8,7 +8,7 @@
         <css src="Perfect_Event::css/font-awesome.min.css"/>
     </head>
     <referenceBlock name="after.body.start">
-        <block class="Perfect\Event\Block\Adminhtml\TimetableConfig" name="perfect.timetable_service_config"
+        <block class="Perfect\Event\Block\Adminhtml\TimetableConfig" name="perfect.timetable_client_config"
                template="Perfect_Event::timetable/config.phtml">
         </block>
     </referenceBlock>
