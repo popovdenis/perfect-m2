@@ -31,13 +31,13 @@ define([
         },
         initEvents: function () {
             $('.action-delete').off('click').on('click', this.deleteService.bind(this));
-            $(this.appointmentTableContainer).find(".fieldset-wrapper").collapsible({
+            /*$(this.appointmentTableContainer).find(".fieldset-wrapper").collapsible({
                 "header": ".fieldset-wrapper-title",
                 "content": ".admin__collapsible-content",
                 "openedState": "_show",
                 "closedState": "_hide",
                 "active": true
-            });
+            });*/
         }
     });
 });

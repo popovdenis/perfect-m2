@@ -11,6 +11,9 @@ define([
         getDeleteAppointmentUrl: function () {
             return this._getConfig('delete_appointment_url');
         },
+        getSearchClientUrl: function () {
+            return this._getConfig('client_search_url');
+        },
         /**
          * Retrieve config value by given key.
          * Config will be fetched from defined section.

@@ -13,18 +13,6 @@ if ($customers = $block->getEmployees()):
         $employeesHash[$hash] = $hash;
     }
 ?>
-<!--    <div class="timetable-controls-date-buttons">-->
-<!--        <div class="y-timetable-controls-date-buttons-change">-->
-<!--            <button class="button timetable-controls-date-buttons-change-prev" type="button"-->
-<!--                    style="border: solid black;border-width: 0 3px 3px 0;display: inline-block;padding: 3px;transform: rotate(135deg);-webkit-transform: rotate(135deg);">-->
-<!--                <i class="fa-chevron-left"></i>-->
-<!--            </button>-->
-<!--            <button class="button timetable-controls-date-buttons-change-next" type="button"-->
-<!--                    style="border: solid black;border-width: 0 3px 3px 0;display: inline-block;padding: 3px;transform: rotate(-45deg);-webkit-transform: rotate(-45deg);">-->
-<!--                <i class="fa-chevron-right"></i>-->
-<!--            </button>-->
-<!--        </div>-->
-<!--    </div>-->
     <div class="timetable" style="float: left; width: 100%">
         <?php foreach ($customers as $customer): ?>
             <div class="timetable-grid-<?= $indexer ?>" style="float: left;width:48%;margin:0 10px;">

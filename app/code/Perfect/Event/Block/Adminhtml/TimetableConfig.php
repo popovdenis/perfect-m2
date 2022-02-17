@@ -44,6 +44,9 @@ class TimetableConfig extends \Magento\Backend\Block\Template
             ),
             'delete_appointment_url' => $this->getUrl(
                 'perfect_event/timetable/delete', ['_secure' => true]
+            ),
+            'client_search_url' => $this->getUrl(
+                'perfect_event/timetable/search', ['_secure' => true]
             )
         ]);
     }

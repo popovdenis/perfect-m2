@@ -85,7 +85,7 @@ class Timetable extends \Magento\Backend\Block\Template
     }
 
     /**
-     * @param                                              $schedulerId
+     * @param   $schedulerId
      *
      * @return array
      */
@@ -94,9 +94,6 @@ class Timetable extends \Magento\Backend\Block\Template
         return [
             'schedulerId' => $schedulerId,
             'scheduler' => 'scheduler' . $schedulerId,
-            'searchConfig' => [
-                'url' => $this->getUrl('perfect_event/timetable/search', ['_secure' => true])
-            ],
             'appointmentModal' => '.appointment-modal'
         ];
     }
