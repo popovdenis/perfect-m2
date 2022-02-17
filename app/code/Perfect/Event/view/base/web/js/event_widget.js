@@ -61,10 +61,10 @@ define([
                     nowIndicator: true,
                     events: appointmentManager().populateAppointments(this.options.appointments),
                     views: {
-                        timeGridDay: {pointer: true, titleFormat: {year: 'numeric', month: 'short', day: 'numeric'}},
+                        timeGridDay: {pointer: true, titleFormat: {year: 'numeric', month: 'short', day: 'numeric'}, locale: 'ru'},
+                        timeGridWeek: {pointer: true, titleFormat: {year: 'numeric', month: '2-digit', day: 'numeric'}, locale: 'ru'},
+                        dayGridMonth: {pointer: true, titleFormat: {year: 'numeric', month: 'short', day: 'numeric'}, locale: 'ru'},
                         resourceTimeGridDay: {pointer: true},
-                        timeGridWeek: {pointer: true, titleFormat: {year: 'numeric', month: 'short', day: 'numeric'}},
-                        dayGridMonth: {pointer: true, titleFormat: {year: 'numeric', month: 'short', day: 'numeric'}},
                         resourceTimeGridWeek: {pointer: true}
                     },
                     dateClick: function (dateClickInfo) {
