@@ -63,9 +63,10 @@ define([
                     nowIndicator: true,
                     events: self._populateAppointments(),
                     views: {
-                        timeGridDay: {pointer: true},
+                        timeGridDay: {pointer: true, titleFormat: {year: 'numeric', month: 'short', day: 'numeric'}},
                         resourceTimeGridDay: {pointer: true},
-                        timeGridWeek: {pointer: true},
+                        timeGridWeek: {pointer: true, titleFormat: {year: 'numeric', month: 'short', day: 'numeric'}},
+                        dayGridMonth: {pointer: true, titleFormat: {year: 'numeric', month: 'short', day: 'numeric'}},
                         resourceTimeGridWeek: {pointer: true}
                     },
                     dateClick: function (dateClickInfo) {
