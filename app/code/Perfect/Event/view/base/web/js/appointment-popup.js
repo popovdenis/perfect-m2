@@ -30,7 +30,7 @@ define([
         init: function () {
             this.initPopup();
             this.initEvents();
-            this.initAutocomplete();
+            // this.initAutocomplete();
         },
         initPopup: function () {
             var self = this,
@@ -94,7 +94,6 @@ define([
             });
         },
         initAutocomplete: function () {
-            var self = this;
             $('input[name="client_name"]').autocomplete({
                 minLength: 2,
                 source: function(request, response) {

@@ -16,6 +16,8 @@ class Timetable extends \Magento\Backend\Block\Template
 {
     const MASTER_CUSTOMER_GROUP = 'Сотрудник';
 
+    const CLIENT_CUSTOMER_GROUP = 'Клиент';
+
     /**
      * @var \Magento\Framework\Serialize\Serializer\Json
      */
@@ -161,6 +163,38 @@ class Timetable extends \Magento\Backend\Block\Template
     }
 
     /**
+     * @return string
+     */
+    public function getSearchServicesUrl()
+    {
+        return $this->getUrl(
+            'perfect_event/search/services',
+            [
+                '_secure' => true
+            ]
+        );
+    }
+
+    public function getTopClientsList()
+    {
+        $clients = [];
+        if ($customerGroupId = $this->getClientGroup()) {
+            $customerCollection = $this->collectionFactory->create();
+            $customerCollection->addFieldToFilter('group_id', ['eq' => $customerGroupId]);
+            $customerCollection->getSelect()->limit(10);
+
+            foreach ($customerCollection->getItems() as $customer) {
+                $clients[] = [
+                    'service' => $customer->getFirstname(),
+                    'service_id' => $customer->getId()
+                ];
+            }
+        }
+
+        return $clients;
+    }
+
+    /**
      * @return int|null
      */
     protected function getEmployeeGroup()
@@ -168,6 +202,22 @@ class Timetable extends \Magento\Backend\Block\Template
         try {
             /** @var \Magento\Customer\Api\Data\GroupInterface $workerGroup */
             $workerGroup = $this->customerHelper->getCustomerGroupByName(self::MASTER_CUSTOMER_GROUP);
+
+            return $workerGroup->getId();
+        } catch (LocalizedException $e) {
+        }
+
+        return null;
+    }
+
+    /**
+     * @return int|null
+     */
+    protected function getClientGroup()
+    {
+        try {
+            /** @var \Magento\Customer\Api\Data\GroupInterface $workerGroup */
+            $workerGroup = $this->customerHelper->getCustomerGroupByName(self::CLIENT_CUSTOMER_GROUP);
 
             return $workerGroup->getId();
         } catch (LocalizedException $e) {

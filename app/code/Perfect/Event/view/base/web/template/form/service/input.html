@@ -1,0 +1,61 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="admin__action-multiselect-wrap action-select-wrap" tabindex="0"
+     data-bind="
+        css: {_active: listVisible},
+        event: {
+            focusin: onFocusIn,
+            focusout: onFocusOut
+        },
+        outerClick: outerClick.bind($data)
+    ">
+    <div class="action-select admin__action-multiselect" data-role="advanced-select"
+            data-bind="
+            css: {_active: listVisible},
+            click: function(data, event) {
+                toggleListVisible(data, event)
+            }
+    ">
+        <div class="admin__action-multiselect-text" data-bind="text: value"></div>
+    </div>
+    <div class="action-menu" data-bind="css:{_active: listVisible}">
+        <div class="admin__action-multiselect-search-wrap">
+            <input class="admin__control-text admin__action-multiselect-search"
+                    data-role="advanced-select-text" type="text" autocomplete="off"
+                    data-bind="
+                        event: {keydown: filterOptionsKeydown},
+                        valueUpdate: 'afterkeydown',
+                        value: inputValue
+                    ">
+            <label class="admin__action-multiselect-search-label" data-action="advanced-select-search"></label>
+            <div if="itemsQuantity" data-bind="text: itemsQuantity" class="admin__action-multiselect-search-count"></div>
+        </div>
+        <div class="service-detail-empty" data-bind="text: servicesEmpty()"></div>
+        <ul data-bind="foreach: services()"
+            class="services-search-items services-search-items admin__action-multiselect-menu-inner _root">
+            <li class="admin__action-multiselect-menu-inner-item _root" data-role="option-group">
+                <div class="action-menu-item service-detail"
+                     data-bind="
+                     click: function(data, event) {
+                        $parent.toggleOptionSelected($data, event);
+                     }">
+                    <span data-bind="text: service"></span>
+                </div>
+            </li>
+        </ul>
+        <!-- ko if: $data.closeBtn -->
+        <div class="admin__action-multiselect-actions-wrap">
+            <button class="action-default"
+                    data-action="close-advanced-select"
+                    type="button"
+                    data-bind="click: outerClick">
+                <span data-bind="i18n: closeBtnLabel"></span>
+            </button>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>

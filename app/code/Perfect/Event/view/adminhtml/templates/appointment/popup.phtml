@@ -7,9 +7,7 @@
                 </strong>
             </div>
             <div class="admin__fieldset-wrapper-content">
-                <form id="appointment-validate-detail" class="form appointment" novalidate method="post"
-                      action=""
-                      data-mage-init='{"validation": {"errorClass": "mage-error"}}'>
+                <form id="appointment-validate-detail" class="form appointment" novalidate method="post">
                     <input name="id" type="hidden" id="appointment-id" value="" />
 
                     <fieldset class="admin__fieldset">
@@ -28,9 +26,12 @@
                                             </label>
                                         </div>
                                         <div class="admin__field-control _with-tooltip">
-                                            <input class="admin__control-text" type="text" name="client_name"
-                                                   id="client-name" maxlength="255" data-validate="{required:true}">
+<!--                                            <input class="admin__control-text" type="text" name="client_name"-->
+<!--                                                   id="client-name" maxlength="255" data-validate="{required:true}">-->
                                             <input name="client_id" type="hidden" id="client-id" value="" />
+                                            <div data-bind="scope: 'client-name-element'">
+                                                <!-- ko template: getTemplate() --><!-- /ko -->
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="admin__field _required" data-index="client-phone" style="margin-bottom: 0;">
@@ -200,9 +201,22 @@
                 "appointment-service-component": {
                     "component": "Perfect_Event/js/appointment-service",
                     "template": "Perfect_Event/appointment/popup/service_new"
+                },
+                "client-name-element": {
+                    "component": "Perfect_Event/js/form/service-search",
+                    "template": "Perfect_Event/form/service/input",
+                    "config": {
+                        "searchConfig": {
+                            "url": "<?= $block->getSearchServicesUrl() ?>"
+                        },
+                        "serviceFields": {
+                            "serviceIdFieldName": "client-id"
+                        },
+                        "servicesDefault": <?= $block->encodeJson($block->getTopClientsList()) ?>
+                    }
                 }
-           }
-       }
-   }
+            }
+        }
+    }
 }
 </script>
