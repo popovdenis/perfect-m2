@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
-    <template id="aw_event_tickets_email_new_ticket_template" label="AW Event Tickets - Email new ticket created"
-              file="ticket_new.html" type="html" module="Aheadworks_EventTickets" area="frontend"/>
-    <template id="aw_event_tickets_email_ticket_template_pdf" label="AW Event Tickets - Ticket template pdf"
-              file="ticket_pdf.html" type="html" module="Aheadworks_EventTickets" area="frontend"/>
-</config>

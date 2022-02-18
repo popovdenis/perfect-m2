@@ -57,4 +57,35 @@
         </index>
     </table>
 
+    <table name="perfect_service" resource="default" engine="innodb" comment="Perfect Service">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Entity Id"/>
+        <column xsi:type="int" name="event_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Event ID"/>
+        <column xsi:type="varchar" name="service_name" length="150" nullable="false"
+                comment="Service Name"/>
+        <column xsi:type="int" name="service_quantity" padding="10" unsigned="false" nullable="false"
+                identity="false" default="0" comment="Service Quantity"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="PERFECT_SERVICE_EVENT_ID_PERFECT_EVENT_ID"
+                    table="perfect_service"
+                    column="event_id"
+                    referenceTable="perfect_event"
+                    referenceColumn="id"
+                    onDelete="CASCADE"/>
+
+        <index referenceId="PERFECT_SERVICE_EVENT_ID" indexType="btree">
+            <column name="event_id"/>
+        </index>
+        <index referenceId="PERFECT_SERVICE_SERVICE_NAME" indexType="btree">
+            <column name="service_name"/>
+        </index>
+        <index referenceId="PERFECT_SERVICE_SERVICE_QUANTITY" indexType="btree">
+            <column name="service_quantity"/>
+        </index>
+    </table>
+
 </schema>
