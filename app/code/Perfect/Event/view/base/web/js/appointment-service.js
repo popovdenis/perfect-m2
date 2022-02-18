@@ -10,6 +10,7 @@ define([
 
     return Component.extend({
         defaults: {
+            template: 'Perfect_Event/appointment/popup/service_new',
             appointmentTableContainer: '.appointment-service-table tbody'
         },
         initialize: function () {

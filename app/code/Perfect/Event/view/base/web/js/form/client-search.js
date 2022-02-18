@@ -12,7 +12,7 @@ define([
     return Abstract.extend({
         defaults: {
             _sequence: null,
-            elementTmpl: 'Perfect_Event/form/client/input',
+            template: 'Perfect_Event/form/client/input',
             clients: ko.observable(),
             clientsEmpty: ko.observable(),
             clientsDefault: ko.observable(),

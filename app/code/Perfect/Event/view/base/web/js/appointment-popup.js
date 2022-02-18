@@ -6,13 +6,12 @@ define([
     'Magento_Ui/js/modal/modal',
     'Magento_Ui/js/modal/confirm',
     'Perfect_Event/js/storage',
-    'timetableConfig',
     'spectrum',
     'qcTimepicker',
     'mage/calendar',
     'mage/collapsible',
     'jquery/ui',
-], function ($, _, ko, Component, modal, confirm, storage, config) {
+], function ($, _, ko, Component, modal, confirm, storage) {
     'use strict';
 
     return Component.extend({
