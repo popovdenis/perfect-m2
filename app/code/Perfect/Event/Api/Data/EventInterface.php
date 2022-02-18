@@ -23,92 +23,146 @@ interface EventInterface
     const APPOINTMENT_COLOR = 'appointment_color';
 
     /**
-     * @inheritdoc
+     * Entity ID setter.
+     *
+     * @param string $entityId
+     *
+     * @return self
      */
     public function setId($entityId): EventInterface;
 
     /**
-     * @inheritdoc
+     * ID getter.
+     *
+     * @return string|null
      */
     public function getId();
 
     /**
-     * @inheritdoc
+     * Service Name setter.
+     *
+     * @param string $serviceName
+     *
+     * @return self
      */
     public function setServiceName($serviceName): EventInterface;
 
     /**
-     * @inheritdoc
+     * Service name getter.
+     *
+     * @return string|null
      */
     public function getServiceName();
 
     /**
-     * @inheritdoc
+     * Service Description setter.
+     *
+     * @param string $description
+     *
+     * @return self
      */
     public function setDescription($description): EventInterface;
 
     /**
-     * @inheritdoc
+     * Description getter.
+     *
+     * @return string|null
      */
     public function getDescription();
 
     /**
-     * @inheritdoc
+     * Service started at setter.
+     *
+     * @param string $startedAt
+     *
+     * @return self
      */
     public function setStartedAt($startedAt): EventInterface;
 
     /**
-     * @inheritdoc
+     * Started at getter.
+     *
+     * @return string|null
      */
     public function getStartedAt();
 
     /**
-     * @inheritdoc
+     * Service finished at setter.
+     *
+     * @param string $finishedAt
+     *
+     * @return self
      */
     public function setFinishedAt($finishedAt): EventInterface;
 
     /**
-     * @inheritdoc
+     * Finished at getter.
+     *
+     * @return string|null
      */
     public function getFinishedAt();
 
     /**
-     * @inheritdoc
+     * Service enabled flag setter.
+     *
+     * @param string $flag
+     *
+     * @return self
      */
     public function setEnabled($flag): EventInterface;
 
     /**
-     * @inheritdoc
+     * Enabled getter.
+     *
+     * @return string|null
      */
     public function getEnabled();
 
     /**
-     * @inheritdoc
+     * Service employee id setter.
+     *
+     * @param string $employeeId
+     *
+     * @return self
      */
     public function setEmployeeId($employeeId): EventInterface;
 
     /**
-     * @inheritdoc
+     * Employee id getter.
+     *
+     * @return string|null
      */
     public function getEmployeeId();
 
     /**
-     * @inheritdoc
+     * Service client id setter.
+     *
+     * @param string $clientId
+     *
+     * @return self
      */
     public function setClientId($clientId): EventInterface;
 
     /**
-     * @inheritdoc
+     * Client id getter.
+     *
+     * @return string|null
      */
     public function getClientId();
 
     /**
-     * @inheritdoc
+     * Service appointment color setter.
+     *
+     * @param string $color
+     *
+     * @return self
      */
     public function setAppointmentColor($color): EventInterface;
 
     /**
-     * @inheritdoc
+     * Appointment color getter.
+     *
+     * @return string|null
      */
     public function getAppointmentColor();
 }

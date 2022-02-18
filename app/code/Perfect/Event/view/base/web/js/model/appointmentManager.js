@@ -4,8 +4,9 @@ define([
     'jquery',
     'timetableAppointmentService',
     'Perfect_Event/js/model/md5',
-    'underscore'
-], function (ko, Class, $, timetableAppointment, md5, _) {
+    'underscore',
+    'Perfect_Event/js/storage'
+], function (ko, Class, $, timetableAppointment, md5, _, storage) {
     'use strict';
 
     return Class.extend({

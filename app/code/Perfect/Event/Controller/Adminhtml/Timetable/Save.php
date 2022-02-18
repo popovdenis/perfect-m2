@@ -85,7 +85,8 @@ class Save extends \Magento\Backend\App\Action
         $results = [];
 
         if ($postValues = $this->getRequest()->getPostValue()) {
-            $appointment = $postValues['appointment'];
+            $appointment = [];
+            parse_str($postValues['appointment'], $appointment);
             $appointmentId = (int) $appointment['id'];
 
             try {
@@ -113,9 +114,15 @@ class Save extends \Magento\Backend\App\Action
     {
         try {
             $appointment = $this->eventRepository->get($eventId);
+            $appointmentData['id'] = (int) $appointmentData['id'];
         } catch (NoSuchEntityException $exception) {
             $appointment = $this->eventFactory->create();
             unset($appointmentData['id']);
+        }
+
+        if (!empty($appointmentData['services'])) {
+            $services = $appointmentData['services'];
+            unset($appointmentData['services']);
         }
 
         $this->dataObjectHelper->populateWithArray(

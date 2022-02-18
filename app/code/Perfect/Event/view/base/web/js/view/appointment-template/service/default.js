@@ -15,7 +15,7 @@ define(['mage/translate'], function ($t) {
                                                         '<label for="service_name"><span>' + $t('Service Name') + '</span></label>\n' +
                                                     '</div>\n' +
                                                     '<div class="admin__field-control">\n' +
-                                                        '<input class="admin__control-text service_name" type="text" name="service_name[<%- data.row_index %>]" style="float: left;width: 90%;" />\n' +
+                                                        '<input class="admin__control-text service_name" type="text" name="services[<%- data.row_index %>][service_name]" style="float: left;width: 90%;" />\n' +
                                                         '<div class="input-group-btn" style="float: left;">\n' +
                                                             '<button class="btn btn-default input-sm btn-list" type="button"><i class="fa fa-sort-down"></i></button>\n' +
                                                             '<button class="btn btn-default btn-delete input-sm fsize15" type="button"><i class="fa fa-trash-o"></i></button>\n' +
@@ -33,7 +33,7 @@ define(['mage/translate'], function ($t) {
                                                                 '<i class="fa fa-minus"></i>\n' +
                                                             '</button>\n' +
                                                         '</span>\n' +
-                                                        '<input type="text" class="form-control input-qty admin__control-text" min="0" max="1000" name="amount" value="1" placeholder="' + $t('Quantity-short') + '">\n' +
+                                                        '<input type="text" class="form-control input-qty admin__control-text" min="0" max="1000" name="services[<%- data.row_index %>][quantity]" value="1" placeholder="' + $t('Quantity-short') + '">\n' +
                                                         '<span class="input-group-btn">\n' +
                                                             '<button type="button" class="btn btn-default input-sm btn-qty-plus">\n' +
                                                                 '<i class="fa fa-plus"></i>\n' +
