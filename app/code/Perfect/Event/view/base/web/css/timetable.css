@@ -31,13 +31,9 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
-.input-group-btn:first-child>.btn {
-    margin-right: -1px;
-    font-size: 10px;
-}
 .input-group-btn:last-child>.btn {
     margin-left: -1px;
-    font-size: 10px;
+    font-size: 12px;
 }
 .btn.input-sm {
     height: 33px;
@@ -53,6 +49,13 @@
     color: inherit;
     background: #fff;
     border: 1px solid #adadad;
+}
+.fsize15,
+.btn-list {
+    font-size: 15px !important;
+}
+.btn-list i {
+    vertical-align: text-top;
 }
 .input-group .form-control {
     display: table-cell;
