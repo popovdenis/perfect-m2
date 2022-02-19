@@ -1,16 +1,16 @@
 <?php
 
-namespace Perfect\EventService\Model;
+namespace Perfect\Service\Model;
 
 use Magento\Framework\Model\AbstractModel;
-use Perfect\EventService\Api\Data\EventServiceInterface;
+use Perfect\Service\Api\Data\ServiceInterface;
 
 /**
- * Class EventService
+ * Class Service
  *
- * @package Perfect\EventService\Model
+ * @package Perfect\Service\Model
  */
-class EventService extends AbstractModel implements EventServiceInterface
+class Service extends AbstractModel implements ServiceInterface
 {
     /**
      * Model cache tag for clear cache in after save and after delete.
@@ -33,13 +33,13 @@ class EventService extends AbstractModel implements EventServiceInterface
      */
     protected function _construct()
     {
-        $this->_init(\Perfect\EventService\Model\ResourceModel\EventService::class);
+        $this->_init(\Perfect\Service\Model\ResourceModel\Service::class);
     }
 
     /**
      * @inheritdoc
      */
-    public function setId($entityId): EventServiceInterface
+    public function setId($entityId): ServiceInterface
     {
         return $this->setData(self::ID, $entityId);
     }
@@ -55,7 +55,7 @@ class EventService extends AbstractModel implements EventServiceInterface
     /**
      * @inheritdoc
      */
-    public function setServiceName($serviceName): EventServiceInterface
+    public function setServiceName($serviceName): ServiceInterface
     {
         return $this->setData(self::SERVICE_NAME, $serviceName);
     }
@@ -71,7 +71,7 @@ class EventService extends AbstractModel implements EventServiceInterface
     /**
      * @inheritdoc
      */
-    public function setServiceQuantity($serviceQuantity): EventServiceInterface
+    public function setServiceQuantity($serviceQuantity): ServiceInterface
     {
         return $this->setData(self::SERVICE_QUANTITY, $serviceQuantity);
     }
@@ -87,7 +87,7 @@ class EventService extends AbstractModel implements EventServiceInterface
     /**
      * @inheritdoc
      */
-    public function setEventId($eventId): EventServiceInterface
+    public function setEventId($eventId): ServiceInterface
     {
         return $this->setData(self::EVENT_ID, $eventId);
     }

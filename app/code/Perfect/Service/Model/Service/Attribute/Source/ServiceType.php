@@ -1,11 +1,11 @@
 <?php
 
-namespace Perfect\EventService\Model\Service\Attribute\Source;
+namespace Perfect\Service\Model\Service\Attribute\Source;
 
 /**
  * Class ServiceType
  *
- * @package Perfect\EventService\Model\Service\Attribute\Source
+ * @package Perfect\Service\Model\Service\Attribute\Source
  */
 class ServiceType extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {

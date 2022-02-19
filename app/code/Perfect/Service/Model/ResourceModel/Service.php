@@ -1,15 +1,15 @@
 <?php
 
-namespace Perfect\EventService\Model\ResourceModel;
+namespace Perfect\Service\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 /**
- * Class EventService
+ * Class Service
  *
- * @package Perfect\EventService\Model\ResourceModel
+ * @package Perfect\Service\Model\ResourceModel
  */
-class EventService extends AbstractDb
+class Service extends AbstractDb
 {
     /**
      * Initialize resource model.

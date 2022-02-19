@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <!--  Perfect Service -->
+        <add id="Perfect_Event::perfect_event_service"
+             title="Services"
+             translate="title"
+             module="Perfect_Service"
+             sortOrder="30"
+             parent="Perfect_Event::perfect_event"
+             action="perfect_service/index"
+             resource="Perfect_Service::perfect_service_index" />
+    </menu>
+</config>

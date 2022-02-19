@@ -1,25 +1,25 @@
 <?php
 
-namespace Perfect\EventService\Model;
+namespace Perfect\Service\Model;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Perfect\EventService\Api\Data\EventServiceInterface;
-use Perfect\EventService\Api\EventServiceRepositoryInterface;
+use Perfect\Service\Api\Data\ServiceInterface;
+use Perfect\Service\Api\ServiceRepositoryInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 
 /**
- * Class EventServiceRepository
+ * Class ServiceRepository
  *
- * @package Perfect\EventService\Model
+ * @package Perfect\Service\Model
  */
-class EventServiceRepository implements EventServiceRepositoryInterface
+class ServiceRepository implements ServiceRepositoryInterface
 {
     /**
-     * @var \Perfect\EventService\Api\Data\EventServiceInterface
+     * @var \Perfect\Service\Api\Data\ServiceInterface
      */
     private $serviceFactory;
     /**
@@ -27,7 +27,7 @@ class EventServiceRepository implements EventServiceRepositoryInterface
      */
     private $searchResultsFactory;
     /**
-     * @var \Perfect\EventService\Model\ResourceModel\EventService
+     * @var \Perfect\Service\Model\ResourceModel\Service
      */
     private $resourceModel;
     /**
@@ -36,8 +36,8 @@ class EventServiceRepository implements EventServiceRepositoryInterface
     private $collectionProcessor;
 
     public function __construct(
-        \Perfect\EventService\Api\Data\EventServiceInterfaceFactory $serviceFactory,
-        \Perfect\EventService\Model\ResourceModel\EventService $resourceModel,
+        \Perfect\Service\Api\Data\ServiceInterfaceFactory $serviceFactory,
+        \Perfect\Service\Model\ResourceModel\Service $resourceModel,
         \Magento\Framework\Api\SearchResultsInterfaceFactory $searchResultsFactory,
         CollectionProcessorInterface $collectionProcessor
     )
@@ -51,7 +51,7 @@ class EventServiceRepository implements EventServiceRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function get(int $serviceId): EventServiceInterface
+    public function get(int $serviceId): ServiceInterface
     {
         $service = $this->serviceFactory->create();
         $this->resourceModel->load($service, $serviceId);
@@ -71,7 +71,7 @@ class EventServiceRepository implements EventServiceRepositoryInterface
         /* @var  \Magento\Framework\Api\SearchResultsInterface $searchResults */
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($searchCriteria);
-        /* @var \Perfect\EventService\Model\ResourceModel\EventService\Collection */
+        /* @var \Perfect\Service\Model\ResourceModel\Service\Collection */
         $collection = $this->serviceFactory->create()->getCollection();
         $this->collectionProcessor->process($searchCriteria, $collection);
         $searchResults->setItems($collection->getItems());
@@ -82,7 +82,7 @@ class EventServiceRepository implements EventServiceRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function save(EventServiceInterface $service): void
+    public function save(ServiceInterface $service): void
     {
         $this->resourceModel->save($service);
     }
@@ -90,7 +90,7 @@ class EventServiceRepository implements EventServiceRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(EventServiceInterface $service)
+    public function delete(ServiceInterface $service)
     {
         try {
             $this->resourceModel->delete($service);

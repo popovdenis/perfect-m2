@@ -1,28 +1,28 @@
 <?php
 
-namespace Perfect\EventService\Api;
+namespace Perfect\Service\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchResultsInterface;
-use Perfect\EventService\Api\Data\EventServiceInterface;
+use Perfect\Service\Api\Data\ServiceInterface;
 
 /**
- * Interface EventServiceRepositoryInterface
+ * Interface ServiceRepositoryInterface
  *
- * @package Perfect\EventService\Api
+ * @package Perfect\Service\Api
  */
-interface EventServiceRepositoryInterface
+interface ServiceRepositoryInterface
 {
     /**
-     * Return EventServiceInterface instance
+     * Return ServiceInterface instance
      *
      * @param int $serviceId
      *
-     * @return EventServiceInterface
+     * @return ServiceInterface
      *
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function get(int $serviceId): EventServiceInterface;
+    public function get(int $serviceId): ServiceInterface;
 
     /**
      * Retrieve Services List
@@ -36,21 +36,21 @@ interface EventServiceRepositoryInterface
     /**
      * Save service.
      *
-     * @param EventServiceInterface $service
+     * @param ServiceInterface $service
      *
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-    public function save(EventServiceInterface $service): void;
+    public function save(ServiceInterface $service): void;
 
     /**
      * Delete service.
      *
-     * @param EventServiceInterface $service
+     * @param ServiceInterface $service
      *
      * @return boolean
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function delete(EventServiceInterface $service);
+    public function delete(ServiceInterface $service);
 
     /**
      * Delete services by IDs.

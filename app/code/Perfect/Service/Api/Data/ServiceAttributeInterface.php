@@ -1,13 +1,13 @@
 <?php
 
-namespace Perfect\EventService\Api\Data;
+namespace Perfect\Service\Api\Data;
 
 /**
- * Interface EventServiceAttributeInterface
+ * Interface ServiceAttributeInterface
  *
- * @package Perfect\EventService\Api\Data
+ * @package Perfect\Service\Api\Data
  */
-interface EventServiceAttributeInterface
+interface ServiceAttributeInterface
 {
     const ENTITY_TYPE_CODE = 'perfect_service';
 

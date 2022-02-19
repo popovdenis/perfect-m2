@@ -1,30 +1,30 @@
 <?php
 
-namespace Perfect\EventService\Observer;
+namespace Perfect\Service\Observer;
 
 use Magento\Framework\Exception\NoSuchEntityException;
-use Perfect\EventService\Api\Data\EventServiceInterface;
-use Perfect\EventService\Api\Data\EventServiceInterfaceFactory;
-use Perfect\EventService\Api\EventServiceRepositoryInterface;
-use Perfect\EventService\Model\ResourceModel\EventService\CollectionFactory as EventServiceCollection;
+use Perfect\Service\Api\Data\ServiceInterface;
+use Perfect\Service\Api\Data\ServiceInterfaceFactory;
+use Perfect\Service\Api\ServiceRepositoryInterface;
+use Perfect\Service\Model\ResourceModel\Service\CollectionFactory as ServiceCollection;
 
 /**
- * Class SaveEntityService
+ * Class SaveService
  *
- * @package Perfect\EventService\Observer
+ * @package Perfect\Service\Observer
  */
-class SaveEntityService implements \Magento\Framework\Event\ObserverInterface
+class SaveService implements \Magento\Framework\Event\ObserverInterface
 {
     /**
-     * @var \Perfect\EventService\Model\ResourceModel\EventService\CollectionFactory
+     * @var \Perfect\Service\Model\ResourceModel\Service\CollectionFactory
      */
     private $serviceCollectionFactory;
     /**
-     * @var \Perfect\EventService\Api\EventServiceRepositoryInterface
+     * @var \Perfect\Service\Api\ServiceRepositoryInterface
      */
     private $serviceRepository;
     /**
-     * @var \Perfect\EventService\Api\Data\EventServiceInterfaceFactory
+     * @var \Perfect\Service\Api\Data\ServiceInterfaceFactory
      */
     private $serviceFactory;
     /**
@@ -35,15 +35,15 @@ class SaveEntityService implements \Magento\Framework\Event\ObserverInterface
     /**
      * SaveEntityService constructor.
      *
-     * @param \Perfect\EventService\Model\ResourceModel\EventService\CollectionFactory $serviceCollectionFactory
-     * @param \Perfect\EventService\Api\EventServiceRepositoryInterface                $serviceRepository
-     * @param \Perfect\EventService\Api\Data\EventServiceInterfaceFactory              $serviceFactory
+     * @param \Perfect\Service\Model\ResourceModel\Service\CollectionFactory $serviceCollectionFactory
+     * @param \Perfect\Service\Api\ServiceRepositoryInterface                $serviceRepository
+     * @param \Perfect\Service\Api\Data\ServiceInterfaceFactory              $serviceFactory
      * @param \Magento\Framework\Api\DataObjectHelper                                  $dataObjectHelper
      */
     public function __construct(
-        EventServiceCollection $serviceCollectionFactory,
-        EventServiceRepositoryInterface $serviceRepository,
-        EventServiceInterfaceFactory $serviceFactory,
+        ServiceCollection $serviceCollectionFactory,
+        ServiceRepositoryInterface $serviceRepository,
+        ServiceInterfaceFactory $serviceFactory,
         \Magento\Framework\Api\DataObjectHelper $dataObjectHelper
     )
     {
@@ -66,7 +66,7 @@ class SaveEntityService implements \Magento\Framework\Event\ObserverInterface
 
         if (!empty($request['services'])) {
             if ($services = $request['services']) {
-                /** @var \Perfect\EventService\Model\ResourceModel\EventService\Collection $collection */
+                /** @var \Perfect\Service\Model\ResourceModel\Service\Collection $collection */
                 $collection = $this->serviceCollectionFactory->create();
                 $collection->addFieldToFilter('event_id', $entity->getId());
                 $oldServices = $collection->getItems();
@@ -127,9 +127,9 @@ class SaveEntityService implements \Magento\Framework\Event\ObserverInterface
      * @param array $serviceData
      * @param int   $serviceId
      *
-     * @return \Perfect\EventService\Api\Data\EventServiceInterface
+     * @return \Perfect\Service\Api\Data\ServiceInterface
      */
-    protected function initService(array $serviceData, int $serviceId): EventServiceInterface
+    protected function initService(array $serviceData, int $serviceId): ServiceInterface
     {
         try {
             $service = $this->serviceRepository->get($serviceId);
@@ -141,7 +141,7 @@ class SaveEntityService implements \Magento\Framework\Event\ObserverInterface
         $this->dataObjectHelper->populateWithArray(
             $service,
             $serviceData,
-            EventServiceInterface::class
+            ServiceInterface::class
         );
 
         return $service;

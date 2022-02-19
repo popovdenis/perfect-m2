@@ -1,13 +1,13 @@
 <?php
 
-namespace Perfect\EventService\Model\ResourceModel\EventService;
+namespace Perfect\Service\Model\ResourceModel\Service;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 /**
  * Class Collection
  *
- * @package Perfect\EventService\Model\ResourceModel\EventService
+ * @package Perfect\Service\Model\ResourceModel\Service
  */
 class Collection extends AbstractCollection
 {
@@ -17,8 +17,8 @@ class Collection extends AbstractCollection
     protected function _construct()
     {
         $this->_init(
-            \Perfect\EventService\Model\EventService::class,
-            \Perfect\EventService\Model\ResourceModel\EventService::class
+            \Perfect\Service\Model\Service::class,
+            \Perfect\Service\Model\ResourceModel\Service::class
         );
     }
 }

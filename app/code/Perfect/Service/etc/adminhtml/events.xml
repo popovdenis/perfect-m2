@@ -4,6 +4,6 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="adminhtml_perfect_event_entity_save_after">
         <observer name="perfect_event_service_entity_save_service"
-                  instance="Perfect\EventService\Observer\SaveEntityService"/>
+                  instance="Perfect\Service\Observer\SaveEntityService"/>
     </event>
 </config>

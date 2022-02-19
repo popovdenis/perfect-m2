@@ -1,15 +1,15 @@
 <?php
 
-namespace Perfect\EventService\Setup;
+namespace Perfect\Service\Setup;
 
 use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Model\Entity\Attribute\Source\Boolean;
-use Perfect\EventService\Model\Service\Attribute\Source\ServiceType;
+use Perfect\Service\Model\Service\Attribute\Source\ServiceType;
 
 /**
  * Class ServiceSetup
  *
- * @package Perfect\EventService\Setup
+ * @package Perfect\Service\Setup
  */
 class ServiceSetup extends EavSetup
 {
@@ -28,7 +28,7 @@ class ServiceSetup extends EavSetup
                 'table' => 'perfect_service_entity',
                 'increment_model' => \Magento\Eav\Model\Entity\Increment\NumericValue::class,
                 'additional_attribute_table' => 'perfect_service_eav_attribute',
-                'entity_attribute_collection' => 'Perfect\EntityService\Model\ResourceModel\EventService\Attribute\Collection',
+                'entity_attribute_collection' => 'Perfect\EntityService\Model\ResourceModel\Service\Attribute\Collection',
                 'attributes' => [
                     'service_name' => [
                         'type' => 'varchar',

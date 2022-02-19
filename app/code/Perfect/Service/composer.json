@@ -1,5 +1,5 @@
 {
-  "name": "perfect/event-service",
+  "name": "perfect/service",
   "description": "N/A",
   "require": {
     "php": "~7.2|~7.3",
@@ -19,7 +19,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "Perfect\\Event\\": ""
+      "Perfect\\Service\\": ""
     }
   }
 }

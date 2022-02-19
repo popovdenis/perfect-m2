@@ -1,13 +1,13 @@
 <?php
 
-namespace Perfect\EventService\Api\Data;
+namespace Perfect\Service\Api\Data;
 
 /**
- * Interface EventServiceInterface
+ * Interface ServiceInterface
  *
- * @package Perfect\EventService\Api\Data
+ * @package Perfect\Service\Api\Data
  */
-interface EventServiceInterface
+interface ServiceInterface
 {
     /**
      * Constants defined for keys of array
@@ -24,7 +24,7 @@ interface EventServiceInterface
      *
      * @return self
      */
-    public function setId($entityId): EventServiceInterface;
+    public function setId($entityId): ServiceInterface;
 
     /**
      * ID getter.
@@ -40,7 +40,7 @@ interface EventServiceInterface
      *
      * @return self
      */
-    public function setServiceName($serviceName): EventServiceInterface;
+    public function setServiceName($serviceName): ServiceInterface;
 
     /**
      * Service name getter.
@@ -56,7 +56,7 @@ interface EventServiceInterface
      *
      * @return self
      */
-    public function setServiceQuantity($serviceQuantity): EventServiceInterface;
+    public function setServiceQuantity($serviceQuantity): ServiceInterface;
 
     /**
      * Service Quantity getter.
@@ -72,7 +72,7 @@ interface EventServiceInterface
      *
      * @return self
      */
-    public function setEventId($eventId): EventServiceInterface;
+    public function setEventId($eventId): ServiceInterface;
 
     /**
      * Event ID getter.
