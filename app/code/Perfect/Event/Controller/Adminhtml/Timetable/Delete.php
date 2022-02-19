@@ -67,8 +67,8 @@ class Delete extends \Magento\Backend\App\Action
         $results = [];
 
         if ($postValues = $this->getRequest()->getPostValue()) {
-            $appointment = $postValues['appointment'];
-            $eventId = (int) $appointment['id'];
+            $event = $postValues['event'];
+            $eventId = (int) $event['id'];
 
             try {
                 $event = $this->eventRepository->get($eventId);

@@ -104,7 +104,7 @@ class EventRepository implements EventRepositoryInterface
             $this->resourceModel->delete($event);
         } catch (Exception $exception) {
             throw new CouldNotDeleteException(__(
-                'Could not delete the appointment: %1',
+                'Could not delete the event: %1',
                 $exception->getMessage()
             ));
         }

@@ -43,9 +43,9 @@
             </item>
         </argument>
     </dataSource>
-    <fieldset name="appointment">
+    <fieldset name="event">
         <settings>
-            <label translate="true">Appointment Info</label>
+            <label translate="true">Event Info</label>
         </settings>
         <field name="id">
             <argument name="data" xsi:type="array">
@@ -53,7 +53,7 @@
                     <item name="visible" xsi:type="boolean">false</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>
-                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="source" xsi:type="string">event</item>
                     <item name="dataScope" xsi:type="string">id</item>
                 </item>
             </argument>
@@ -64,7 +64,7 @@
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="label" xsi:type="string" translate="true">Service Name</item>
                     <item name="formElement" xsi:type="string">input</item>
-                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="source" xsi:type="string">event</item>
                     <item name="dataScope" xsi:type="string">service_name</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
@@ -78,7 +78,7 @@
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="label" xsi:type="string" translate="true">Description</item>
                     <item name="formElement" xsi:type="string">textarea</item>
-                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="source" xsi:type="string">event</item>
                     <item name="dataScope" xsi:type="string">description</item>
                 </item>
             </argument>
@@ -89,7 +89,7 @@
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="label" xsi:type="string" translate="true">Started At Time</item>
                     <item name="formElement" xsi:type="string">date</item>
-                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="source" xsi:type="string">event</item>
                     <item name="dataScope" xsi:type="string">started_at</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
@@ -110,7 +110,7 @@
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="label" xsi:type="string" translate="true">Finished At Time</item>
                     <item name="formElement" xsi:type="string">date</item>
-                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="source" xsi:type="string">event</item>
                     <item name="dataScope" xsi:type="string">finished_at</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
@@ -132,7 +132,7 @@
                     <item name="label" xsi:type="string" translate="true">Worker</item>
                     <item name="dataType" xsi:type="string">string</item>
                     <item name="formElement" xsi:type="string">select</item>
-                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="source" xsi:type="string">event</item>
                     <item name="dataScope" xsi:type="string">employee_id</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
@@ -147,7 +147,7 @@
                     <item name="label" xsi:type="string" translate="true">Client</item>
                     <item name="dataType" xsi:type="string">string</item>
                     <item name="formElement" xsi:type="string">select</item>
-                    <item name="source" xsi:type="string">appointment</item>
+                    <item name="source" xsi:type="string">event</item>
                     <item name="dataScope" xsi:type="string">client_id</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>

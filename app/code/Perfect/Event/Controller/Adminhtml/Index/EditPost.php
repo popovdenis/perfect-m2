@@ -63,11 +63,11 @@ class EditPost extends \Magento\Backend\App\Action
         $resultRedirect = $this->resultRedirectFactory->create();
 
         if ($postValues = $this->getRequest()->getPostValue()) {
-            $appointment = $postValues['appointment'];
+            $event = $postValues['event'];
 
 
             try {
-                $event = $this->initEvent($appointment);
+                $event = $this->initEvent($event);
 
                 $this->eventRepository->save($event);
 
@@ -91,7 +91,7 @@ class EditPost extends \Magento\Backend\App\Action
      */
     protected function initEvent(array $eventData): EventInterface
     {
-        $eventId = isset($appointment['id']) ? (int) $eventData['id'] : 0;
+        $eventId = isset($event['id']) ? (int) $eventData['id'] : 0;
 
         try {
             $event = $this->eventRepository->get($eventId);

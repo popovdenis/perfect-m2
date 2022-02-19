@@ -5,11 +5,11 @@ define([
         section = 'perfectTimetableConfig';
 
     return {
-        getSaveAppointmentUrl: function () {
-            return this._getConfig('save_appointment_url');
+        getSaveEventUrl: function () {
+            return this._getConfig('save_event_url');
         },
-        getDeleteAppointmentUrl: function () {
-            return this._getConfig('delete_appointment_url');
+        getDeleteEventUrl: function () {
+            return this._getConfig('delete_event_url');
         },
         getSearchClientUrl: function () {
             return this._getConfig('client_search_url');

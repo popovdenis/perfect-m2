@@ -4,7 +4,7 @@
  * @var \Magento\Framework\Escaper $escaper
  */
 ?>
-<div class="appointment-modal">
+<div class="event-modal">
     <div class="entry-edit form-inline">
         <div class="fieldset-wrapper">
             <div class="fieldset-wrapper-title" style="border-bottom: none;">
@@ -13,8 +13,8 @@
                 </strong>
             </div>
             <div class="admin__fieldset-wrapper-content">
-                <form id="appointment-validate-detail" class="form appointment" novalidate method="post">
-                    <input name="id" type="hidden" id="appointment-id" value="" />
+                <form id="event-validate-detail" class="form event" novalidate method="post">
+                    <input name="id" type="hidden" id="event-id" value="" />
 
                     <fieldset class="admin__fieldset">
                         <div class="fieldset-wrapper admin__collapsible-block-wrapper">
@@ -81,32 +81,32 @@
                                     </div>
                                     <div class="admin__field _required" data-index="client-started-at" style="margin-bottom: 0;">
                                         <div class="admin__field-label">
-                                            <label for="appointment_date">
+                                            <label for="event_date">
                                                 <span data-bind="i18n: 'Дата и время'"></span>
                                             </label>
                                         </div>
                                         <div class="admin__field-control">
-                                            <input class="admin__control-text" type="text" name="appointment_date"
-                                                   id="appointment_date" value="">
+                                            <input class="admin__control-text" type="text" name="event_date"
+                                                   id="event_date" value="">
                                             <input type="time"
                                                    class="timepicker admin__control-text"
-                                                   name="appointment_time_start"
-                                                   id="appointment_time_start" min="09:00" max="20:00" step="300">
+                                                   name="event_time_start"
+                                                   id="event_time_start" min="09:00" max="20:00" step="300">
                                             <span> - </span>
                                             <input type="time"
                                                    class="timepicker admin__control-text"
-                                                   name="appointment_time_end"
-                                                   id="appointment_time_end" min="09:00" max="20:00" step="300">
+                                                   name="event_time_end"
+                                                   id="event_time_end" min="09:00" max="20:00" step="300">
                                         </div>
                                     </div>
-                                    <div class="admin__field" data-index="appointment_color" style="margin-bottom: 0;">
+                                    <div class="admin__field" data-index="event_color" style="margin-bottom: 0;">
                                         <div class="admin__field-label">
                                             <label for="client-color">
                                                 <span data-bind="i18n: 'Цвет записи'"></span>
                                             </label>
                                         </div>
                                         <div class="admin__field-control">
-                                            <input class="admin__control-text" type="text" name="appointment_color" id="appointment_color">
+                                            <input class="admin__control-text" type="text" name="event_color" id="event_color">
                                         </div>
                                     </div>
                                     <div class="admin__field" data-index="client-comment" style="margin-bottom: 0;">
@@ -120,14 +120,14 @@
                                                       name="client_comment" id="client-comment"></textarea>
                                         </div>
                                     </div>
-                                    <div class="admin__field" data-index="appointment-status" style="margin-bottom: 0;">
+                                    <div class="admin__field" data-index="event-status" style="margin-bottom: 0;">
                                         <div class="admin__field-label">
-                                            <label for="appointment-status">
+                                            <label for="event-status">
                                                 <span data-bind="i18n: 'Категория'"></span>
                                             </label>
                                         </div>
                                         <div class="admin__field-control">
-                                            <select class="admin__control-select" name="appointment-status" id="appointment-status">
+                                            <select class="admin__control-select" name="event-status" id="event-status">
                                                 <option value="" data-bind="i18n: 'Выберите статус'"></option>
                                                 <option value="full-paid" data-bind="i18n: 'Полностью оплачен'"></option>
                                                 <option value="partially-paid" data-bind="i18n: 'Частично оплачен'"></option>
@@ -144,8 +144,8 @@
                                     <span data-bind="i18n: 'Услуги'"></span>
                                 </strong>
                             </div>
-                            <div class="admin__fieldset-wrapper-content appointment-service"
-                                 data-bind="scope: 'appointment-service-component'">
+                            <div class="admin__fieldset-wrapper-content event-service"
+                                 data-bind="scope: 'event-service-component'">
                                 <!-- ko template: getTemplate() --><!-- /ko -->
                             </div>
                         </div>
@@ -159,7 +159,7 @@
                             </div>
                             <div class="admin__fieldset-wrapper-content">
                                 <fieldset class="admin__fieldset" style="padding-top: 2rem;">
-                                    <div class="admin__field" data-index="appointment-employee-name" style="margin-bottom: 0;">
+                                    <div class="admin__field" data-index="event-employee-name" style="margin-bottom: 0;">
                                         <div class="admin__field-label">
                                             <label for="employee_id">
                                                 <span data-bind="i18n: 'Сотрудник'"></span>
@@ -191,8 +191,8 @@
     "*": {
         "Magento_Ui/js/core/app": {
             "components": {
-                "appointment-service-component": {
-                    "component": "Perfect_Event/js/appointment-service"
+                "event-service-component": {
+                    "component": "Perfect_Event/js/event-service"
                 },
                 "client-name-element": {
                     "component": "Perfect_Event/js/form/client-search",

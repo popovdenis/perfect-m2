@@ -3,7 +3,7 @@ define([
     'uiElement',
     'ko',
     'mage/template',
-    'Perfect_Event/js/view/appointment-template/service/default',
+    'Perfect_Event/js/view/event-template/service/default',
     'timetableConfig',
     'mage/collapsible'
 ], function($, Component, ko, mageTemplate, defaultTemplate, config) {
@@ -11,17 +11,17 @@ define([
 
     return Component.extend({
         defaults: {
-            template: 'Perfect_Event/appointment/popup/service_new',
-            appointmentTableContainer: '.appointment-service-table tbody'
+            template: 'Perfect_Event/event/popup/service_new',
+            eventTableContainer: '.event-service-table tbody'
         },
         initialize: function () {
             this._super();
         },
         addService: function () {
-            var params = {data: {row_index: $(this.appointmentTableContainer).find('.data-row').length}};
+            var params = {data: {row_index: $(this.eventTableContainer).find('.data-row').length}};
             var templateText = $(mageTemplate(defaultTemplate())(params));
 
-            $(this.appointmentTableContainer).append(templateText);
+            $(this.eventTableContainer).append(templateText);
 
             this.initEvents(templateText);
 
@@ -34,7 +34,7 @@ define([
             target.fadeOut(200, function() {
                 target.remove();
 
-                var dataRows = $(self.appointmentTableContainer).find('.data-row');
+                var dataRows = $(self.eventTableContainer).find('.data-row');
                 if (dataRows.length) {
                     dataRows.find('.service_name').each(function (index) {
                         $(this).attr('name', 'service_name[' + index + ']');
@@ -92,7 +92,7 @@ define([
             $('.btn-qty-plus', target).on('click', this.increaseServiceQty.bind(this));
             $('.btn-qty-minus', target).on('click', this.decreaseServiceQty.bind(this));
             this.initAutocomplete(target);
-            /*$(this.appointmentTableContainer).find(".fieldset-wrapper").collapsible({
+            /*$(this.eventTableContainer).find(".fieldset-wrapper").collapsible({
                 "header": ".fieldset-wrapper-title",
                 "content": ".admin__collapsible-content",
                 "openedState": "_show",

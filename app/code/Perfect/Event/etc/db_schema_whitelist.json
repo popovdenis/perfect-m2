@@ -9,7 +9,7 @@
             "enabled": true,
             "employee_id": true,
             "client_id": true,
-            "appointment_color": true
+            "event_color": true
         },
         "index": {
             "PERFECT_EVENT_SERVICE_NAME": true,
@@ -17,7 +17,7 @@
             "PERFECT_EVENT_ENABLED": true,
             "PERFECT_EVENT_EMPLOYEE_ID": true,
             "PERFECT_EVENT_CLIENT_ID": true,
-            "PERFECT_EVENT_APPOINTMENT_COLOR": true
+            "PERFECT_EVENT_EVENT_COLOR": true
         },
         "constraint": {
             "PRIMARY": true,

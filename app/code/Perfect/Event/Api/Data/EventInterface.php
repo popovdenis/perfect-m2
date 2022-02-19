@@ -20,7 +20,7 @@ interface EventInterface
     const ENABLED = 'enabled';
     const EMPLOYEE_ID = 'employee_id';
     const CLIENT_ID = 'client_id';
-    const APPOINTMENT_COLOR = 'appointment_color';
+    const EVENT_COLOR = 'event_color';
 
     /**
      * Entity ID setter.
@@ -151,18 +151,18 @@ interface EventInterface
     public function getClientId();
 
     /**
-     * Service appointment color setter.
+     * Service event color setter.
      *
      * @param string $color
      *
      * @return self
      */
-    public function setAppointmentColor($color): EventInterface;
+    public function setEventColor($color): EventInterface;
 
     /**
-     * Appointment color getter.
+     * Event color getter.
      *
      * @return string|null
      */
-    public function getAppointmentColor();
+    public function getEventColor();
 }

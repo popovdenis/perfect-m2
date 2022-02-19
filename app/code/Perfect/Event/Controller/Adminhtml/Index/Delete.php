@@ -49,23 +49,23 @@ class Delete extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $appointmentId = $this->getRequest()->getParam('id');
+        $eventId = $this->getRequest()->getParam('id');
         $resultRedirect = $this->resultRedirectFactory->create();
-        if ($appointmentId) {
+        if ($eventId) {
             try {
-                $this->eventRepository->delete($appointmentId);
+                $this->eventRepository->delete($eventId);
 
-                $this->messageManager->addSuccessMessage(__('The appointment has been deleted.'));
+                $this->messageManager->addSuccessMessage(__('The event has been deleted.'));
 
                 return $resultRedirect->setPath('*/*/');
             } catch (Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
 
-                return $resultRedirect->setPath('*/*/edit', ['id' => $appointmentId]);
+                return $resultRedirect->setPath('*/*/edit', ['id' => $eventId]);
             }
         }
 
-        $this->messageManager->addErrorMessage(__('We can\'t find an appointment to delete.'));
+        $this->messageManager->addErrorMessage(__('We can\'t find an event to delete.'));
 
         return $resultRedirect->setPath('*/*/');
     }

@@ -19,8 +19,8 @@
                 comment="Employee Id"/>
         <column xsi:type="int" name="client_id" padding="10" unsigned="true" nullable="false" identity="false"
                 comment="Client Id"/>
-        <column xsi:type="varchar" name="appointment_color" length="150" nullable="true"
-                comment="Appointment Color"/>
+        <column xsi:type="varchar" name="event_color" length="150" nullable="true"
+                comment="Event Color"/>
 
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
@@ -52,8 +52,8 @@
         <index referenceId="PERFECT_EVENT_CLIENT_ID" indexType="btree">
             <column name="client_id"/>
         </index>
-        <index referenceId="PERFECT_EVENT_APPOINTMENT_COLOR" indexType="btree">
-            <column name="appointment_color"/>
+        <index referenceId="PERFECT_EVENT_EVENT_COLOR" indexType="btree">
+            <column name="event_color"/>
         </index>
     </table>
 

@@ -2,24 +2,24 @@ define([
     'jquery',
     'Perfect_Event/js/storage',
     'Perfect_Event/js/event',
-    'Perfect_Event/js/model/appointmentManager',
-    'Perfect_Event/js/appointment-popup',
+    'Perfect_Event/js/model/eventManager',
+    'Perfect_Event/js/event-popup',
     'eventCalendarLib',
     'domReady!'
-], function ($, storage, Event, appointmentManager, appointmentPopup) {
+], function ($, storage, Event, eventManager, eventPopup) {
     'use strict';
 
     $.widget('perfect.event',{
         options: {
             schedulerId: null,
             scheduler: null,
-            appointments: [],
-            appointmentForm: '.form.appointment',
+            events: [],
+            eventForm: '.form.event',
             searchConfig: {},
             employeeHash: {},
             employeesHash: {}
         },
-        lastAppointmentId: null,
+        lastEventId: null,
         eventCalendarObject: null,
 
         /**
@@ -59,7 +59,7 @@ define([
                     slotMaxTime: '21:00:00',
                     dayMaxEvents: true,
                     nowIndicator: true,
-                    events: appointmentManager().populateAppointments(this.options.appointments),
+                    events: eventManager().populateEvents(this.options.events),
                     views: {
                         timeGridDay: {pointer: true, titleFormat: {year: 'numeric', month: 'short', day: 'numeric'}, locale: 'ru'},
                         timeGridWeek: {pointer: true, titleFormat: {year: 'numeric', month: '2-digit', day: 'numeric'}, locale: 'ru'},
@@ -68,16 +68,16 @@ define([
                         resourceTimeGridWeek: {pointer: true}
                     },
                     dateClick: function (dateClickInfo) {
-                        if (!appointmentPopup().isPopupActive()) {
-                            appointmentPopup().preparePopup(Event.newEvent(dateClickInfo)).openPopup();
+                        if (!eventPopup().isPopupActive()) {
+                            eventPopup().preparePopup(Event.newEvent(dateClickInfo)).openPopup();
                         }
                     },
                     eventClick: function (eventClickInfo) {
-                        appointmentPopup().preparePopup(eventClickInfo.event).openPopup();
+                        eventPopup().preparePopup(eventClickInfo.event).openPopup();
                     },
                     eventDrop: function (eventClickInfo) {
                         storage.currentEvent(eventClickInfo.event);
-                        appointmentManager().saveAppointment(eventClickInfo.event);
+                        eventManager().saveEvent(eventClickInfo.event);
                     },
                     eventContent: function (eventInfo) {
                         if (eventInfo.event.id === '{pointer}') {
@@ -103,17 +103,17 @@ define([
 
         initEvents: function () {
             let self = this,
-                appointmentForm = $('.form.appointment');
+                eventForm = $('.form.event');
 
-            $(appointmentForm).off('submit').on('submit', function(e) {
+            $(eventForm).off('submit').on('submit', function(e) {
                 e.preventDefault();
-                // if ($(appointmentForm).valid()) {
+                // if ($(eventForm).valid()) {
                 //     var formData = {};
-                //     for (const field of $(appointmentForm).serialize()) {
+                //     for (const field of $(eventForm).serialize()) {
                 //         formData[field.name] = field.value;
                 //     }
-                appointmentManager().saveAppointment($(appointmentForm).serialize());
-                appointmentPopup().closePopup();
+                eventManager().saveEvent($(eventForm).serialize());
+                eventPopup().closePopup();
                 // }
             });
         },

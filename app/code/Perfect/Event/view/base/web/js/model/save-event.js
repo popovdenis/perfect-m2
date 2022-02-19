@@ -4,10 +4,10 @@ define([
 ], function ($, config) {
     'use strict';
 
-    var _saveAppointment = function (appointment, onSuccess) {
+    var _saveEvent = function (event, onSuccess) {
         $.ajax({
-            url: config.getSaveAppointmentUrl(),
-            data: {form_key: window.FORM_KEY, appointment: appointment},
+            url: config.getSaveEventUrl(),
+            data: {form_key: window.FORM_KEY, event: event},
             type: 'post',
             dataType: 'json',
             showLoader: true,
@@ -25,6 +25,6 @@ define([
     };
 
     return function (data, onSuccess) {
-        _saveAppointment(data, onSuccess);
+        _saveEvent(data, onSuccess);
     }
 });

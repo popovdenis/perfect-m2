@@ -80,8 +80,8 @@ class Event extends AbstractDataProvider
         }
 
         foreach ($this->getCollection()->getItems() as $item) {
-            $this->loadedData[$item->getId()]['appointment'] = $item->getData();
-            $this->loadedData[$item->getId()]['appointment']['worker'] = $this->getWorker($item->getEmployeeId());
+            $this->loadedData[$item->getId()]['event'] = $item->getData();
+            $this->loadedData[$item->getId()]['event']['worker'] = $this->getWorker($item->getEmployeeId());
         }
 
         return $this->loadedData;

@@ -17,12 +17,12 @@ define([
     return Component.extend({
         defaults: {
             initializedPopup: ko.observable(false),
-            appointment: ko.observableArray(),
+            event: ko.observableArray(),
             isPopupActive: ko.observable(false),
-            appointmentModal: '.appointment-modal',
-            appointmentForm: '.form.appointment',
+            eventModal: '.event-modal',
+            eventForm: '.form.event',
             listens: {
-                appointment: 'initAppointmentListener',
+                event: 'initEventListener',
                 initializedPopup: 'init',
             }
         },
@@ -42,14 +42,14 @@ define([
                 clickableOverlay: true,
                 buttons: [{
                     text: $.mage.__('Delete'),
-                    class: 'action secondary delete-appointment',
+                    class: 'action secondary delete-event',
                     click: function (event) {
                         confirm({
-                            title: $.mage.__('Delete appointment'),
-                            content: $.mage.__('Are you sure you want to delete this appointment?'),
+                            title: $.mage.__('Delete event'),
+                            content: $.mage.__('Are you sure you want to delete this event?'),
                             actions: {
                                 confirm: function () {
-                                    self._deleteAppointment(storage.currentEvent());
+                                    self._deleteEvent(storage.currentEvent());
                                 },
                                 cancel: function () {
                                     return false;
@@ -62,21 +62,21 @@ define([
                     }
                 }, {
                     text: $.mage.__('Save'),
-                    class: 'action primary save-appointment',
+                    class: 'action primary save-event',
                     click: function (event) {
-                        $(self.appointmentForm).trigger('submit');
+                        $(self.eventForm).trigger('submit');
                     }
                 }]
-            }, $(this.appointmentModal));
+            }, $(this.eventModal));
 
-            $(this.appointmentModal).on('modalclosed', function() {
+            $(this.eventModal).on('modalclosed', function() {
                 self.isPopupActive(false);
             });
         },
         initEvents: function () {
-            $('#appointment_time_start').qcTimepicker({classes: 'admin__control-select'});
-            $('#appointment_time_end').qcTimepicker({classes: 'admin__control-select'});
-            $("#appointment_date").calendar({
+            $('#event_time_start').qcTimepicker({classes: 'admin__control-select'});
+            $('#event_time_end').qcTimepicker({classes: 'admin__control-select'});
+            $("#event_date").calendar({
                 dateFormat: 'dd/mm/yy',
                 changeMonth: true,
                 changeYear: true,
@@ -91,44 +91,44 @@ define([
                 "active": true
             });
         },
-        initAppointmentListener: function (appointment) {
-            storage.currentEvent(appointment);
+        initEventListener: function (event) {
+            storage.currentEvent(event);
         },
-        preparePopup: function (appointment) {
+        preparePopup: function (event) {
             if (!this.initializedPopup()) {
                 this.initializedPopup(true);
             }
-            this.appointment(appointment);
+            this.event(event);
 
-            // appointment
-            $('input[name="id"]').val(appointment.id);
+            // event
+            $('input[name="id"]').val(event.id);
 
-            var start = new Date(appointment.start);
-            $('#appointment_date').val(start.toLocaleDateString("en-GB"));
-            $('#appointment_time_start-qcTimepicker option[value="' + start.toLocaleTimeString("en-GB") + '"]').prop('selected', true).trigger('change');
-            var end = new Date(appointment.end);
-            $('#appointment_time_end-qcTimepicker option[value="' + end.toLocaleTimeString("en-GB") + '"]').prop('selected', true).trigger('change');
-            $('#appointment_color').spectrum(this.getSpectrumOptions(appointment.backgroundColor));
+            var start = new Date(event.start);
+            $('#event_date').val(start.toLocaleDateString("en-GB"));
+            $('#event_time_start-qcTimepicker option[value="' + start.toLocaleTimeString("en-GB") + '"]').prop('selected', true).trigger('change');
+            var end = new Date(event.end);
+            $('#event_time_end-qcTimepicker option[value="' + end.toLocaleTimeString("en-GB") + '"]').prop('selected', true).trigger('change');
+            $('#event_color').spectrum(this.getSpectrumOptions(event.backgroundColor));
 
             // client
-            $('input[name="client_id"]').val(appointment.extendedProps.client.client_id);
-            $('input[name="client_name"]').val(appointment.extendedProps.client.client_name);
-            $('input[name="client_phone"]').val(appointment.extendedProps.client.client_phone);
+            $('input[name="client_id"]').val(event.extendedProps.client.client_id);
+            $('input[name="client_name"]').val(event.extendedProps.client.client_name);
+            $('input[name="client_phone"]').val(event.extendedProps.client.client_phone);
 
             // services
-            $('input[name="service_name"]').val(appointment.title);
+            $('input[name="service_name"]').val(event.title);
 
             // master
-            $('#employee_id option[value="' + appointment.extendedProps.employee_id + '"]').prop('selected', true);
+            $('#employee_id option[value="' + event.extendedProps.employee_id + '"]').prop('selected', true);
 
             return this;
         },
         openPopup: function () {
             this.isPopupActive(true);
-            $(this.appointmentModal).modal("openModal");
+            $(this.eventModal).modal("openModal");
         },
         closePopup: function () {
-            $(this.appointmentModal).modal("closeModal");
+            $(this.eventModal).modal("closeModal");
         },
         getSpectrumOptions: function (color) {
             return {

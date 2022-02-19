@@ -96,12 +96,12 @@ class Timetable extends \Magento\Backend\Block\Template
         return [
             'schedulerId' => $schedulerId,
             'scheduler' => 'scheduler' . $schedulerId,
-            'appointmentModal' => '.appointment-modal'
+            'eventModal' => '.event-modal'
         ];
     }
 
     /**
-     * Get collection of appointments by customer
+     * Get collection of events by customer
      *
      * @param \Magento\Customer\Api\Data\CustomerInterface $customer
      *
@@ -109,21 +109,21 @@ class Timetable extends \Magento\Backend\Block\Template
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getAppointments($customer)
+    public function getEvents($customer)
     {
         $searchBuilder = $this->searchCriteriaBuilder;
         $searchBuilder->addFilter(EventInterface::EMPLOYEE_ID, $customer->getId(), 'eq');
 
         $entities = $this->eventRepository->getEntities($searchBuilder->create())->getItems();
-        $appointments = [];
+        $events = [];
         if ($entities) {
             /**@var \Perfect\Event\Api\Data\EventInterface $entity */
             foreach ($entities as $entity) {
-                $appointments[$entity->getId()] = $entity->getData();
-                $appointments[$entity->getId()]['master'] = $customer->getFirstname();
+                $events[$entity->getId()] = $entity->getData();
+                $events[$entity->getId()]['master'] = $customer->getFirstname();
 
                 $client = $this->getClientInfo($entity->getClientId());
-                $appointments[$entity->getId()]['client'] = [
+                $events[$entity->getId()]['client'] = [
                     'client_id' => $client->getId(),
                     'client_name' => $client->getFirstname() . ' ' . $client->getLastname(),
                     'client_phone' => $client->getCustomAttribute('phone')->getValue(),
@@ -132,7 +132,7 @@ class Timetable extends \Magento\Backend\Block\Template
             }
         }
 
-        return $appointments;
+        return $events;
     }
 
     /**

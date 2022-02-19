@@ -20,9 +20,9 @@
         </container>
     </referenceContainer>
     <referenceBlock name="before.body.end">
-        <container htmlId="perfect.appointment.popup" htmlTag="div" htmlClass="appointment-popup hidden">
-            <block class="Perfect\Event\Block\Adminhtml\Timetable" name="appointment.popup"
-                   template="Perfect_Event::appointment/popup.phtml"/>
+        <container htmlId="perfect.event.popup" htmlTag="div" htmlClass="event-popup hidden">
+            <block class="Perfect\Event\Block\Adminhtml\Timetable" name="event.popup"
+                   template="Perfect_Event::event/popup.phtml"/>
         </container>
     </referenceBlock>
 </page>

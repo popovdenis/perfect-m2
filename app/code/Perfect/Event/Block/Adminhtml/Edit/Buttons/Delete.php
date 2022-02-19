@@ -19,7 +19,7 @@ class Delete extends GenericButton implements ButtonProviderInterface
         $data = [];
         if ($this->context->getRequest()->getParam('id')) {
             $data = [
-                'label'      => __('Delete Appointment'),
+                'label'      => __('Delete Event'),
                 'class'      => 'delete',
                 'on_click'   => 'deleteConfirm(\'' . __('Are you sure you want to do this?') . '\', \''
                     . $this->getDeleteUrl() . '\')',

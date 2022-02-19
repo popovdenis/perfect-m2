@@ -1,9 +1,9 @@
 define([
     'jquery',
-    'timetableAppointmentService',
+    'timetableEventService',
     'jquery-ui-modules/autocomplete',
     'domReady!'
-], function ($, timetableAppointment) {
+], function ($, timetableEvent) {
     'use strict';
 
     $.widget('perfect.timetable',{
@@ -11,14 +11,14 @@ define([
             scheduler: null,
             jqxBtn: null,
             log: null,
-            appointments: [],
+            events: [],
             clientIdElement: '#client_id',
             clientNameElement: '#client_name',
             clientPhoneElement: '#client_phone',
             clientEmailElement: '#client_email',
             searchConfig: {}
         },
-        lastAppointmentId: null,
+        lastEventId: null,
 
         /**
          * Initialize widget
@@ -49,14 +49,14 @@ define([
                     // showAllDayRow: false,
                     localization: self._getLocalization(),
                     ready: function () {
-                        scheduler.jqxScheduler('ensureAppointmentVisible', self.lastAppointmentId);
+                        scheduler.jqxScheduler('ensureEventVisible', self.lastEventId);
                     },
                     resources: {
                         colorScheme: "scheme04",
                         dataField: "master",
                         source: source
                     },
-                    appointmentDataFields: {
+                    eventDataFields: {
                         from: "started_at",
                         to: "finished_at",
                         id: "id",
@@ -74,22 +74,22 @@ define([
                             workTime: {fromDayOfWeek: 1, toDayOfWeek: 5, fromHour: 8, toHour: 20}
                         }
                     ],
-                    renderAppointment: function (info) {
-                        var startedAt = (new Date(Date.parse(info.appointment.from.toDate()))),
-                            finishedAt = (new Date(Date.parse(info.appointment.to.toDate())));
+                    renderEvent: function (info) {
+                        var startedAt = (new Date(Date.parse(info.event.from.toDate()))),
+                            finishedAt = (new Date(Date.parse(info.event.to.toDate())));
 
-                        var appointmentInfo = '<div><span>';
-                        appointmentInfo += startedAt.toLocaleString("en-GB", {hour: "numeric", minute: "2-digit"});
-                        appointmentInfo += ' - ';
-                        appointmentInfo += finishedAt.toLocaleString("en-GB", {hour: "numeric", minute: "2-digit"});
-                        appointmentInfo += '</span></div>';
-                        appointmentInfo += '<div><span>' + info.appointment.subject + '</span></div>';
+                        var eventInfo = '<div><span>';
+                        eventInfo += startedAt.toLocaleString("en-GB", {hour: "numeric", minute: "2-digit"});
+                        eventInfo += ' - ';
+                        eventInfo += finishedAt.toLocaleString("en-GB", {hour: "numeric", minute: "2-digit"});
+                        eventInfo += '</span></div>';
+                        eventInfo += '<div><span>' + info.event.subject + '</span></div>';
 
-                        info.html = appointmentInfo;
+                        info.html = eventInfo;
 
                         return info;
                     },
-                    editDialogCreate: function (dialog, fields, editAppointment) {
+                    editDialogCreate: function (dialog, fields, editEvent) {
                         fields.locationContainer.hide();
                         fields.timeZoneContainer.hide();
                         fields.subjectLabel.html("Название");
@@ -125,19 +125,19 @@ define([
 
                         self._initAutocomplete();
                     },
-                    editDialogOpen: function (dialog, fields, editAppointment) {
+                    editDialogOpen: function (dialog, fields, editEvent) {
                         console.log('open dialog');
                         $(self.options.clientIdElement).val('');
                         $(self.options.clientNameElement).val('');
                         $(self.options.clientPhoneElement).val('');
                         $(self.options.clientEmailElement).val('');
                     },
-                    editDialogClose: function (dialog, fields, editAppointment) {
+                    editDialogClose: function (dialog, fields, editEvent) {
                     }
                 });
-                scheduler.on('appointmentAdd', self._saveAppointment.bind(this));
-                scheduler.on('appointmentChange', self._saveAppointment.bind(this));
-                scheduler.on('appointmentDelete', self._deleteAppointment.bind(this));
+                scheduler.on('eventAdd', self._saveEvent.bind(this));
+                scheduler.on('eventChange', self._saveEvent.bind(this));
+                scheduler.on('eventDelete', self._deleteEvent.bind(this));
             });
         },
 
@@ -237,7 +237,7 @@ define([
                     { name: 'finished_at', type: 'date', format: "yyyy-MM-dd HH:mm" }
                 ],
                 id: 'id',
-                localData: this._populateAppointments()
+                localData: this._populateEvents()
             };
         },
 
@@ -316,14 +316,14 @@ define([
                 timelineWeekViewString: "Неделя",
                 timelineMonthViewString: "Месяц",
                 loadingErrorMessage: "Данные все еще загружаются",
-                editRecurringAppointmentDialogTitleString: "Изменить повторающуюся запись",
-                editRecurringAppointmentDialogContentString: "Вы ходить изменить только эту запись или серию?",
-                editRecurringAppointmentDialogOccurrenceString: "Изменить запись",
-                editRecurringAppointmentDialogSeriesString: "Редактировать серию",
+                editRecurringEventDialogTitleString: "Изменить повторающуюся запись",
+                editRecurringEventDialogContentString: "Вы ходить изменить только эту запись или серию?",
+                editRecurringEventDialogOccurrenceString: "Изменить запись",
+                editRecurringEventDialogSeriesString: "Редактировать серию",
                 editDialogTitleString: "Изменить запись",
                 editDialogCreateTitleString: "Создать новую запись",
-                contextMenuEditAppointmentString: "Изменить запись",
-                contextMenuCreateAppointmentString: "Создать новую запись",
+                contextMenuEditEventString: "Изменить запись",
+                contextMenuCreateEventString: "Создать новую запись",
                 editDialogSubjectString: "Название",
                 editDialogLocationString: "Место расположения",
                 editDialogFromString: "От",
@@ -377,48 +377,48 @@ define([
             };
         },
 
-        _populateAppointments: function () {
-            var appointments = [];
-            for (var entityId in this.options.appointments) {
-                var appointment = this.options.appointments[entityId];
+        _populateEvents: function () {
+            var events = [];
+            for (var entityId in this.options.events) {
+                var event = this.options.events[entityId];
 
                 var regex = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/,
                     startedAt, finishedAt;
 
-                startedAt = new Date(appointment.started_at.replace(regex, '$1-$2-$3'));
-                finishedAt = new Date(appointment.finished_at.replace(regex, '$1-$2-$3'));
+                startedAt = new Date(event.started_at.replace(regex, '$1-$2-$3'));
+                finishedAt = new Date(event.finished_at.replace(regex, '$1-$2-$3'));
 
                 startedAt.setHours(
-                    appointment.started_at.replace(regex, '$4'),
-                    appointment.started_at.replace(regex, '$5')
+                    event.started_at.replace(regex, '$4'),
+                    event.started_at.replace(regex, '$5')
                 );
                 finishedAt.setHours(
-                    appointment.finished_at.replace(regex, '$4'),
-                    appointment.finished_at.replace(regex, '$5')
+                    event.finished_at.replace(regex, '$4'),
+                    event.finished_at.replace(regex, '$5')
                 );
 
-                appointments.push({
-                    id: appointment.id,
-                    subject: appointment.subject,
-                    description: appointment.description,
+                events.push({
+                    id: event.id,
+                    subject: event.subject,
+                    description: event.description,
                     location: "place",
-                    master: appointment.master,
+                    master: event.master,
                     started_at: startedAt.toString(),
                     finished_at: finishedAt.toString()
                 });
 
-                this.lastAppointmentId = appointment.id;
+                this.lastEventId = event.id;
             }
 
-            return appointments;
+            return events;
         },
 
-        _saveAppointment: function (event) {
-            timetableAppointment.sendAppointment(event.args.appointment);
+        _saveEvent: function (event) {
+            timetableEvent.sendEvent(event.args.event);
         },
 
-        _deleteAppointment: function (event) {
-            timetableAppointment.deleteAppointment(event.args.appointment);
+        _deleteEvent: function (event) {
+            timetableEvent.deleteEvent(event.args.event);
         }
     });
 

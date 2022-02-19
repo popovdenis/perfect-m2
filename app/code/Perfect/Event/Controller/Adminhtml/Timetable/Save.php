@@ -85,16 +85,16 @@ class Save extends \Magento\Backend\App\Action
         $results = [];
 
         if ($postValues = $this->getRequest()->getPostValue()) {
-            $appointment = [];
-            if (is_string($postValues['appointment'])) {
-                parse_str($postValues['appointment'], $appointment);
-            } elseif (is_array($postValues['appointment'])) {
-                $appointment = $postValues['appointment'];
+            $event = [];
+            if (is_string($postValues['event'])) {
+                parse_str($postValues['event'], $event);
+            } elseif (is_array($postValues['event'])) {
+                $event = $postValues['event'];
             }
-            $appointmentId = (int) $appointment['id'];
+            $eventId = (int) $event['id'];
 
             try {
-                $event = $this->initEvent($appointment, $appointmentId);
+                $event = $this->initEvent($event, $eventId);
 
                 $this->eventRepository->save($event);
 
@@ -114,56 +114,56 @@ class Save extends \Magento\Backend\App\Action
      * @return \Perfect\Event\Api\Data\EventInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function initEvent(array $appointmentData, int $eventId): EventInterface
+    protected function initEvent(array $eventData, int $eventId): EventInterface
     {
         try {
-            $appointment = $this->eventRepository->get($eventId);
-            $appointmentData['id'] = (int) $appointmentData['id'];
+            $event = $this->eventRepository->get($eventId);
+            $eventData['id'] = (int) $eventData['id'];
         } catch (NoSuchEntityException $exception) {
-            $appointment = $this->eventFactory->create();
-            unset($appointmentData['id']);
+            $event = $this->eventFactory->create();
+            unset($eventData['id']);
         }
 
-        if (!empty($appointmentData['services'])) {
-            $services = $appointmentData['services'];
-            unset($appointmentData['services']);
+        if (!empty($eventData['services'])) {
+            $services = $eventData['services'];
+            unset($eventData['services']);
         }
 
         $this->dataObjectHelper->populateWithArray(
-            $appointment,
-            $appointmentData,
+            $event,
+            $eventData,
             EventInterface::class
         );
 
-        if (!empty($appointmentData['start'])) {
-            $appointment->setStartedAt(
-                date('Y-m-d H:i:s', strtotime(preg_replace('/GMT.*$/', '', $appointmentData['start'])))
+        if (!empty($eventData['start'])) {
+            $event->setStartedAt(
+                date('Y-m-d H:i:s', strtotime(preg_replace('/GMT.*$/', '', $eventData['start'])))
             );
         }
-        if (!empty($appointmentData['end'])) {
-            $appointment->setFinishedAt(
-                date('Y-m-d H:i:s', strtotime(preg_replace('/GMT.*$/', '', $appointmentData['end'])))
+        if (!empty($eventData['end'])) {
+            $event->setFinishedAt(
+                date('Y-m-d H:i:s', strtotime(preg_replace('/GMT.*$/', '', $eventData['end'])))
             );
         }
-        if (!empty($appointmentData['master'])) {
-            $appointment->setEmployeeId($this->getEmployer($appointmentData['master'])->getId());
+        if (!empty($eventData['master'])) {
+            $event->setEmployeeId($this->getEmployer($eventData['master'])->getId());
         }
-        if (!empty($appointmentData['appointment_date'])
-            && !empty($appointmentData['appointment_time_start'])
-            && !empty($appointmentData['appointment_time_end'])
+        if (!empty($eventData['event_date'])
+            && !empty($eventData['event_time_start'])
+            && !empty($eventData['event_time_end'])
         ) {
-            $appointmentDate = explode('/', $appointmentData['appointment_date']);
-            $appointmentDate = sprintf('%s-%s-%s', $appointmentDate[2], $appointmentDate[1], $appointmentDate[0]);
+            $eventDate = explode('/', $eventData['event_date']);
+            $eventDate = sprintf('%s-%s-%s', $eventDate[2], $eventDate[1], $eventDate[0]);
 
-            $appointment->setStartedAt(
-                $appointmentDate . ' ' . $appointmentData['appointment_time_start']
+            $event->setStartedAt(
+                $eventDate . ' ' . $eventData['event_time_start']
             );
-            $appointment->setFinishedAt(
-                $appointmentDate . ' ' . $appointmentData['appointment_time_end']
+            $event->setFinishedAt(
+                $eventDate . ' ' . $eventData['event_time_end']
             );
         }
 
-        return $appointment;
+        return $event;
     }
 
     /**

@@ -39,10 +39,10 @@ class TimetableConfig extends \Magento\Backend\Block\Template
     public function getConfig(): string
     {
         return $this->serializer->serialize([
-            'save_appointment_url' => $this->getUrl(
+            'save_event_url' => $this->getUrl(
                 'perfect_event/timetable/save', ['_secure' => true]
             ),
-            'delete_appointment_url' => $this->getUrl(
+            'delete_event_url' => $this->getUrl(
                 'perfect_event/timetable/delete', ['_secure' => true]
             ),
             'client_search_url' => $this->getUrl(

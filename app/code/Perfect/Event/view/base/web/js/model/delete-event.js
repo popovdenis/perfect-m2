@@ -4,10 +4,10 @@ define([
 ], function ($, config) {
     'use strict';
 
-    var _deleteAppointment = function (appointment, onSuccess) {
+    var _deleteEvent = function (event, onSuccess) {
         $.ajax({
-            url: config.getDeleteAppointmentUrl(),
-            data: {form_key: window.FORM_KEY, appointment: appointment},
+            url: config.getDeleteEventUrl(),
+            data: {form_key: window.FORM_KEY, event: event},
             type: 'post',
             dataType: 'json',
             showLoader: true,
@@ -25,6 +25,6 @@ define([
     };
 
     return function (data, onSuccess) {
-        _deleteAppointment(data, onSuccess);
+        _deleteEvent(data, onSuccess);
     }
 });
