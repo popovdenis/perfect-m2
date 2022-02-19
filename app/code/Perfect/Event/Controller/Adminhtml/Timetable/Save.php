@@ -86,7 +86,11 @@ class Save extends \Magento\Backend\App\Action
 
         if ($postValues = $this->getRequest()->getPostValue()) {
             $appointment = [];
-            parse_str($postValues['appointment'], $appointment);
+            if (is_string($postValues['appointment'])) {
+                parse_str($postValues['appointment'], $appointment);
+            } elseif (is_array($postValues['appointment'])) {
+                $appointment = $postValues['appointment'];
+            }
             $appointmentId = (int) $appointment['id'];
 
             try {

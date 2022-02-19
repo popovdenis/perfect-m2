@@ -1,0 +1,45 @@
+{
+    "perfect_service": {
+        "column": {
+            "entity_id": true,
+            "event_id": true,
+            "service_name": true,
+            "service_quantity": true,
+            "service_price": true,
+            "service_price_from": true,
+            "service_price_to": true,
+            "service_type": true,
+            "is_active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "PERFECT_SERVICE_EVENT_ID": true,
+            "PERFECT_SERVICE_SERVICE_NAME": true,
+            "PERFECT_SERVICE_SERVICE_QUANTITY": true,
+            "PERFECT_SERVICE_IS_ACTIVE": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "PERFECT_SERVICE_EVENT_ID_PERFECT_EVENT_ID": true
+        }
+    },
+    "perfect_event_service": {
+        "column": {
+            "entity_id": true,
+            "event_id": true,
+            "service_id": true,
+            "service_quantity": true,
+            "position": true
+        },
+        "index": {
+            "PERFECT_EVENT_SERVICE_SERVICE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "PERFECT_EVENT_SERVICE_SERVICE_ID_PERFECT_SERVICE_ENTITY_ID": true,
+            "PERFECT_EVENT_SERVICE_EVENT_ID_PERFECT_EVENT_ID": true,
+            "PERFECT_EVENT_SERVICE_EVENT_ID_SERVICE_ID": true
+        }
+    }
+}

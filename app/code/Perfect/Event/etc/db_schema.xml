@@ -64,8 +64,6 @@
                 comment="Event ID"/>
         <column xsi:type="varchar" name="service_name" length="150" nullable="false"
                 comment="Service Name"/>
-        <column xsi:type="int" name="service_quantity" padding="10" unsigned="false" nullable="false"
-                identity="false" default="0" comment="Service Quantity"/>
 
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>

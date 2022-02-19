@@ -5,4 +5,7 @@
     <preference for="Perfect\EventService\Api\Data\EventServiceInterface"
                 type="Perfect\EventService\Model\EventService" />
 
+    <preference for="Perfect\EventService\Api\EventServiceRepositoryInterface"
+                type="Perfect\EventService\Model\EventServiceRepository"/>
+
 </config>

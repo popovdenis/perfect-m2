@@ -12,7 +12,7 @@ interface EventServiceInterface
     /**
      * Constants defined for keys of array
      */
-    const ID = 'id';
+    const ID = 'entity_id';
     const SERVICE_NAME = 'service_name';
     const SERVICE_QUANTITY = 'service_quantity';
     const EVENT_ID = 'event_id';
