@@ -171,6 +171,90 @@
         <settings>
             <label translate="true">Employees</label>
         </settings>
-
+        <dynamicRows name="dynamic_rows">
+            <settings>
+                <addButtonLabel translate="true">Add Employee</addButtonLabel>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                </additionalClasses>
+                <componentType>dynamicRows</componentType>
+            </settings>
+            <container name="record" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="componentType" xsi:type="string">container</item>
+                    </item>
+                </argument>
+                <field name="employees" formElement="select">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="prefixName" xsi:type="string">value</item>
+                            <item name="prefixElementName" xsi:type="string">option_</item>
+                            <item name="dataScope" xsi:type="string">value</item>
+                            <item name="fit" xsi:type="boolean">false</item>
+                            <item name="label" xsi:type="string" translate="true">Employee Name</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <validation>
+                            <rule name="validate-select" xsi:type="boolean">true</rule>
+                        </validation>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Perfect\Service\Ui\Component\Service\Form\Employers\Options"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+                <field name="service_duration_hours" component="Magento_Ui/js/form/element/select" formElement="select">
+                    <settings>
+                        <dataType>text</dataType>
+                        <label translate="true">Duration (hours)</label>
+                        <dataScope>service_duration_hours</dataScope>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Perfect\Service\Ui\Component\Service\Form\Employers\Hours"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+                <field name="service_duration_minutes" component="Magento_Ui/js/form/element/select" formElement="select">
+                    <settings>
+                        <dataType>text</dataType>
+                        <label translate="true">Duration (minutes)</label>
+                        <dataScope>service_duration_minutes</dataScope>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Perfect\Service\Ui\Component\Service\Form\Employers\Minutes"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+                <actionDelete template="Magento_Backend/dynamic-rows/cells/action-delete">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <additionalClasses>
+                            <class name="some-class">true</class>
+                        </additionalClasses>
+                        <dataType>text</dataType>
+                        <label>Actions</label>
+                        <componentType>actionDelete</componentType>
+                    </settings>
+                </actionDelete>
+            </container>
+        </dynamicRows>
     </fieldset>
 </form>

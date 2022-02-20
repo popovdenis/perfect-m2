@@ -67,6 +67,7 @@ class EditPost extends \Magento\Backend\App\Action
 
             try {
                 $service = $this->initService($service);
+                $service->setData('employees', serialize($postValues['employees']));
 
                 $this->serviceRepository->save($service);
 

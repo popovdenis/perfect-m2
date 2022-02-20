@@ -76,6 +76,7 @@ class Service extends AbstractDataProvider
 
         foreach ($this->getCollection()->getItems() as $item) {
             $this->loadedData[$item->getId()]['service'] = $item->getData();
+            $this->loadedData[$item->getId()]['employees'] = unserialize($item->getData('employees'));
         }
 
         return $this->loadedData;
