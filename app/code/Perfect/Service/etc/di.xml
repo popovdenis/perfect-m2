@@ -8,4 +8,25 @@
     <preference for="Perfect\Service\Api\ServiceRepositoryInterface"
                 type="Perfect\Service\Model\ServiceRepository"/>
 
+    <!-- - - - - - - - - - - Grid configurations - - - - - -->
+
+    <virtualType name="Perfect\Service\Model\ResourceModel\Service\GridCollection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">perfect_event</argument>
+            <argument name="resourceModel"
+                      xsi:type="string">Perfect\Service\Model\ResourceModel\Service
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="service_listing_data_source"
+                      xsi:type="string">Perfect\Service\Model\ResourceModel\Service\GridCollection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
 </config>

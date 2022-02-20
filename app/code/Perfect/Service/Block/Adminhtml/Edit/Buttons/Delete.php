@@ -1,15 +1,12 @@
 <?php
 
-namespace Perfect\Event\Block\Adminhtml\Edit\Buttons;
 
-use Perfect\Base\Block\Adminhtml\Edit\Buttons\GenericButton;
+namespace Perfect\Service\Block\Adminhtml\Edit\Buttons;
+
+
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+use Perfect\Base\Block\Adminhtml\Edit\Buttons\GenericButton;
 
-/**
- * Class Delete
- *
- * @package Perfect\Event\Block\Adminhtml\Edit\Buttons
- */
 class Delete extends GenericButton implements ButtonProviderInterface
 {
     /**
@@ -18,9 +15,9 @@ class Delete extends GenericButton implements ButtonProviderInterface
     public function getButtonData()
     {
         $data = [];
-        if ($this->context->getRequest()->getParam('id')) {
+        if ($this->context->getRequest()->getParam('entity_id')) {
             $data = [
-                'label'      => __('Delete Event'),
+                'label'      => __('Delete Service'),
                 'class'      => 'delete',
                 'on_click'   => 'deleteConfirm(\'' . __('Are you sure you want to do this?') . '\', \''
                     . $this->getDeleteUrl() . '\')',
@@ -36,6 +33,6 @@ class Delete extends GenericButton implements ButtonProviderInterface
      */
     public function getDeleteUrl()
     {
-        return $this->getUrl('*/*/delete', ['id' => $this->context->getRequest()->getParam('id')]);
+        return $this->getUrl('*/*/delete', ['entity_id' => $this->context->getRequest()->getParam('entity_id')]);
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
-namespace Perfect\Event\Block\Adminhtml\Edit\Buttons;
+namespace Perfect\Service\Block\Adminhtml\Edit\Buttons;
 
-use Perfect\Base\Block\Adminhtml\Edit\Buttons\GenericButton;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+use Perfect\Base\Block\Adminhtml\Edit\Buttons\GenericButton;
 
 /**
  * Class SaveAndContinue
  *
- * @package Perfect\Event\Block\Adminhtml\Edit\Buttons
+ * @package Perfect\Service\Block\Adminhtml\Edit\Buttons
  */
 class SaveAndContinue extends GenericButton implements ButtonProviderInterface
 {

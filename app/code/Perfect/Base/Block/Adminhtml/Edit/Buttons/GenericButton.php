@@ -1,13 +1,13 @@
 <?php
 
-namespace Perfect\Event\Block\Adminhtml\Edit\Buttons;
+namespace Perfect\Base\Block\Adminhtml\Edit\Buttons;
 
 use Magento\Backend\Block\Widget\Context;
 
 /**
  * Class GenericButton
  *
- * @package Perfect\Event\Block\Adminhtml\Edit\Buttons
+ * @package Perfect\Base\Block\Adminhtml\Edit\Buttons
  */
 class GenericButton
 {

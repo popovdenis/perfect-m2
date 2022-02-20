@@ -5,17 +5,16 @@
     <table name="perfect_service" resource="default" engine="innodb" comment="Perfect Service">
         <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true"
                 comment="Entity Id"/>
-        <column xsi:type="varchar" name="service_name" length="255" nullable="false" comment="Service Name"/>
-        <column xsi:type="int" name="service_quantity" unsigned="true" nullable="false" identity="false" default="0"
-                comment="Service Quantity"/>
-        <column xsi:type="decimal" name="service_price" scale="4" precision="12" unsigned="false" nullable="false" default="0"
+        <column xsi:type="varchar" name="service_name" length="255" nullable="false"
+                comment="Service Name"/>
+        <column xsi:type="smallint" name="service_duration" padding="6" unsigned="false" nullable="false" identity="false" default="0"
+                comment="Service Duration"/>
+        <column xsi:type="decimal" name="service_price" scale="2" precision="12" unsigned="false" nullable="false" default="0"
                 comment="Service Price"/>
-        <column xsi:type="decimal" name="service_price_from" scale="4" precision="12" unsigned="false" nullable="false" default="0"
+        <column xsi:type="decimal" name="service_price_from" scale="2" precision="12" unsigned="false" nullable="false" default="0"
                 comment="Service Price From"/>
-        <column xsi:type="decimal" name="service_price_to" scale="4" precision="12" unsigned="false" nullable="false" default="0"
+        <column xsi:type="decimal" name="service_price_to" scale="2" precision="12" unsigned="false" nullable="false" default="0"
                 comment="Service Price To"/>
-        <column xsi:type="smallint" name="service_type" padding="6" unsigned="false" nullable="false" identity="false" default="0"
-                comment="Service Type"/>
         <column xsi:type="smallint" name="is_active" padding="6" unsigned="false" nullable="false" identity="false" default="0"
                 comment="Is Service Active"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"

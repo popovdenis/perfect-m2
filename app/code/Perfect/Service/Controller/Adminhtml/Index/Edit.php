@@ -1,6 +1,6 @@
 <?php
 
-namespace Perfect\Event\Controller\Adminhtml\Index;
+namespace Perfect\Service\Controller\Adminhtml\Index;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
@@ -10,13 +10,12 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Perfect\Event\Api\Data\EventInterfaceFactory;
 use Perfect\Event\Api\EventRepositoryInterface;
 
 /**
  * Class Edit
  *
- * @package Perfect\Event\Controller\Adminhtml\Index
+ * @package Perfect\Service\Controller\Adminhtml\Index
  */
 class Edit extends Action
 {
@@ -25,7 +24,7 @@ class Edit extends Action
      *
      * @see _isAllowed()
      */
-    const ADMIN_RESOURCE = 'Perfect_Event::perfect_event_list';
+    const ADMIN_RESOURCE = 'Perfect_Event::perfect_service_edit';
 
     /**
      * @var \Perfect\Event\Api\EventRepositoryInterface
@@ -55,15 +54,15 @@ class Edit extends Action
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        if ($entityId = (int)$this->getRequest()->getParam('id')) {
+        if ($entityId = (int)$this->getRequest()->getParam('entity_id')) {
             try {
                 $entity = $this->getEntityById($entityId);
 
-                $resultPage->getConfig()->getTitle()->prepend(__('Edit event %1', $entity->getServiceName()));
+                $resultPage->getConfig()->getTitle()->prepend(__('Edit service %1', $entity->getServiceName()));
             } catch (NoSuchEntityException | LocalizedException $e) {
                 $this->getMessageManager()->addErrorMessage($e->getMessage());
 
-                return $this->getResultRedirectFactory()->setPath('perfect_event/*/*');
+                return $this->getResultRedirectFactory()->setPath('perfect_service/*/*');
             }
         }
 
@@ -94,6 +93,6 @@ class Edit extends Action
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('Perfect_Event::perfect_event_list');
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }

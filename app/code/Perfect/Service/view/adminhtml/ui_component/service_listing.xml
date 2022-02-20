@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">service_listing.service_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="add" class="Perfect\Service\Block\Adminhtml\Edit\Buttons\AddButton"/>
+        </buttons>
+        <spinner>service_columns</spinner>
+        <deps>
+            <dep>service_listing.service_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="service_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <dataProvider class="Perfect\Service\Model\DataProvider\ServicesList" name="service_listing_data_source">
+            <settings>
+                <primaryFieldName>entity_id</primaryFieldName>
+                <requestFieldName>id</requestFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <container name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="template" xsi:type="string">ui/grid/toolbar</item>
+                <item name="stickyTmpl" xsi:type="string">ui/grid/sticky/toolbar</item>
+            </item>
+        </argument>
+        <filterSearch name="name" provider="service_listing.service_listing_data_source">
+            <settings>
+                <chipsProvider>service_listing.service_listing.listing_top.listing_filters_chips</chipsProvider>
+            </settings>
+        </filterSearch>
+        <bookmark name="bookmarks"/>
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="columnsProvider" xsi:type="string">service_listing.service_listing.service_columns</item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">service_listing.service_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.filters</item>
+                    </item>
+                    <item name="childDefaults" xsi:type="array">
+                        <item name="provider" xsi:type="string">service_listing.service_listing.listing_top.listing_filters</item>
+                        <item name="imports" xsi:type="array">
+                            <item name="visible" xsi:type="string">service_listing.service_listing.service_columns.${ $.index }:visible</item>
+                        </item>
+                    </item>
+                </item>
+                <item name="observers" xsi:type="array">
+                    <item name="column" xsi:type="string">column</item>
+                </item>
+            </argument>
+        </filters>
+        <paging name="listing_paging">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">service_listing.service_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.paging</item>
+                    </item>
+                    <item name="selectProvider" xsi:type="string">service_listing.service_listing.service_columns.ids</item>
+                </item>
+            </argument>
+        </paging>
+    </container>
+    <columns name="service_columns" class="Perfect\Service\Ui\Component\Listing\Columns">
+        <settings>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">service_listing.service_listing.services_columns_editor</item>
+                    <item name="target" xsi:type="string">startEdit</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                        <item name="1" xsi:type="boolean">true</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+        <column name="id" sortOrder="10">
+            <settings>
+                <label translate="true">ID</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="service_name" sortOrder="20">
+            <settings>
+                <label translate="true">Service Name</label>
+            </settings>
+        </column>
+        <column name="service_price" sortOrder="30">
+            <settings>
+                <label translate="true">Price</label>
+            </settings>
+        </column>
+        <column name="service_duration" sortOrder="40">
+            <settings>
+                <label translate="true">Duration</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" sortOrder="100"
+                       class="Perfect\Service\Ui\Component\Listing\Column\Action">
+            <settings>
+                <indexField>entity_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

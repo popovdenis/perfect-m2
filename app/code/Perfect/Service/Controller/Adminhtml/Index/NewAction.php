@@ -1,11 +1,11 @@
 <?php
 
-namespace Perfect\Event\Controller\Adminhtml\Index;
+namespace Perfect\Service\Controller\Adminhtml\Index;
 
 /**
  * Class NewAction
  *
- * @package Perfect\Event\Controller\Adminhtml\Index
+ * @package Perfect\Service\Controller\Adminhtml\Index
  */
 class NewAction extends \Magento\Backend\App\Action
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Perfect\Event\Block\Adminhtml\Edit\Buttons;
+namespace Perfect\Service\Block\Adminhtml\Edit\Buttons;
 
 use Perfect\Base\Block\Adminhtml\Edit\Buttons\GenericButton;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
@@ -8,7 +8,7 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 /**
  * Class AddButton
  *
- * @package Perfect\Event\Block\Adminhtml\Edit\Buttons
+ * @package Perfect\Service\Block\Adminhtml\Edit\Buttons
  */
 class AddButton extends GenericButton implements ButtonProviderInterface
 {
@@ -18,7 +18,7 @@ class AddButton extends GenericButton implements ButtonProviderInterface
     public function getButtonData()
     {
         return [
-            'label'      => __('Add New Event'),
+            'label'      => __('Add New Service'),
             'class'      => 'primary',
             'on_click'   => sprintf("location.href = '%s';", $this->getUrl('*/*/new')),
             'sort_order' => 10,

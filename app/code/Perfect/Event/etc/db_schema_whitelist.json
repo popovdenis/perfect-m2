@@ -24,22 +24,5 @@
             "PERFECT_EVENT_EMPLOYEE_ID_CUSTOMER_ENTITY_ENTITY_ID": true,
             "PERFECT_EVENT_CLIENT_ID_CUSTOMER_ENTITY_ENTITY_ID": true
         }
-    },
-    "perfect_service": {
-        "column": {
-            "entity_id": true,
-            "event_id": true,
-            "service_name": true,
-            "service_quantity": true
-        },
-        "index": {
-            "PERFECT_SERVICE_EVENT_ID": true,
-            "PERFECT_SERVICE_SERVICE_NAME": true,
-            "PERFECT_SERVICE_SERVICE_QUANTITY": true
-        },
-        "constraint": {
-            "PRIMARY": true,
-            "PERFECT_SERVICE_EVENT_ID_PERFECT_EVENT_ID": true
-        }
     }
 }

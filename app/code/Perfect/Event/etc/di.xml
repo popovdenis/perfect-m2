@@ -8,7 +8,7 @@
     <preference for="Perfect\Event\Api\EventRepositoryInterface"
                 type="Perfect\Event\Model\EventRepository"/>
 
-    <!-- - - - - - - - - - - Perfect grid - - - - - -->
+    <!-- - - - - - - - - - - Grid configurations - - - - - -->
 
     <virtualType name="Perfect\Event\Model\ResourceModel\Event\GridCollection"
                  type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
@@ -22,7 +22,7 @@
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="perfectevent_listing_data_source"
+                <item name="perfect_event_listing_data_source"
                       xsi:type="string">Perfect\Event\Model\ResourceModel\Event\GridCollection
                 </item>
             </argument>

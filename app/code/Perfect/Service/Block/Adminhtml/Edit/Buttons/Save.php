@@ -1,14 +1,14 @@
 <?php
 
-namespace Perfect\Event\Block\Adminhtml\Edit\Buttons;
+namespace Perfect\Service\Block\Adminhtml\Edit\Buttons;
 
-use Perfect\Base\Block\Adminhtml\Edit\Buttons\GenericButton;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+use Perfect\Base\Block\Adminhtml\Edit\Buttons\GenericButton;
 
 /**
  * Class Save
  *
- * @package Perfect\Event\Block\Adminhtml\Edit\Buttons
+ * @package Perfect\Service\Block\Adminhtml\Edit\Buttons
  */
 class Save extends GenericButton implements ButtonProviderInterface
 {
@@ -18,7 +18,7 @@ class Save extends GenericButton implements ButtonProviderInterface
     public function getButtonData()
     {
         return [
-            'label'          => __('Save Event'),
+            'label'          => __('Save Service'),
             'class'          => 'save primary',
             'data_attribute' => [
                 'mage-init' => ['button' => ['event' => 'save']],
