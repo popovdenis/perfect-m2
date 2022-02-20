@@ -1,12 +1,15 @@
 <?php
 
-
 namespace Perfect\Service\Block\Adminhtml\Edit\Buttons;
-
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 use Perfect\Base\Block\Adminhtml\Edit\Buttons\GenericButton;
 
+/**
+ * Class Delete
+ *
+ * @package Perfect\Service\Block\Adminhtml\Edit\Buttons
+ */
 class Delete extends GenericButton implements ButtonProviderInterface
 {
     /**

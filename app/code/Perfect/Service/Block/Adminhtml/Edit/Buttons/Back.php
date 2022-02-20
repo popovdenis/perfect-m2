@@ -3,7 +3,7 @@
 namespace Perfect\Service\Block\Adminhtml\Edit\Buttons;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
-use Perfect\Event\Block\Adminhtml\Edit\Buttons\GenericButton;
+use Perfect\Base\Block\Adminhtml\Edit\Buttons\GenericButton;
 
 /**
  * Class Back

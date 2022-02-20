@@ -71,32 +71,64 @@ class Service extends AbstractModel implements ServiceInterface
     /**
      * @inheritdoc
      */
-    public function setServiceQuantity($serviceQuantity): ServiceInterface
+    public function setServiceDuration($serviceDuration): ServiceInterface
     {
-        return $this->setData(self::SERVICE_QUANTITY, $serviceQuantity);
+        return $this->setData(self::SERVICE_DURATION, $serviceDuration);
     }
 
     /**
      * @inheritdoc
      */
-    public function getServiceQuantity()
+    public function getServiceDuration()
     {
-        return $this->getData(self::SERVICE_QUANTITY);
+        return $this->getData(self::SERVICE_DURATION);
     }
 
     /**
      * @inheritdoc
      */
-    public function setEventId($eventId): ServiceInterface
+    public function setServicePrice($price): ServiceInterface
     {
-        return $this->setData(self::EVENT_ID, $eventId);
+        return $this->setData(self::SERVICE_PRICE, $price);
     }
 
     /**
      * @inheritdoc
      */
-    public function getEventId()
+    public function getServicePrice()
     {
-        return $this->getData(self::EVENT_ID);
+        return $this->getData(self::SERVICE_PRICE);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setServicePriceFrom($priceFrom): ServiceInterface
+    {
+        return $this->setData(self::SERVICE_PRICE_FROM, $priceFrom);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getServicePriceFrom()
+    {
+        return $this->getData(self::SERVICE_PRICE_FROM);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setServicePriceTo($priceTo): ServiceInterface
+    {
+        return $this->setData(self::SERVICE_PRICE_TO, $priceTo);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getServicePriceTo()
+    {
+        return $this->getData(self::SERVICE_PRICE_TO);
     }
 }

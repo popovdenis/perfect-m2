@@ -14,8 +14,10 @@ interface ServiceInterface
      */
     const ID = 'entity_id';
     const SERVICE_NAME = 'service_name';
-    const SERVICE_QUANTITY = 'service_quantity';
-    const EVENT_ID = 'event_id';
+    const SERVICE_DURATION = 'service_duration';
+    const SERVICE_PRICE = 'service_price';
+    const SERVICE_PRICE_FROM = 'service_price_from';
+    const SERVICE_PRICE_TO = 'service_price_to';
 
     /**
      * Entity ID setter.
@@ -50,34 +52,66 @@ interface ServiceInterface
     public function getServiceName();
 
     /**
-     * Service Quantity setter.
+     * Service duration setter.
      *
-     * @param string $serviceQuantity
-     *
-     * @return self
-     */
-    public function setServiceQuantity($serviceQuantity): ServiceInterface;
-
-    /**
-     * Service Quantity getter.
-     *
-     * @return string|null
-     */
-    public function getServiceQuantity();
-
-    /**
-     * Event ID setter.
-     *
-     * @param string $eventId
+     * @param string $serviceDuration
      *
      * @return self
      */
-    public function setEventId($eventId): ServiceInterface;
+    public function setServiceDuration($serviceDuration): ServiceInterface;
 
     /**
-     * Event ID getter.
+     * Service duration getter.
      *
      * @return string|null
      */
-    public function getEventId();
+    public function getServiceDuration();
+
+    /**
+     * Service base price setter.
+     *
+     * @param string $serviceDuration
+     *
+     * @return self
+     */
+    public function setServicePrice($price): ServiceInterface;
+
+    /**
+     * Service base price getter.
+     *
+     * @return string|null
+     */
+    public function getServicePrice();
+
+    /**
+     * Service price from range setter.
+     *
+     * @param string $priceFrom
+     *
+     * @return self
+     */
+    public function setServicePriceFrom($priceFrom): ServiceInterface;
+
+    /**
+     * Service price from range getter.
+     *
+     * @return string|null
+     */
+    public function getServicePriceFrom();
+
+    /**
+     * Service price to range setter.
+     *
+     * @param string $priceTo
+     *
+     * @return self
+     */
+    public function setServicePriceTo($priceTo): ServiceInterface;
+
+    /**
+     * Service price to range getter.
+     *
+     * @return string|null
+     */
+    public function getServicePriceTo();
 }
