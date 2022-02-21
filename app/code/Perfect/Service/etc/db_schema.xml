@@ -7,20 +7,8 @@
                 comment="Entity Id"/>
         <column xsi:type="varchar" name="service_name" length="255" nullable="false"
                 comment="Service Name"/>
-        <column xsi:type="smallint" name="is_price_range" padding="4" unsigned="false" nullable="false" identity="false" default="0"
-                comment="Is Price Range"/>
-        <column xsi:type="decimal" name="service_price_from" scale="2" precision="12" unsigned="false" nullable="false" default="0"
-                comment="Service Price From"/>
-        <column xsi:type="decimal" name="service_price_to" scale="2" precision="12" unsigned="false" nullable="false" default="0"
-                comment="Service Price To"/>
-        <column xsi:type="smallint" name="service_duration_h" padding="4" unsigned="false" nullable="false" identity="false" default="0"
-                comment="Service Duration Hours"/>
-        <column xsi:type="smallint" name="service_duration_m" padding="4" unsigned="false" nullable="false" identity="false" default="0"
-                comment="Service Duration Minutes"/>
         <column xsi:type="smallint" name="employee_position_id" padding="6" unsigned="false" nullable="false" identity="false" default="0"
                 comment="Service Category"/>
-        <column xsi:type="smallint" name="employee_level_id" padding="6" unsigned="false" nullable="false" identity="false" default="0"
-                comment="Service Level"/>
         <column xsi:type="smallint" name="is_active" padding="4" unsigned="false" nullable="false" identity="false" default="0"
                 comment="Is Service Active"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
@@ -100,6 +88,36 @@
             <column name="employee_id"/>
         </index>
         <index referenceId="PERFECT_SERVICE_EMPLOYEE_SERVICE_ID" indexType="btree">
+            <column name="service_id"/>
+        </index>
+    </table>
+
+    <table name="perfect_service_price" resource="default" engine="innodb" comment="Service To Price Linkage Table">
+        <column xsi:type="int" name="entity_id" unsigned="false" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="int" name="service_id" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Service ID"/>
+        <column xsi:type="smallint" name="employee_level" padding="6" unsigned="false" nullable="false" identity="false" default="0"
+                comment="Service Level"/>
+        <column xsi:type="smallint" name="is_price_range" padding="4" unsigned="false" nullable="false" identity="false" default="0"
+                comment="Is Price Range"/>
+        <column xsi:type="decimal" name="service_price_from" scale="2" precision="12" unsigned="false" nullable="false" default="0"
+                comment="Service Price From"/>
+        <column xsi:type="decimal" name="service_price_to" scale="2" precision="12" unsigned="false" nullable="false" default="0"
+                comment="Service Price To"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="PERFECT_SERVICE_PRICE_SERVICE_ID_PERFECT_SERVICE_ENTITY_ID"
+                    table="perfect_event_service" column="service_id" referenceTable="perfect_service" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="PERFECT_SERVICE_PRICE_EMPLOYEE_ID_SERVICE_ID">
+            <column name="service_id"/>
+            <column name="employee_level_id"/>
+        </constraint>
+
+        <index referenceId="PERFECT_SERVICE_PRICE_SERVICE_ID" indexType="btree">
             <column name="service_id"/>
         </index>
     </table>

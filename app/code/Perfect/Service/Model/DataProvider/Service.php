@@ -6,6 +6,7 @@ use Magento\Customer\Api\CustomerRepositoryInterface;
 use Perfect\Service\Api\Data\ServiceInterface;
 use Perfect\Service\Model\ResourceModel\Service\CollectionFactory;
 use Perfect\Service\Model\ResourceModel\ServiceEmployee;
+use Perfect\Service\Model\ResourceModel\ServicePrice;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
 use Magento\Ui\DataProvider\Modifier\PoolInterface;
@@ -36,6 +37,10 @@ class Service extends AbstractDataProvider
      * @var \Perfect\Service\Model\ResourceModel\ServiceEmployee
      */
     private $serviceEmployee;
+    /**
+     * @var \Perfect\Service\Model\ResourceModel\ServicePrice
+     */
+    private $servicePrice;
 
     public function __construct(
         $name,
@@ -46,6 +51,7 @@ class Service extends AbstractDataProvider
         PoolInterface $pool,
         CustomerRepositoryInterface $customerRepository,
         ServiceEmployee $serviceEmployee,
+        ServicePrice $servicePrice,
         array $meta = [],
         array $data = []
     ) {
@@ -57,6 +63,7 @@ class Service extends AbstractDataProvider
         $this->pool = $pool;
         $this->customerRepository = $customerRepository;
         $this->serviceEmployee = $serviceEmployee;
+        $this->servicePrice = $servicePrice;
     }
 
     /**
@@ -88,7 +95,7 @@ class Service extends AbstractDataProvider
 
             unset($serviceData['employees']);
             $this->loadedData[$item->getId()]['service'] = $serviceData;
-            $this->loadedData[$item->getId()]['prices'] = unserialize($serviceData['prices']);
+            $this->loadedData[$item->getId()]['prices'] = $this->getServicePrices($item->getId());
             $this->loadedData[$item->getId()]['employees'] = $this->getServiceMasters($item->getId());
         }
 
@@ -125,5 +132,22 @@ class Service extends AbstractDataProvider
         }
 
         return $serviceMasters;
+    }
+
+    protected function getServicePrices($serviceId)
+    {
+        $servicePrices = [];
+        if ($prices = $this->servicePrice->getServicePrices($serviceId)) {
+            foreach ($prices as &$price) {
+                unset($price['entity_id']);
+            }
+            $servicePrices = [
+                'price_rows' => [
+                    'price_rows' => $prices
+                ]
+            ];
+        }
+
+        return $servicePrices;
     }
 }

@@ -11,6 +11,7 @@ use Perfect\Service\Api\Data\ServiceInterface;
 use Perfect\Service\Api\Data\ServiceInterfaceFactory;
 use Perfect\Service\Api\ServiceRepositoryInterface;
 use Perfect\Service\Model\ResourceModel\ServiceEmployee;
+use Perfect\Service\Model\ResourceModel\ServicePrice;
 
 /**
  * Class EditPost
@@ -39,6 +40,10 @@ class EditPost extends \Magento\Backend\App\Action
      * @var \Perfect\Service\Model\ResourceModel\ServiceEmployee
      */
     private $serviceEmployee;
+    /**
+     * @var \Perfect\Service\Model\ResourceModel\ServicePrice
+     */
+    private $servicePrice;
 
     /**
      * Index constructor.
@@ -49,6 +54,7 @@ class EditPost extends \Magento\Backend\App\Action
      * @param \Perfect\Service\Api\ServiceRepositoryInterface      $serviceRepository
      * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone
      * @param \Perfect\Service\Model\ResourceModel\ServiceEmployee $serviceEmployee
+     * @param \Perfect\Service\Model\ResourceModel\ServicePrice    $servicePrice
      */
     public function __construct(
         Context $context,
@@ -56,7 +62,8 @@ class EditPost extends \Magento\Backend\App\Action
         ServiceInterfaceFactory $serviceFactory,
         ServiceRepositoryInterface $serviceRepository,
         TimezoneInterface $timezone,
-        ServiceEmployee $serviceEmployee
+        ServiceEmployee $serviceEmployee,
+        ServicePrice $servicePrice
     ) {
         parent::__construct($context);
         $this->dataObjectHelper = $dataObjectHelper;
@@ -64,6 +71,7 @@ class EditPost extends \Magento\Backend\App\Action
         $this->serviceRepository = $serviceRepository;
         $this->timezone = $timezone;
         $this->serviceEmployee = $serviceEmployee;
+        $this->servicePrice = $servicePrice;
     }
 
     /**
@@ -80,11 +88,12 @@ class EditPost extends \Magento\Backend\App\Action
 
             try {
                 $service = $this->initService($service);
-                $service->setPrices(serialize($prices));
+//                $service->setPrices(serialize($prices));
 
                 $this->serviceRepository->save($service);
 
                 $this->saveServiceMasters($service, $employees);
+                $this->saveServicePrices($service, $prices);
 
                 if ($this->getRequest()->getParam('back')) {
                     return $this->returnOnEdit($service->getId());
@@ -146,6 +155,32 @@ class EditPost extends \Magento\Backend\App\Action
                 $serviceMasterMapping[$master['employee_id']] = $master;
             }
             $this->serviceEmployee->insertMultiple($service, $serviceMasterMapping);
+        }
+    }
+
+    /**
+     * @param \Perfect\Service\Api\Data\ServiceInterface $service
+     * @param                                            $prices
+     *
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function saveServicePrices(ServiceInterface $service, $prices)
+    {
+        if (empty($prices)) {
+            if ($prices = $this->servicePrice->getServicePrices($service->getId())) {
+                $this->servicePrice->deleteServicePrices($service->getId());
+            }
+        } else {
+            $servicePriceMapping = [];
+            $prices = array_shift($prices);
+            $prices = array_shift($prices);
+            foreach ($prices as $price) {
+                unset($price['record_id']);
+                unset($price['initialize']);
+                $price['service_id'] = $service->getId();
+                $servicePriceMapping[$price['employee_level']] = $price;
+            }
+            $this->servicePrice->insertMultiple($service, $servicePriceMapping);
         }
     }
 

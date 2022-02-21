@@ -10,7 +10,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Perfect\Event\Api\EventRepositoryInterface;
+use Perfect\Service\Api\ServiceRepositoryInterface;
 
 /**
  * Class Edit
@@ -27,23 +27,23 @@ class Edit extends Action
     const ADMIN_RESOURCE = 'Perfect_Event::perfect_service_edit';
 
     /**
-     * @var \Perfect\Event\Api\EventRepositoryInterface
+     * @var \Perfect\Service\Api\ServiceRepositoryInterface
      */
-    private $eventRepository;
+    private $serviceRepository;
 
     /**
      * Edit constructor.
      *
-     * @param \Magento\Backend\App\Action\Context         $context
-     * @param \Perfect\Event\Api\EventRepositoryInterface $eventRepository
+     * @param \Magento\Backend\App\Action\Context             $context
+     * @param \Perfect\Service\Api\ServiceRepositoryInterface $serviceRepository
      */
     public function __construct(
         Context $context,
-        EventRepositoryInterface $eventRepository
+        ServiceRepositoryInterface $serviceRepository
     )
     {
         parent::__construct($context);
-        $this->eventRepository = $eventRepository;
+        $this->serviceRepository = $serviceRepository;
     }
 
     /**
@@ -74,12 +74,12 @@ class Edit extends Action
     /**
      * @param int $entityId
      *
-     * @return \Perfect\Event\Api\Data\EventInterface
+     * @return \Perfect\Service\Api\Data\ServiceInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     protected function getEntityById(int $entityId)
     {
-        return $this->eventRepository->get($entityId);
+        return $this->serviceRepository->get($entityId);
     }
 
     /**
