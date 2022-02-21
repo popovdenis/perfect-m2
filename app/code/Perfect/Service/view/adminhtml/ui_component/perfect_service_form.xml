@@ -208,7 +208,7 @@
         <settings>
             <label translate="true">Employees</label>
         </settings>
-        <dynamicRows name="dynamic_rows">
+        <dynamicRows name="masters">
             <settings>
                 <addButtonLabel translate="true">Add Employee</addButtonLabel>
                 <additionalClasses>
@@ -227,9 +227,9 @@
                 <field name="employees" formElement="select">
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
-                            <item name="prefixName" xsi:type="string">value</item>
+                            <item name="prefixName" xsi:type="string">master_id</item>
                             <item name="prefixElementName" xsi:type="string">option_</item>
-                            <item name="dataScope" xsi:type="string">value</item>
+                            <item name="dataScope" xsi:type="string">master_id</item>
                             <item name="fit" xsi:type="boolean">false</item>
                             <item name="label" xsi:type="string" translate="true">Employee Name</item>
                             <item name="dataType" xsi:type="string">text</item>

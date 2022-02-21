@@ -104,4 +104,9 @@ class Service extends AbstractDataProvider
 
         return $meta;
     }
+
+    protected function getMastersStructure()
+    {
+
+    }
 }

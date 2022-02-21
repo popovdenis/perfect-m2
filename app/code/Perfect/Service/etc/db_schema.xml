@@ -65,4 +65,39 @@
         </index>
     </table>
 
+    <table name="perfect_service_employee" resource="default" engine="innodb" comment="Service To Employee Linkage Table">
+        <column xsi:type="int" name="entity_id" unsigned="false" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="int" name="employee_id" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Event ID"/>
+        <column xsi:type="int" name="service_id" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Service ID"/>
+        <column xsi:type="smallint" name="service_duration_h" padding="2" unsigned="false" nullable="false" identity="false" default="0"
+                comment="Service Duration Hours"/>
+        <column xsi:type="smallint" name="service_duration_m" padding="2" unsigned="false" nullable="false" identity="false" default="0"
+                comment="Service Duration Minutes"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+            <column name="employee_id"/>
+            <column name="service_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="PERFECT_SERVICE_EMPLOYEE_SERVICE_ID_PERFECT_SERVICE_ENTITY_ID"
+                    table="perfect_event_service" column="service_id" referenceTable="perfect_service" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="PERFECT_SERVICE_EMPLOYEE_EMPLOYEE_ID_CUSTOMER_ENTITY_ENTITY_ID"
+                    table="perfect_event_service" column="employee_id" referenceTable="customer_entity" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="PERFECT_SERVICE_EMPLOYEE_EMPLOYEE_ID_SERVICE_ID">
+            <column name="employee_id"/>
+            <column name="service_id"/>
+        </constraint>
+        <index referenceId="PERFECT_SERVICE_EMPLOYEE_EMPLOYEE_ID" indexType="btree">
+            <column name="employee_id"/>
+        </index>
+        <index referenceId="PERFECT_SERVICE_EMPLOYEE_SERVICE_ID" indexType="btree">
+            <column name="service_id"/>
+        </index>
+    </table>
+
 </schema>

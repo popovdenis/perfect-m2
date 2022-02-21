@@ -2,11 +2,15 @@
 
 namespace Perfect\Service\Controller\Adminhtml\Index;
 
-use Magento\Framework\Controller\ResultFactory;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Perfect\Service\Api\Data\ServiceInterface;
+use Perfect\Service\Api\Data\ServiceInterfaceFactory;
 use Perfect\Service\Api\ServiceRepositoryInterface;
+use Perfect\Service\Model\ResourceModel\ServiceEmployee;
 
 /**
  * Class EditPost
@@ -31,6 +35,10 @@ class EditPost extends \Magento\Backend\App\Action
      * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
      */
     private $timezone;
+    /**
+     * @var \Perfect\Service\Model\ResourceModel\ServiceEmployee
+     */
+    private $serviceEmployee;
 
     /**
      * Index constructor.
@@ -40,19 +48,22 @@ class EditPost extends \Magento\Backend\App\Action
      * @param \Perfect\Service\Api\Data\ServiceInterfaceFactory    $serviceFactory
      * @param \Perfect\Service\Api\ServiceRepositoryInterface      $serviceRepository
      * @param \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone
+     * @param \Perfect\Service\Model\ResourceModel\ServiceEmployee $serviceEmployee
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
-        \Perfect\Service\Api\Data\ServiceInterfaceFactory $serviceFactory,
+        Context $context,
+        DataObjectHelper $dataObjectHelper,
+        ServiceInterfaceFactory $serviceFactory,
         ServiceRepositoryInterface $serviceRepository,
-        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone
+        TimezoneInterface $timezone,
+        ServiceEmployee $serviceEmployee
     ) {
         parent::__construct($context);
         $this->dataObjectHelper = $dataObjectHelper;
         $this->serviceFactory = $serviceFactory;
         $this->serviceRepository = $serviceRepository;
         $this->timezone = $timezone;
+        $this->serviceEmployee = $serviceEmployee;
     }
 
     /**
@@ -67,11 +78,12 @@ class EditPost extends \Magento\Backend\App\Action
 
             try {
                 $service = $this->initService($service);
-                if (!empty($postValues['employees'])) {
-                    $service->setData('employees', serialize($postValues['employees']));
-                }
 
                 $this->serviceRepository->save($service);
+
+                if (!empty($postValues['employees'])) {
+                    $this->saveServiceMasters($service, $postValues['employees']);
+                }
 
                 if ($this->getRequest()->getParam('back')) {
                     return $this->returnOnEdit($service->getId());
@@ -116,6 +128,28 @@ class EditPost extends \Magento\Backend\App\Action
         }
 
         return $service;
+    }
+
+    /**
+     * @param \Perfect\Service\Api\Data\ServiceInterface $service
+     * @param                                            $masters
+     *
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function saveServiceMasters(ServiceInterface $service, $masters)
+    {
+        $serviceMasterMapping = [];
+        $masters = array_shift($masters);
+        $masters = array_shift($masters);
+        foreach ($masters as $master) {
+            $serviceMasterMapping[] = [
+                'service_id' => $service->getId(),
+                'employee_id' => (int)$master['master_id'],
+                'service_duration_h' => (int)$master['master_duration_h'],
+                'service_duration_m' => (int)$master['master_duration_m'],
+            ];
+        }
+        $this->serviceEmployee->insertMultiple($service, $serviceMasterMapping);
     }
 
     /**
