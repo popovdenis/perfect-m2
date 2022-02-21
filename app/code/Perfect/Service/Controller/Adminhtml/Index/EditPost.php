@@ -118,9 +118,9 @@ class EditPost extends \Magento\Backend\App\Action
             ServiceInterface::class
         );
 
-        if (!empty($serviceData['service_duration'])
-            && !empty($serviceData['service_duration']['service_duration_h'])
-            && !empty($serviceData['service_duration']['service_duration_m'])
+        if (array_key_exists('service_duration', $serviceData)
+            && array_key_exists('service_duration_h', $serviceData['service_duration'])
+            && array_key_exists('service_duration_m', $serviceData['service_duration'])
         ) {
             $service->setServiceDurationH(intval($serviceData['service_duration']['service_duration_h']));
             $service->setServiceDurationM(intval($serviceData['service_duration']['service_duration_m']));
