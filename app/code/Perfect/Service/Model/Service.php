@@ -147,4 +147,36 @@ class Service extends AbstractModel implements ServiceInterface
     {
         return $this->getData(self::SERVICE_PRICE_TO);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function setEmployeePositionId($positionId): ServiceInterface
+    {
+        return $this->setData(self::EMPLOYEE_POSITION_ID, $positionId);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEmployeePositionId()
+    {
+        return $this->getData(self::EMPLOYEE_POSITION_ID);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setEmployeeLevelId($level): ServiceInterface
+    {
+        return $this->setData(self::EMPLOYEE_LEVEL_ID, $level);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEmployeeLevelId()
+    {
+        return $this->getData(self::EMPLOYEE_LEVEL_ID);
+    }
 }

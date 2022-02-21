@@ -203,6 +203,40 @@
                 </formElements>
             </field>
         </container>
+        <field name="employee_position" component="Magento_Ui/js/form/element/select" formElement="select">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Category</label>
+                <dataScope>employee_position_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Perfect\Service\Ui\Component\Service\Form\CustomerPosition"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="employee_level" component="Magento_Ui/js/form/element/select" formElement="select">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Master Level</label>
+                <dataScope>employee_level_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Perfect\Service\Ui\Component\Service\Form\CustomerLevel"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
     </fieldset>
     <fieldset name="employees">
         <settings>

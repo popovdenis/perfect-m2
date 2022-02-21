@@ -19,6 +19,8 @@ interface ServiceInterface
     const SERVICE_PRICE = 'service_price';
     const SERVICE_PRICE_FROM = 'service_price_from';
     const SERVICE_PRICE_TO = 'service_price_to';
+    const EMPLOYEE_POSITION_ID = 'employee_position_id';
+    const EMPLOYEE_LEVEL_ID = 'employee_level_id';
 
     /**
      * Entity ID setter.
@@ -131,4 +133,36 @@ interface ServiceInterface
      * @return string|null
      */
     public function getServicePriceTo();
+
+    /**
+     * Employee position setter.
+     *
+     * @param string $positionId
+     *
+     * @return self
+     */
+    public function setEmployeePositionId($positionId): ServiceInterface;
+
+    /**
+     * Employee position getter.
+     *
+     * @return string|null
+     */
+    public function getEmployeePositionId();
+
+    /**
+     * Employee level setter.
+     *
+     * @param string $level
+     *
+     * @return self
+     */
+    public function setEmployeeLevelId($level): ServiceInterface;
+
+    /**
+     * Employee level getter.
+     *
+     * @return string|null
+     */
+    public function getEmployeeLevelId();
 }

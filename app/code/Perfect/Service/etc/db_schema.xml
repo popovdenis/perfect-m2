@@ -17,6 +17,10 @@
                 comment="Service Duration Hours"/>
         <column xsi:type="smallint" name="service_duration_m" padding="2" unsigned="false" nullable="false" identity="false" default="0"
                 comment="Service Duration Minutes"/>
+        <column xsi:type="smallint" name="employee_position_id" padding="6" unsigned="false" nullable="false" identity="false" default="0"
+                comment="Service Category"/>
+        <column xsi:type="smallint" name="employee_level_id" padding="6" unsigned="false" nullable="false" identity="false" default="0"
+                comment="Service Level"/>
         <column xsi:type="smallint" name="is_active" padding="6" unsigned="false" nullable="false" identity="false" default="0"
                 comment="Is Service Active"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"

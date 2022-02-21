@@ -19,7 +19,7 @@ class Hours implements OptionSourceInterface
         return $this->getTimes();
     }
 
-    public function getTimes()
+    protected function getTimes()
     {
         $output = [];
 
