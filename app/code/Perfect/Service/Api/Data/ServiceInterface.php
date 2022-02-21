@@ -16,7 +16,7 @@ interface ServiceInterface
     const SERVICE_NAME = 'service_name';
     const SERVICE_DURATION_H = 'service_duration_h';
     const SERVICE_DURATION_M = 'service_duration_m';
-    const SERVICE_PRICE = 'service_price';
+    const SERVICE_PRICE_RANGE = 'is_price_range';
     const SERVICE_PRICE_FROM = 'service_price_from';
     const SERVICE_PRICE_TO = 'service_price_to';
     const EMPLOYEE_POSITION_ID = 'employee_position_id';
@@ -87,20 +87,20 @@ interface ServiceInterface
     public function getServiceDurationM();
 
     /**
-     * Service base price setter.
+     * Price range flag setter.
      *
      * @param string $serviceDuration
      *
      * @return self
      */
-    public function setServicePrice($price): ServiceInterface;
+    public function setIsPriceRange($flag): ServiceInterface;
 
     /**
-     * Service base price getter.
+     * Price range flag getter.
      *
      * @return string|null
      */
-    public function getServicePrice();
+    public function getIsPriceRange();
 
     /**
      * Service price from range setter.

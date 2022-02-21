@@ -103,17 +103,17 @@ class Service extends AbstractModel implements ServiceInterface
     /**
      * @inheritdoc
      */
-    public function setServicePrice($price): ServiceInterface
+    public function setIsPriceRange($flag): ServiceInterface
     {
-        return $this->setData(self::SERVICE_PRICE, $price);
+        return $this->setData(self::SERVICE_PRICE_RANGE, $flag);
     }
 
     /**
      * @inheritdoc
      */
-    public function getServicePrice()
+    public function getIsPriceRange()
     {
-        return $this->getData(self::SERVICE_PRICE);
+        return $this->getData(self::SERVICE_PRICE_RANGE);
     }
 
     /**

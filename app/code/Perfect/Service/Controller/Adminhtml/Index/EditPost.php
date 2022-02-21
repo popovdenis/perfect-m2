@@ -118,6 +118,14 @@ class EditPost extends \Magento\Backend\App\Action
             ServiceInterface::class
         );
 
+        if (array_key_exists('service_price_range', $serviceData)
+            && array_key_exists('service_price_from', $serviceData['service_price_range'])
+            && array_key_exists('service_price_to', $serviceData['service_price_range'])
+        ) {
+            $service->setServicePriceFrom(floatval($serviceData['service_price_range']['service_price_from']));
+            $service->setServicePriceTo(floatval($serviceData['service_price_range']['service_price_to']));
+        }
+
         if (array_key_exists('service_duration', $serviceData)
             && array_key_exists('service_duration_h', $serviceData['service_duration'])
             && array_key_exists('service_duration_m', $serviceData['service_duration'])

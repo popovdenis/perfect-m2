@@ -128,7 +128,7 @@
                     <item name="breakLine" xsi:type="boolean">true</item>
                 </item>
             </argument>
-            <field name="service_price_from" formElement="input">
+            <field name="service_price_from" formElement="input" component="Perfect_Service/js/format-price">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="source" xsi:type="string">service</item>
@@ -139,14 +139,14 @@
                         <class name="admin__field-service">true</class>
                     </additionalClasses>
                     <label translate="true">Price</label>
-                    <dataType>text</dataType>
+                    <dataType>int</dataType>
                     <dataScope>service_price_from</dataScope>
                     <validation>
                         <rule name="required-entry" xsi:type="boolean">true</rule>
                     </validation>
                 </settings>
             </field>
-            <field name="service_price_to" formElement="input">
+            <field name="service_price_to" formElement="input" component="Perfect_Service/js/format-price">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="source" xsi:type="string">service</item>
@@ -157,7 +157,7 @@
                         <class name="admin__field-service-last">true</class>
                     </additionalClasses>
                     <label translate="true">Price To</label>
-                    <dataType>text</dataType>
+                    <dataType>int</dataType>
                     <dataScope>service_price_to</dataScope>
                     <!--<validation>
                         <rule name="validate-digits" xsi:type="boolean">true</rule>
