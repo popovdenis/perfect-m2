@@ -7,14 +7,16 @@
                 comment="Entity Id"/>
         <column xsi:type="varchar" name="service_name" length="255" nullable="false"
                 comment="Service Name"/>
-        <column xsi:type="smallint" name="service_duration" padding="6" unsigned="false" nullable="false" identity="false" default="0"
-                comment="Service Duration"/>
         <column xsi:type="decimal" name="service_price" scale="2" precision="12" unsigned="false" nullable="false" default="0"
                 comment="Service Price"/>
         <column xsi:type="decimal" name="service_price_from" scale="2" precision="12" unsigned="false" nullable="false" default="0"
                 comment="Service Price From"/>
         <column xsi:type="decimal" name="service_price_to" scale="2" precision="12" unsigned="false" nullable="false" default="0"
                 comment="Service Price To"/>
+        <column xsi:type="smallint" name="service_duration_h" padding="2" unsigned="false" nullable="false" identity="false" default="0"
+                comment="Service Duration Hours"/>
+        <column xsi:type="smallint" name="service_duration_m" padding="2" unsigned="false" nullable="false" identity="false" default="0"
+                comment="Service Duration Minutes"/>
         <column xsi:type="smallint" name="is_active" padding="6" unsigned="false" nullable="false" identity="false" default="0"
                 comment="Is Service Active"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
@@ -28,24 +30,6 @@
 
         <index referenceId="PERFECT_SERVICE_SERVICE_NAME" indexType="btree">
             <column name="service_name"/>
-        </index>
-        <index referenceId="PERFECT_SERVICE_SERVICE_QUANTITY" indexType="btree">
-            <column name="service_quantity"/>
-        </index>
-        <index referenceId="PERFECT_SERVICE_SERVICE_QUANTITY" indexType="btree">
-            <column name="service_price"/>
-        </index>
-        <index referenceId="PERFECT_SERVICE_SERVICE_QUANTITY" indexType="btree">
-            <column name="service_price_from"/>
-        </index>
-        <index referenceId="PERFECT_SERVICE_SERVICE_QUANTITY" indexType="btree">
-            <column name="service_price_to"/>
-        </index>
-        <index referenceId="PERFECT_SERVICE_SERVICE_QUANTITY" indexType="btree">
-            <column name="service_type"/>
-        </index>
-        <index referenceId="PERFECT_SERVICE_SERVICE_QUANTITY" indexType="btree">
-            <column name="is_active"/>
         </index>
     </table>
 

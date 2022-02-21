@@ -3,6 +3,7 @@
 namespace Perfect\Service\Model\DataProvider;
 
 use Magento\Customer\Api\CustomerRepositoryInterface;
+use Perfect\Service\Api\Data\ServiceInterface;
 use Perfect\Service\Model\ResourceModel\Service\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
@@ -74,8 +75,15 @@ class Service extends AbstractDataProvider
             return $this->loadedData;
         }
 
+        /** @var ServiceInterface $item */
         foreach ($this->getCollection()->getItems() as $item) {
-            $this->loadedData[$item->getId()]['service'] = $item->getData();
+            $serviceData = $item->getData();
+            $serviceData['service_duration'] = [
+                'service_duration_h' => $item->getServiceDurationH(),
+                'service_duration_m' => $item->getServiceDurationM(),
+            ];
+            unset($serviceData['employees']);
+            $this->loadedData[$item->getId()]['service'] = $serviceData;
             $this->loadedData[$item->getId()]['employees'] = unserialize($item->getData('employees'));
         }
 

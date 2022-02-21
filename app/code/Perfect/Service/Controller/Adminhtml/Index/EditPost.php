@@ -67,7 +67,9 @@ class EditPost extends \Magento\Backend\App\Action
 
             try {
                 $service = $this->initService($service);
-                $service->setData('employees', serialize($postValues['employees']));
+                if (!empty($postValues['employees'])) {
+                    $service->setData('employees', serialize($postValues['employees']));
+                }
 
                 $this->serviceRepository->save($service);
 
@@ -104,6 +106,14 @@ class EditPost extends \Magento\Backend\App\Action
             $serviceData,
             ServiceInterface::class
         );
+
+        if (!empty($serviceData['service_duration'])
+            && !empty($serviceData['service_duration']['service_duration_h'])
+            && !empty($serviceData['service_duration']['service_duration_m'])
+        ) {
+            $service->setServiceDurationH(intval($serviceData['service_duration']['service_duration_h']));
+            $service->setServiceDurationM(intval($serviceData['service_duration']['service_duration_m']));
+        }
 
         return $service;
     }

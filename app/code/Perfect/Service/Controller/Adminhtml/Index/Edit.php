@@ -64,6 +64,8 @@ class Edit extends Action
 
                 return $this->getResultRedirectFactory()->setPath('perfect_service/*/*');
             }
+        } else {
+            $resultPage->getConfig()->getTitle()->prepend(__('New Service'));
         }
 
         return $resultPage;

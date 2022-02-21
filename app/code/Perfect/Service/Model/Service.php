@@ -71,17 +71,33 @@ class Service extends AbstractModel implements ServiceInterface
     /**
      * @inheritdoc
      */
-    public function setServiceDuration($serviceDuration): ServiceInterface
+    public function setServiceDurationH($serviceDurationH): ServiceInterface
     {
-        return $this->setData(self::SERVICE_DURATION, $serviceDuration);
+        return $this->setData(self::SERVICE_DURATION_H, $serviceDurationH);
     }
 
     /**
      * @inheritdoc
      */
-    public function getServiceDuration()
+    public function getServiceDurationH()
     {
-        return $this->getData(self::SERVICE_DURATION);
+        return $this->getData(self::SERVICE_DURATION_H);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setServiceDurationM($serviceDurationM): ServiceInterface
+    {
+        return $this->setData(self::SERVICE_DURATION_M, $serviceDurationM);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getServiceDurationM()
+    {
+        return $this->getData(self::SERVICE_DURATION_M);
     }
 
     /**

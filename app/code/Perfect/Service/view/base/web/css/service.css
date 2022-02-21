@@ -1,0 +1,10 @@
+.admin__field-service,
+.admin__field-service-last {
+    float: left;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+.admin__field-service-last {
+    margin-top: 0 !important;
+    margin-left: 15px;
+}

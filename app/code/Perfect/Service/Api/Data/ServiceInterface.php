@@ -14,7 +14,8 @@ interface ServiceInterface
      */
     const ID = 'entity_id';
     const SERVICE_NAME = 'service_name';
-    const SERVICE_DURATION = 'service_duration';
+    const SERVICE_DURATION_H = 'service_duration_h';
+    const SERVICE_DURATION_M = 'service_duration_m';
     const SERVICE_PRICE = 'service_price';
     const SERVICE_PRICE_FROM = 'service_price_from';
     const SERVICE_PRICE_TO = 'service_price_to';
@@ -52,20 +53,36 @@ interface ServiceInterface
     public function getServiceName();
 
     /**
-     * Service duration setter.
+     * Service duration in hours setter.
      *
-     * @param string $serviceDuration
+     * @param string $serviceDurationH
      *
      * @return self
      */
-    public function setServiceDuration($serviceDuration): ServiceInterface;
+    public function setServiceDurationH($serviceDurationH): ServiceInterface;
 
     /**
-     * Service duration getter.
+     * Service duration in hours getter.
      *
      * @return string|null
      */
-    public function getServiceDuration();
+    public function getServiceDurationH();
+
+    /**
+     * Service duration in minutes setter.
+     *
+     * @param string $serviceDurationM
+     *
+     * @return self
+     */
+    public function setServiceDurationM($serviceDurationM): ServiceInterface;
+
+    /**
+     * Service duration in minutes getter.
+     *
+     * @return string|null
+     */
+    public function getServiceDurationM();
 
     /**
      * Service base price setter.

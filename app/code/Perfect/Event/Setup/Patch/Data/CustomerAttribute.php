@@ -79,11 +79,8 @@ class CustomerAttribute implements \Magento\Framework\Setup\Patch\DataPatchInter
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $this->customerSetup = $this->customerSetupFactory->create(['setup' => $this->moduleDataSetup]);
 
-        $customerAttribute = 'phone';
-        $eavSetup->addAttribute(
-            \Magento\Customer\Model\Customer::ENTITY,
-            $customerAttribute,
-            [
+        $customerAttributes = [
+            'phone' => [
                 'type' => 'varchar',
                 'label' => 'Phone',
                 'input' => 'text',
@@ -92,12 +89,38 @@ class CustomerAttribute implements \Magento\Framework\Setup\Patch\DataPatchInter
                 'user_defined' => true,
                 'position' => 85,
                 'system' => 0
+            ],
+            'job_position' => [
+                'type' => 'int',
+                'label' => 'Job position',
+                'input' => 'select',
+                'source' => \Magento\Eav\Model\Entity\Attribute\Source\Table::class,
+                'required' => true,
+                'visible' => true,
+                'user_defined' => true,
+                'position' => 80,
+                'system' => 0
+            ],
+            'skill_level' => [
+                'type' => 'int',
+                'label' => 'Skill level',
+                'input' => 'select',
+                'source' => \Magento\Eav\Model\Entity\Attribute\Source\Table::class,
+                'required' => true,
+                'visible' => true,
+                'user_defined' => true,
+                'position' => 81,
+                'system' => 0
             ]
-        );
-        $this->createCustomerAttribute(
-            $customerAttribute,
-            ['adminhtml_customer', 'customer_account_create', 'customer_account_edit']
-        );
+        ];
+        foreach ($customerAttributes as $attributeCode => $attributeData) {
+            $eavSetup->addAttribute(Customer::ENTITY, $attributeCode, $attributeData);
+            $this->createCustomerAttribute(
+                $attributeCode,
+                ['adminhtml_customer', 'customer_account_create', 'customer_account_edit']
+            );
+        }
+
 
         $this->moduleDataSetup->getConnection()->endSetup();
     }
@@ -148,6 +171,6 @@ class CustomerAttribute implements \Magento\Framework\Setup\Patch\DataPatchInter
      */
     public static function getVersion()
     {
-        return '1.0.2';
+        return '1.0.3';
     }
 }
