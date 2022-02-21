@@ -74,16 +74,15 @@ class EditPost extends \Magento\Backend\App\Action
         $resultRedirect = $this->resultRedirectFactory->create();
 
         if ($postValues = $this->getRequest()->getPostValue()) {
-            $service = $postValues['service'];
+            $service = $this->getRequest()->getParam('service');
+            $employees = $this->getRequest()->getParam('employees', []);
 
             try {
                 $service = $this->initService($service);
 
                 $this->serviceRepository->save($service);
 
-                if (!empty($postValues['employees'])) {
-                    $this->saveServiceMasters($service, $postValues['employees']);
-                }
+                $this->saveServiceMasters($service, $employees);
 
                 if ($this->getRequest()->getParam('back')) {
                     return $this->returnOnEdit($service->getId());
@@ -138,18 +137,22 @@ class EditPost extends \Magento\Backend\App\Action
      */
     protected function saveServiceMasters(ServiceInterface $service, $masters)
     {
-        $serviceMasterMapping = [];
-        $masters = array_shift($masters);
-        $masters = array_shift($masters);
-        foreach ($masters as $master) {
-            $serviceMasterMapping[] = [
-                'service_id' => $service->getId(),
-                'employee_id' => (int)$master['employee_id'],
-                'service_duration_h' => (int)$master['master_duration_h'],
-                'service_duration_m' => (int)$master['master_duration_m'],
-            ];
+        if (empty($masters)) {
+            if ($masters = $this->serviceEmployee->getServiceMasters($service->getId())) {
+                $this->serviceEmployee->deleteServiceMasters($service->getId());
+            }
+        } else {
+            $serviceMasterMapping = [];
+            $masters = array_shift($masters);
+            $masters = array_shift($masters);
+            foreach ($masters as $master) {
+                unset($master['record_id']);
+                unset($master['initialize']);
+                $master['service_id'] = $service->getId();
+                $serviceMasterMapping[$master['employee_id']] = $master;
+            }
+            $this->serviceEmployee->insertMultiple($service, $serviceMasterMapping);
         }
-        $this->serviceEmployee->insertMultiple($service, $serviceMasterMapping);
     }
 
     /**
