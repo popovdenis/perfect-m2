@@ -34,32 +34,6 @@
                 <item name="stickyTmpl" xsi:type="string">ui/grid/sticky/toolbar</item>
             </item>
         </argument>
-        <filterSearch name="name" provider="service_listing.service_listing_data_source">
-            <settings>
-                <chipsProvider>service_listing.service_listing.listing_top.listing_filters_chips</chipsProvider>
-            </settings>
-        </filterSearch>
-        <bookmark name="bookmarks"/>
-        <filters name="listing_filters">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="columnsProvider" xsi:type="string">service_listing.service_listing.service_columns</item>
-                    <item name="storageConfig" xsi:type="array">
-                        <item name="provider" xsi:type="string">service_listing.service_listing.listing_top.bookmarks</item>
-                        <item name="namespace" xsi:type="string">current.filters</item>
-                    </item>
-                    <item name="childDefaults" xsi:type="array">
-                        <item name="provider" xsi:type="string">service_listing.service_listing.listing_top.listing_filters</item>
-                        <item name="imports" xsi:type="array">
-                            <item name="visible" xsi:type="string">service_listing.service_listing.service_columns.${ $.index }:visible</item>
-                        </item>
-                    </item>
-                </item>
-                <item name="observers" xsi:type="array">
-                    <item name="column" xsi:type="string">column</item>
-                </item>
-            </argument>
-        </filters>
         <paging name="listing_paging">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -93,17 +67,14 @@
         </column>
         <column name="service_name" sortOrder="20">
             <settings>
-                <label translate="true">Service Name</label>
+                <label translate="true">Service Title</label>
             </settings>
         </column>
-        <column name="service_price" sortOrder="30">
+        <column name="employee_position_id" component="Magento_Ui/js/grid/columns/select" sortOrder="30">
             <settings>
-                <label translate="true">Price</label>
-            </settings>
-        </column>
-        <column name="service_duration" sortOrder="40">
-            <settings>
-                <label translate="true">Duration</label>
+                <options class="Perfect\Service\Ui\Component\Service\Form\CustomerPosition"/>
+                <dataType>select</dataType>
+                <label translate="true">Category</label>
             </settings>
         </column>
         <actionsColumn name="actions" sortOrder="100"
