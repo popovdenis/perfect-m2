@@ -144,7 +144,7 @@ class EditPost extends \Magento\Backend\App\Action
         foreach ($masters as $master) {
             $serviceMasterMapping[] = [
                 'service_id' => $service->getId(),
-                'employee_id' => (int)$master['master_id'],
+                'employee_id' => (int)$master['employee_id'],
                 'service_duration_h' => (int)$master['master_duration_h'],
                 'service_duration_m' => (int)$master['master_duration_m'],
             ];

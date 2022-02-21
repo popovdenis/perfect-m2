@@ -224,12 +224,12 @@
                         <item name="componentType" xsi:type="string">container</item>
                     </item>
                 </argument>
-                <field name="employees" formElement="select">
+                <field name="employee_id" formElement="select">
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
-                            <item name="prefixName" xsi:type="string">master_id</item>
+                            <item name="prefixName" xsi:type="string">employee_id</item>
                             <item name="prefixElementName" xsi:type="string">option_</item>
-                            <item name="dataScope" xsi:type="string">master_id</item>
+                            <item name="dataScope" xsi:type="string">employee_id</item>
                             <item name="fit" xsi:type="boolean">false</item>
                             <item name="label" xsi:type="string" translate="true">Employee Name</item>
                             <item name="dataType" xsi:type="string">text</item>
@@ -252,7 +252,7 @@
                     <settings>
                         <dataType>int</dataType>
                         <label translate="true">Duration (hours)</label>
-                        <dataScope>master_duration_h</dataScope>
+                        <dataScope>service_duration_h</dataScope>
                     </settings>
                     <formElements>
                         <select>
@@ -264,9 +264,9 @@
                 </field>
                 <field name="master_duration_m" component="Magento_Ui/js/form/element/select" formElement="select">
                     <settings>
-                        <dataType>text</dataType>
+                        <dataType>int</dataType>
                         <label translate="true">Duration (minutes)</label>
-                        <dataScope>master_duration_m</dataScope>
+                        <dataScope>service_duration_m</dataScope>
                     </settings>
                     <formElements>
                         <select>

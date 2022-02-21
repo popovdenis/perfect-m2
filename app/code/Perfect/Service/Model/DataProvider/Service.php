@@ -5,6 +5,7 @@ namespace Perfect\Service\Model\DataProvider;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Perfect\Service\Api\Data\ServiceInterface;
 use Perfect\Service\Model\ResourceModel\Service\CollectionFactory;
+use Perfect\Service\Model\ResourceModel\ServiceEmployee;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
 use Magento\Ui\DataProvider\Modifier\PoolInterface;
@@ -31,6 +32,10 @@ class Service extends AbstractDataProvider
      * @var \Magento\Customer\Api\CustomerRepositoryInterface
      */
     private $customerRepository;
+    /**
+     * @var \Perfect\Service\Model\ResourceModel\ServiceEmployee
+     */
+    private $serviceEmployee;
 
     public function __construct(
         $name,
@@ -40,6 +45,7 @@ class Service extends AbstractDataProvider
         DataPersistorInterface $dataPersistor,
         PoolInterface $pool,
         CustomerRepositoryInterface $customerRepository,
+        ServiceEmployee $serviceEmployee,
         array $meta = [],
         array $data = []
     ) {
@@ -50,6 +56,7 @@ class Service extends AbstractDataProvider
 
         $this->pool = $pool;
         $this->customerRepository = $customerRepository;
+        $this->serviceEmployee = $serviceEmployee;
     }
 
     /**
@@ -84,7 +91,7 @@ class Service extends AbstractDataProvider
             ];
             unset($serviceData['employees']);
             $this->loadedData[$item->getId()]['service'] = $serviceData;
-            $this->loadedData[$item->getId()]['employees'] = unserialize($item->getData('employees'));
+            $this->loadedData[$item->getId()]['employees'] = $this->getServiceMasters($item->getId());
         }
 
         return $this->loadedData;
@@ -105,8 +112,20 @@ class Service extends AbstractDataProvider
         return $meta;
     }
 
-    protected function getMastersStructure()
+    protected function getServiceMasters($serviceId)
     {
+        $serviceMasters = [];
+        if ($masters = $this->serviceEmployee->getServiceMasters($serviceId)) {
+            foreach ($masters as &$master) {
+                unset($master['entity_id']);
+            }
+            $serviceMasters = [
+                'masters' => [
+                    'masters' => $masters
+                ]
+            ];
+        }
 
+        return $serviceMasters;
     }
 }

@@ -31,16 +31,26 @@ class ServiceEmployee extends AbstractDb
      */
     public function insertMultiple(\Magento\Framework\Model\AbstractModel $service, array $items)
     {
-        $select = $this->getConnection()->select();
-        $select->from($this->getMainTable())
-            ->where('service_id = ?', $service->getServiceId());
-
         $query = $this->getConnection()->deleteFromSelect(
-            $select,
+            $this->getServiceMastersQuery($service->getId()),
             $this->getMainTable()
         );
         $this->getConnection()->query($query);
 
         $this->getConnection()->insertMultiple($this->getMainTable(), $items);
+    }
+
+    public function getServiceMasters($serviceId)
+    {
+        return $this->getConnection()->fetchAll($this->getServiceMastersQuery($serviceId));
+    }
+
+    protected function getServiceMastersQuery($serviceId)
+    {
+        $select = $this->getConnection()->select();
+        $select->from($this->getMainTable())
+            ->where('service_id = ?', $serviceId);
+
+        return $select;
     }
 }
