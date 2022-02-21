@@ -74,145 +74,6 @@
                 </validation>
             </settings>
         </field>
-        <field name="is_price_range" sortOrder="30" formElement="checkbox">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">service</item>
-                    <item name="default" xsi:type="number">0</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>boolean</dataType>
-                <label translate="true">Select price in range</label>
-                <dataScope>is_price_range</dataScope>
-                <switcherConfig>
-                    <rules>
-                        <rule name="0">
-                            <value>0</value>
-                            <actions>
-                                <action name="0">
-                                    <target>perfect_service_form.areas.service.service.service_price_range.service_price_to</target>
-                                    <callback>hide</callback>
-                                </action>
-                            </actions>
-                        </rule>
-                        <rule name="1">
-                            <value>1</value>
-                            <actions>
-                                <action name="0">
-                                    <target>perfect_service_form.areas.service.service.service_price_range.service_price_to</target>
-                                    <callback>show</callback>
-                                </action>
-                            </actions>
-                        </rule>
-                    </rules>
-                    <enabled>true</enabled>
-                </switcherConfig>
-            </settings>
-            <formElements>
-                <checkbox>
-                    <settings>
-                        <valueMap>
-                            <map name="false" xsi:type="number">0</map>
-                            <map name="true" xsi:type="number">1</map>
-                        </valueMap>
-                        <prefer>toggle</prefer>
-                    </settings>
-                </checkbox>
-            </formElements>
-        </field>
-        <container name="service_price_range" sortOrder="20" component="Magento_Ui/js/form/components/group">
-            <argument name="data" xsi:type="array">
-                <item name="type" xsi:type="string">group</item>
-                <item name="config" xsi:type="array">
-                    <item name="breakLine" xsi:type="boolean">true</item>
-                </item>
-            </argument>
-            <field name="service_price_from" formElement="input" component="Perfect_Service/js/format-price">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="source" xsi:type="string">service</item>
-                    </item>
-                </argument>
-                <settings>
-                    <additionalClasses>
-                        <class name="admin__field-service">true</class>
-                    </additionalClasses>
-                    <label translate="true">Price</label>
-                    <dataType>int</dataType>
-                    <dataScope>service_price_from</dataScope>
-                    <validation>
-                        <rule name="required-entry" xsi:type="boolean">true</rule>
-                    </validation>
-                </settings>
-            </field>
-            <field name="service_price_to" formElement="input" component="Perfect_Service/js/format-price">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="source" xsi:type="string">service</item>
-                    </item>
-                </argument>
-                <settings>
-                    <additionalClasses>
-                        <class name="admin__field-service-last">true</class>
-                    </additionalClasses>
-                    <label translate="true">Price To</label>
-                    <dataType>int</dataType>
-                    <dataScope>service_price_to</dataScope>
-                    <!--<validation>
-                        <rule name="validate-digits" xsi:type="boolean">true</rule>
-                    </validation>-->
-                </settings>
-            </field>
-        </container>
-        <container name="service_duration" sortOrder="60" component="Magento_Ui/js/form/components/group">
-            <argument name="data" xsi:type="array">
-                <item name="type" xsi:type="string">group</item>
-                <item name="config" xsi:type="array">
-                    <item name="breakLine" xsi:type="boolean">true</item>
-                </item>
-            </argument>
-            <field name="service_duration_h" formElement="select">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="source" xsi:type="string">service</item>
-                    </item>
-                </argument>
-                <settings>
-                    <additionalClasses>
-                        <class name="admin__field-service">true</class>
-                    </additionalClasses>
-                    <label translate="true">Duration</label>
-                </settings>
-                <formElements>
-                    <select>
-                        <settings>
-                            <options class="Perfect\Service\Ui\Component\Service\Form\Employers\Hours"/>
-                        </settings>
-                    </select>
-                </formElements>
-            </field>
-            <field name="service_duration_m" formElement="select">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="source" xsi:type="string">service</item>
-                    </item>
-                </argument>
-                <settings>
-                    <additionalClasses>
-                        <class name="admin__field-service-last">true</class>
-                    </additionalClasses>
-                    <label translate="true">Duration</label>
-                </settings>
-                <formElements>
-                    <select>
-                        <settings>
-                            <options class="Perfect\Service\Ui\Component\Service\Form\Employers\Minutes"/>
-                        </settings>
-                    </select>
-                </formElements>
-            </field>
-        </container>
         <field name="employee_position" sortOrder="70" component="Magento_Ui/js/form/element/select" formElement="select">
             <settings>
                 <validation>
@@ -230,24 +91,127 @@
                 </select>
             </formElements>
         </field>
-        <field name="employee_level" sortOrder="80" component="Magento_Ui/js/form/element/select" formElement="select">
-            <settings>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
-                <dataType>int</dataType>
-                <label translate="true">Master Level</label>
-                <dataScope>employee_level_id</dataScope>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options class="Perfect\Service\Ui\Component\Service\Form\CustomerLevel"/>
-                    </settings>
-                </select>
-            </formElements>
-        </field>
     </fieldset>
+
+    <fieldset name="prices">
+        <settings>
+            <label translate="true">Price Configuration</label>
+        </settings>
+        <dynamicRows name="price_rows">
+            <settings>
+                <addButtonLabel translate="true">Add Price</addButtonLabel>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                </additionalClasses>
+                <componentType>dynamicRows</componentType>
+            </settings>
+            <container name="record" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="componentType" xsi:type="string">container</item>
+                    </item>
+                </argument>
+
+                <field name="employee_level" formElement="select">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="prefixName" xsi:type="string">employee_level</item>
+                            <item name="prefixElementName" xsi:type="string">option_</item>
+                            <item name="dataScope" xsi:type="string">employee_level</item>
+                            <item name="fit" xsi:type="boolean">false</item>
+                            <item name="label" xsi:type="string" translate="true">Master Level</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <validation>
+                            <rule name="validate-select" xsi:type="boolean">true</rule>
+                        </validation>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Perfect\Service\Ui\Component\Service\Form\CustomerLevel"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+
+                <field name="is_price_range" formElement="checkbox">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="source" xsi:type="string">service</item>
+                            <item name="default" xsi:type="number">0</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataType>boolean</dataType>
+                        <label translate="true">Select price in range</label>
+                        <dataScope>is_price_range</dataScope>
+                    </settings>
+                    <formElements>
+                        <checkbox>
+                            <settings>
+                                <valueMap>
+                                    <map name="false" xsi:type="number">0</map>
+                                    <map name="true" xsi:type="number">1</map>
+                                </valueMap>
+                                <prefer>toggle</prefer>
+                            </settings>
+                        </checkbox>
+                    </formElements>
+                </field>
+
+                <field name="service_price_from" formElement="input" component="Perfect_Service/js/format-price">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="source" xsi:type="string">service</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <dataType>int</dataType>
+                        <label translate="true">Price</label>
+                        <dataScope>service_price_from</dataScope>
+                    </settings>
+                </field>
+
+                <field name="service_price_to" formElement="input" component="Perfect_Service/js/format-price">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="source" xsi:type="string">service</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <dataType>int</dataType>
+                        <dataScope>service_price_to</dataScope>
+                    </settings>
+                </field>
+
+                <actionDelete template="Magento_Backend/dynamic-rows/cells/action-delete">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <additionalClasses>
+                            <class name="some-class">true</class>
+                        </additionalClasses>
+                        <dataType>text</dataType>
+                        <label>Actions</label>
+                        <componentType>actionDelete</componentType>
+                    </settings>
+                </actionDelete>
+
+            </container>
+        </dynamicRows>
+    </fieldset>
+
     <fieldset name="employees">
         <settings>
             <label translate="true">Employees</label>
@@ -292,6 +256,7 @@
                         </select>
                     </formElements>
                 </field>
+
                 <field name="master_duration_h" component="Magento_Ui/js/form/element/select" formElement="select">
                     <settings>
                         <dataType>int</dataType>
@@ -306,6 +271,7 @@
                         </select>
                     </formElements>
                 </field>
+
                 <field name="master_duration_m" component="Magento_Ui/js/form/element/select" formElement="select">
                     <settings>
                         <dataType>int</dataType>
@@ -320,6 +286,7 @@
                         </select>
                     </formElements>
                 </field>
+
                 <actionDelete template="Magento_Backend/dynamic-rows/cells/action-delete">
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
@@ -335,6 +302,7 @@
                         <componentType>actionDelete</componentType>
                     </settings>
                 </actionDelete>
+
             </container>
         </dynamicRows>
     </fieldset>

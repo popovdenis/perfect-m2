@@ -76,9 +76,11 @@ class EditPost extends \Magento\Backend\App\Action
         if ($postValues = $this->getRequest()->getPostValue()) {
             $service = $this->getRequest()->getParam('service');
             $employees = $this->getRequest()->getParam('employees', []);
+            $prices = $this->getRequest()->getParam('prices', []);
 
             try {
                 $service = $this->initService($service);
+                $service->setPrices(serialize($prices));
 
                 $this->serviceRepository->save($service);
 
@@ -117,22 +119,6 @@ class EditPost extends \Magento\Backend\App\Action
             $serviceData,
             ServiceInterface::class
         );
-
-        if (array_key_exists('service_price_range', $serviceData)
-            && array_key_exists('service_price_from', $serviceData['service_price_range'])
-            && array_key_exists('service_price_to', $serviceData['service_price_range'])
-        ) {
-            $service->setServicePriceFrom(floatval($serviceData['service_price_range']['service_price_from']));
-            $service->setServicePriceTo(floatval($serviceData['service_price_range']['service_price_to']));
-        }
-
-        if (array_key_exists('service_duration', $serviceData)
-            && array_key_exists('service_duration_h', $serviceData['service_duration'])
-            && array_key_exists('service_duration_m', $serviceData['service_duration'])
-        ) {
-            $service->setServiceDurationH(intval($serviceData['service_duration']['service_duration_h']));
-            $service->setServiceDurationM(intval($serviceData['service_duration']['service_duration_m']));
-        }
 
         return $service;
     }

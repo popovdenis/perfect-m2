@@ -85,16 +85,10 @@ class Service extends AbstractDataProvider
         /** @var ServiceInterface $item */
         foreach ($this->getCollection()->getItems() as $item) {
             $serviceData = $item->getData();
-            $serviceData['service_price_range'] = [
-                'service_price_from' => $item->getServicePriceFrom(),
-                'service_price_to' => $item->getServicePriceTo()
-            ];
-            $serviceData['service_duration'] = [
-                'service_duration_h' => $item->getServiceDurationH(),
-                'service_duration_m' => $item->getServiceDurationM(),
-            ];
+
             unset($serviceData['employees']);
             $this->loadedData[$item->getId()]['service'] = $serviceData;
+            $this->loadedData[$item->getId()]['prices'] = unserialize($serviceData['prices']);
             $this->loadedData[$item->getId()]['employees'] = $this->getServiceMasters($item->getId());
         }
 
