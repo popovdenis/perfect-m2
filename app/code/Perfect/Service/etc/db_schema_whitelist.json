@@ -3,7 +3,7 @@
         "column": {
             "entity_id": true,
             "service_name": true,
-            "service_price": true,
+            "is_price_range": true,
             "service_price_from": true,
             "service_price_to": true,
             "service_duration_h": true,
