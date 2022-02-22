@@ -14,6 +14,9 @@ define([
         getSearchClientUrl: function () {
             return this._getConfig('client_search_url');
         },
+        getMasterServicesUrl: function () {
+            return this._getConfig('master_services_url');
+        },
         /**
          * Retrieve config value by given key.
          * Config will be fetched from defined section.

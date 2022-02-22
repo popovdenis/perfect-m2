@@ -1,12 +1,11 @@
 define([
-    'ko',
     'uiClass',
     'jquery',
-    'timetableEventService',
+    'Perfect_Event/js/model/timetable-event-service',
     'Perfect_Event/js/model/md5',
     'underscore',
     'Perfect_Event/js/storage'
-], function (ko, Class, $, timetableEvent, md5, _, storage) {
+], function (Class, $, timetableEvent, md5, _, storage) {
     'use strict';
 
     return Class.extend({

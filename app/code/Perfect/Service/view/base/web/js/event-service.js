@@ -1,17 +1,17 @@
 define([
     'jquery',
     'uiElement',
-    'ko',
     'mage/template',
-    'Perfect_Event/js/view/event-template/service/default',
-    'timetableConfig',
-    'mage/collapsible'
-], function($, Component, ko, mageTemplate, defaultTemplate, config) {
+    'Perfect_Service/js/view/template/default',
+    'Perfect_Service/js/model/serviceManager',
+    'Perfect_Event/js/model/config',
+    'Perfect_Event/js/storage'
+], function($, Component, mageTemplate, defaultTemplate, serviceManager, config, storage) {
     'use strict';
 
     return Component.extend({
         defaults: {
-            template: 'Perfect_Event/event/popup/service_new',
+            template: 'Perfect_Service/service_new',
             eventTableContainer: '.event-service-table tbody'
         },
         initialize: function () {
@@ -87,11 +87,17 @@ define([
                 plusElement.prop('disabled', false);
             }
         },
+        loadServices: function(event) {
+            console.log('load services...');
+            var currentEvent = storage.currentEvent();
+            serviceManager().getServices(currentEvent.extendedProps.employee_id);
+        },
         initEvents: function (target) {
             $('.btn-delete', target).on('click', this.deleteService.bind(this));
             $('.btn-qty-plus', target).on('click', this.increaseServiceQty.bind(this));
             $('.btn-qty-minus', target).on('click', this.decreaseServiceQty.bind(this));
-            this.initAutocomplete(target);
+            $('.btn-list', target).on('click', this.loadServices.bind(this));
+            // this.initAutocomplete(target);
             /*$(this.eventTableContainer).find(".fieldset-wrapper").collapsible({
                 "header": ".fieldset-wrapper-title",
                 "content": ".admin__collapsible-content",

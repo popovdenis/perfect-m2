@@ -47,6 +47,9 @@ class TimetableConfig extends \Magento\Backend\Block\Template
             ),
             'client_search_url' => $this->getUrl(
                 'perfect_event/timetable/search', ['_secure' => true]
+            ),
+            'master_services_url' => $this->getUrl(
+                'perfect_service/master/service', ['_secure' => true]
             )
         ]);
     }

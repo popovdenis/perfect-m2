@@ -4,10 +4,10 @@ define([
 ], function ($, config) {
     'use strict';
 
-    var _saveEvent = function (event, onSuccess) {
+    var _getMasterServices = function (masterId, onSuccess) {
         $.ajax({
-            url: config.getSaveEventUrl(),
-            data: {form_key: window.FORM_KEY, event: event},
+            url: config.getMasterServicesUrl(),
+            data: {form_key: window.FORM_KEY, masterId: masterId},
             type: 'post',
             dataType: 'json',
             showLoader: true,
@@ -24,7 +24,7 @@ define([
         });
     };
 
-    return function (data, onSuccess) {
-        _saveEvent(data, onSuccess);
+    return function (masterId, onSuccess) {
+        _getMasterServices(masterId, onSuccess);
     }
 });

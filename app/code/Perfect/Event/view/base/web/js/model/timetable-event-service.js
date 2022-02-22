@@ -1,6 +1,6 @@
 define([
-    'saveEvent',
-    'deleteEvent'
+    'Perfect_Event/js/model/save-event',
+    'Perfect_Event/js/model/delete-event'
 ], function (saveEvent, deleteEvent) {
     return {
         sendEvent: function (events) {

@@ -1,6 +1,6 @@
 define([
     'jquery',
-    'timetableConfig'
+    'Perfect_Event/js/model/config'
 ], function ($, config) {
     'use strict';
 
