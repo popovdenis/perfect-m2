@@ -114,7 +114,7 @@
                     onDelete="CASCADE"/>
         <constraint xsi:type="unique" referenceId="PERFECT_SERVICE_PRICE_EMPLOYEE_ID_SERVICE_ID">
             <column name="service_id"/>
-            <column name="employee_level_id"/>
+            <column name="employee_level"/>
         </constraint>
 
         <index referenceId="PERFECT_SERVICE_PRICE_SERVICE_ID" indexType="btree">

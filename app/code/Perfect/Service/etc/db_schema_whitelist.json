@@ -67,7 +67,8 @@
         "constraint": {
             "PRIMARY": true,
             "PERFECT_SERVICE_PRICE_SERVICE_ID_PERFECT_SERVICE_ENTITY_ID": true,
-            "PERFECT_SERVICE_PRICE_SERVICE_ID_EMPLOYEE_LEVEL_ID": true
+            "PERFECT_SERVICE_PRICE_SERVICE_ID_EMPLOYEE_LEVEL_ID": true,
+            "PERFECT_SERVICE_PRICE_SERVICE_ID_EMPLOYEE_LEVEL": true
         }
     }
 }

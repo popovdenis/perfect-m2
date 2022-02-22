@@ -165,11 +165,6 @@
                 </field>
 
                 <field name="service_price_from" formElement="input" component="Perfect_Service/js/format-price">
-                    <argument name="data" xsi:type="array">
-                        <item name="config" xsi:type="array">
-                            <item name="source" xsi:type="string">service</item>
-                        </item>
-                    </argument>
                     <settings>
                         <validation>
                             <rule name="required-entry" xsi:type="boolean">true</rule>

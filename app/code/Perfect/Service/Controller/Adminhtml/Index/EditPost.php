@@ -88,7 +88,6 @@ class EditPost extends \Magento\Backend\App\Action
 
             try {
                 $service = $this->initService($service);
-//                $service->setPrices(serialize($prices));
 
                 $this->serviceRepository->save($service);
 
@@ -171,7 +170,7 @@ class EditPost extends \Magento\Backend\App\Action
                 $this->servicePrice->deleteServicePrices($service->getId());
             }
         } else {
-            $servicePriceMapping = [];
+            $servicePriceMapping = $servicesInOrder = [];
             $prices = array_shift($prices);
             $prices = array_shift($prices);
             foreach ($prices as $price) {
