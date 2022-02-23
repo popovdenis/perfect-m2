@@ -232,23 +232,38 @@ define([
             currentEvent.eventPriceSummary = ko.observable(0);
             currentEvent.eventPriceSummaryRange = ko.observable(0);
 
+            var basePrice = 0;
+            // calculate base price
             for (const index in services) {
                 if (services.hasOwnProperty(index)) {
-                    let service = services[index],
-                        priceFrom = parseInt(service.service_price_from);
+                    let service = services[index];
 
-                    currentEvent.eventPriceSummary(
-                        currentEvent.eventPriceSummary() + priceFrom * parseInt(service.service_quantity)
-                    );
+                    if (!parseInt(service.is_price_range)) {
+                        basePrice += parseInt(service.service_price_from) * parseInt(service.service_quantity);
+                    }
+                }
+            }
+            // calculate range price only
+            for (const index in services) {
+                if (services.hasOwnProperty(index)) {
+                    let service = services[index];
 
-                    if (!_.isEmpty(service.is_price_range)) {
-                        var priceTo = parseInt(service.service_price_to);
+                    if (parseInt(service.is_price_range)) {
+                        let priceFrom = parseInt(service.service_price_from),
+                            priceTo = parseInt(service.service_price_to);
 
+                        currentEvent.eventPriceSummary(
+                            currentEvent.eventPriceSummary() + priceFrom * parseInt(service.service_quantity)
+                        );
                         currentEvent.eventPriceSummaryRange(
                             currentEvent.eventPriceSummaryRange() + priceTo * parseInt(service.service_quantity)
                         );
                     }
                 }
+            }
+            currentEvent.eventPriceSummary(currentEvent.eventPriceSummary() + basePrice);
+            if (currentEvent.eventPriceSummaryRange()) {
+                currentEvent.eventPriceSummaryRange(currentEvent.eventPriceSummaryRange() + basePrice);
             }
 
             var priceSummary = currentEvent.eventPriceSummary();
