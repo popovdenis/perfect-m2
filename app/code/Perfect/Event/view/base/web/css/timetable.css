@@ -90,3 +90,15 @@
 .service-item-details:hover {
     background-color: #e3e3e3;
 }
+.admin__action-multiselect-wrap .admin__action-multiselect:before {
+    height: 33px;
+    top: auto;
+}
+.admin__action-multiselect-wrap .admin__action-multiselect {
+    border: 1px solid #adadad;
+    cursor: pointer;
+    display: block;
+    min-height: 3.1rem;
+    padding-right: 3.6rem;
+    white-space: normal;
+}

@@ -8,15 +8,19 @@ define([
     'use strict';
 
     return Class.extend({
-        getServices: function (masterId) {
-            var self = this;
-            serviceProvider.getServices(masterId)
-                .then(function () {
-                    // save services in storage
-                    // display services
-                    console.log('save services in storage');
-                    console.log('display services...');
-                });
+        getServices: function (masterId, onSuccess) {
+            if (storage.getMasterServices(masterId).length) {
+                onSuccess(storage.getMasterServices(masterId));
+            }
+            if (!storage.getMasterServices(masterId).length) {
+                serviceProvider.getServices(masterId)
+                    .then(function (services) {
+                        console.log('save services in storage');
+                        console.log('display services...');
+                        storage.masterServices.push({masterId: masterId, services: services});
+                        onSuccess(storage.getMasterServices(masterId));
+                    });
+            }
         }
     })
 });

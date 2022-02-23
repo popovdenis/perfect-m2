@@ -71,12 +71,34 @@ class ServiceRepository implements ServiceRepositoryInterface
         /* @var  \Magento\Framework\Api\SearchResultsInterface $searchResults */
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($searchCriteria);
-        /* @var \Perfect\Service\Model\ResourceModel\Service\Collection */
+        /* @var \Perfect\Service\Model\ResourceModel\Service\Collection $collection */
         $collection = $this->serviceFactory->create()->getCollection();
         $this->collectionProcessor->process($searchCriteria, $collection);
         $searchResults->setItems($collection->getItems());
 
         return $searchResults;
+    }
+
+    public function getServicesByMasterId(int $masterId)
+    {
+        /* @var \Perfect\Service\Model\ResourceModel\Service\Collection $collection */
+        $collection = $this->serviceFactory->create()->getCollection();
+        $collection->getSelect()
+            ->joinInner(
+                ['se' => $collection->getTable('perfect_service_employee')],
+                'se.service_id = main_table.entity_id',
+                [
+                    'master_service_duration_h' => 'service_duration_h',
+                    'master_service_duration_m' => 'service_duration_m'
+                ]
+            )->joinInner(
+                ['sp' => $collection->getTable('perfect_service_price')],
+                'sp.service_id = main_table.entity_id',
+                ['is_price_range', 'service_price_from', 'service_price_to']
+            )->where('se.employee_id = ?', $masterId)
+            ->where('sp.employee_level = ?', 15);
+
+        return $collection->getItems();
     }
 
     /**

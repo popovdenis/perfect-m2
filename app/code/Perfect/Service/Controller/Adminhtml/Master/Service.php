@@ -5,7 +5,6 @@ namespace Perfect\Service\Controller\Adminhtml\Master;
 use Magento\Backend\App\Action\Context;
 use Magento\Customer\Api\Data\CustomerInterface;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\Exception\LocalizedException;
 
 /**
  * Class Service
@@ -15,36 +14,23 @@ use Magento\Framework\Exception\LocalizedException;
 class Service extends \Magento\Backend\App\Action
 {
     /**
-     * @var \Magento\Framework\Api\SearchCriteriaBuilder
+     * @var \Perfect\Service\Api\ServiceRepositoryInterface
      */
-    private $searchCriteriaBuilder;
-    /**
-     * @var \Perfect\Event\Helper\Customer
-     */
-    private $customerHelper;
-    /**
-     * @var \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory
-     */
-    private $customerCollection;
+    private $serviceRepository;
 
     /**
      * Service constructor.
      *
-     * @param \Magento\Backend\App\Action\Context          $context
-     * @param \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder
-     * @param \Perfect\Event\Helper\Customer               $customerHelper
+     * @param \Magento\Backend\App\Action\Context             $context
+     * @param \Perfect\Service\Api\ServiceRepositoryInterface $serviceRepository
      */
     public function __construct(
         Context $context,
-        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
-        \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerCollection,
-        \Perfect\Event\Helper\Customer $customerHelper
+        \Perfect\Service\Api\ServiceRepositoryInterface $serviceRepository
     )
     {
         parent::__construct($context);
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->customerHelper = $customerHelper;
-        $this->customerCollection = $customerCollection;
+        $this->serviceRepository = $serviceRepository;
     }
 
     /**
@@ -63,12 +49,16 @@ class Service extends \Magento\Backend\App\Action
 
         $results = [];
         if ($services = $this->getServicesByMaster($masterId)) {
-            /** @var CustomerInterface $customer */
-            foreach ($services as $customer) {
+            /** @var \Perfect\Service\Api\Data\ServiceInterface $service */
+            foreach ($services as $service) {
                 $results[] = [
-                    'client_id' => $customer->getId(),
-                    'client' => sprintf('%s %s', $customer->getFirstname(), $customer->getLastname()),
-                    'client_phone' => $customer->getPhone()
+                    'service_id' => $service->getId(),
+                    'service_name' => $service->getServiceName(),
+                    'service_duration_h' => $service->getData('master_service_duration_h'),
+                    'service_duration_m' => $service->getData('master_service_duration_m'),
+                    'is_price_range' => $service->getData('is_price_range'),
+                    'service_price_from' => $service->getData('service_price_from'),
+                    'service_price_to' => $service->getData('service_price_to'),
                 ];
             }
         }
@@ -84,12 +74,7 @@ class Service extends \Magento\Backend\App\Action
      */
     protected function getServicesByMaster($masterId)
     {
-        $customerCollection = $this->customerCollection->create();
-        $customerCollection->addFieldToFilter('firstname', ['like' => '%' . $search . '%']);
-        $customerCollection->addFieldToFilter('group_id', ['eq' => $this->getClientGroup()]);
-        $customerCollection->addAttributeToSelect('phone');
-
-        return $customerCollection->getItems();
+        return $this->serviceRepository->getServicesByMasterId($masterId);
     }
 
     /**
