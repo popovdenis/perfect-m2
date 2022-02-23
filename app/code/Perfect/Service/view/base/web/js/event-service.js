@@ -19,7 +19,9 @@ define([
             eventDurationSummary: ko.observable(0),
             inputValue: '',
             multiselectFocus: false,
-            hoverClass: '_hover',
+            serviceRowClass: '.data-row',
+            serviceItemClass: '.service-item',
+            serviceItemIndex: 'service-index',
             listens: {
                 listVisible: 'cleanHoveredElement'
             }
@@ -46,15 +48,16 @@ define([
         cleanHoveredElement: function () {
             return this;
         },
-        addService: function () {
-            var params = {data: {row_index: $(this.eventTableContainer).find('.data-row').length}};
-            var templateText = $(mageTemplate(defaultTemplate())(params));
 
-            $(this.eventTableContainer).append(templateText);
+        addServiceRow: function () {
+            var params = {data: {row_index: $(this.eventTableContainer).find(this.serviceRowClass).length}};
+            var newServiceTemplate = $(mageTemplate(defaultTemplate())(params));
+
+            $(this.eventTableContainer).append(newServiceTemplate);
 
             var self = this;
             serviceManager().getServices(storage.currentEvent().extendedProps.employee_id, function (services) {
-                var servicesSearchItems = templateText.find('.services-search-items');
+                var servicesSearchItems = newServiceTemplate.find('.services-search-items');
 
                 for (const index in services) {
                     if (services.hasOwnProperty(index)) {
@@ -69,8 +72,8 @@ define([
                         }
 
                         let dropdown =
-                            '<li class="admin__action-multiselect-menu-inner-item _root" data-role="option-group">\n' +
-                                '<div class="action-menu-item service-details" data-service-index="' + service.service_id + '">\n' +
+                            '<li class="admin__action-multiselect-menu-inner-item service-item" data-role="option-group" data-service-index="' + service.service_id + '">\n' +
+                                '<div class="action-menu-item service-details">\n' +
                                     '<span class="service-name" style="font-weight: bold;margin-right: 5px;">' + service.service_name + '</span>' +
                                     '<span class="service_details">' +
                                         '<span class="service_length" style="margin-right: 5px;">' + serviceDuration + '</span>' +
@@ -83,11 +86,12 @@ define([
                     }
                 }
 
-                self.initEvents(templateText);
+                self.initEvents(newServiceTemplate);
             });
 
             return this;
         },
+
         deleteService: function (event) {
             var self = this,
                 target = $(event.target).closest('.data-row');
@@ -110,8 +114,10 @@ define([
 
             return this;
         },
+
         increaseServiceQty: function (event) {
-            var rowElement = $(event.target).closest('.data-row'),
+            var rowElement = $(event.currentTarget).closest(this.serviceRowClass),
+                serviceId = rowElement.data(this.serviceItemIndex),
                 qtyElement = rowElement.find('.input-qty');
 
             if (qtyElement) {
@@ -126,14 +132,25 @@ define([
                     qty = parseInt(qtyElement.attr('max'));
                 }
                 qtyElement.val(qty);
+
+                if (parseInt(serviceId) && typeof serviceId !== "undefined") {
+                    var service = this.getCurrentEventServiceById(serviceId);
+                    if (!_.isEmpty(service)) {
+                        service.service_quantity = qty;
+                    }
+                    this.updateEventPriceSummary();
+                }
             }
+
             var minusElement = rowElement.find('.btn-qty-minus');
             if (minusElement.prop('disabled')) {
                 minusElement.prop('disabled', false);
             }
         },
+
         decreaseServiceQty: function (event) {
-            var rowElement = $(event.target).closest('.data-row'),
+            var rowElement = $(event.currentTarget).closest(this.serviceRowClass),
+                serviceId = rowElement.data(this.serviceItemIndex),
                 qtyElement = rowElement.find('.input-qty');
 
             if (qtyElement) {
@@ -148,12 +165,21 @@ define([
                     qty = parseInt(qtyElement.attr('min'));
                 }
                 qtyElement.val(qty);
+
+                if (parseInt(serviceId) && typeof serviceId !== "undefined") {
+                    var service = this.getCurrentEventServiceById(serviceId);
+                    if (!_.isEmpty(service)) {
+                        service.service_quantity = qty;
+                    }
+                    this.updateEventPriceSummary();
+                }
             }
             var plusElement = rowElement.find('.btn-qty-plus');
             if (plusElement) {
                 plusElement.prop('disabled', false);
             }
         },
+
         initServicesDropdown: function (event) {
             if (!this.multiselectFocus()) {
                 var target = event.currentTarget;
@@ -168,45 +194,72 @@ define([
                 }
             }
         },
-        selectService: function (event) {
-            var serviceId = $(event.currentTarget).data('service-index');
-            if (typeof serviceId !== "undefined") {
+
+        selectServiceFromList: function (event) {
+            var rowElement = $(event.currentTarget).closest(this.serviceItemClass),
+                serviceId = rowElement.data(this.serviceItemIndex);
+
+            if (parseInt(serviceId) && typeof serviceId !== "undefined") {
                 var currentEvent = storage.currentEvent(),
-                    masterId = currentEvent.extendedProps.employee_id,
-                    currentService = storage.getServiceById(masterId, serviceId);
+                    currentService = storage.getServiceById(currentEvent.extendedProps.employee_id, serviceId);
 
                 if (currentService && typeof currentService.service_name !== "undefined") {
-                    var inputContainer = $(event.currentTarget).closest('.admin__field-control');
-                    $('.selected-service-name', inputContainer).attr('data-service-index', currentService.service_id)
+                    $('.selected-service-name', $(event.currentTarget).closest('.admin__field-control'))
+                        .attr('data-service-index', currentService.service_id)
                         .text(currentService.service_name);
 
-                    this.updateEventPriceSummary(currentEvent, currentService);
-                    this.updateEventDurationSummary(currentEvent, currentService);
+                    $(event.currentTarget).closest(this.serviceRowClass)
+                        .attr('data-' + this.serviceItemIndex, serviceId);
 
-                    this.addEventService(currentEvent, currentService);
+                    var inputQty = $(event.currentTarget).closest(this.serviceRowClass).find('.input-qty');
+                    if (inputQty) {
+                        currentService.service_quantity = 0;
+                        if (_.isNumber(parseInt(inputQty.val()))) {
+                            currentService.service_quantity = parseInt(inputQty.val());
+                        }
+                    }
+
+                    this.addCurrentEventService(currentService);
+                    this.updateEventPriceSummary();
                 }
             }
         },
-        updateEventPriceSummary: function (currentEvent, currentService) {
-            if (typeof currentEvent.eventPriceSummary === "undefined") {
-                currentEvent.eventPriceSummary = ko.observable(0);
-                currentEvent.eventPriceSummaryRange = ko.observable(0);
+
+        updateEventPriceSummary: function () {
+            var currentEvent = storage.currentEvent(),
+                services = currentEvent.services();
+
+            currentEvent.eventPriceSummary = ko.observable(0);
+            currentEvent.eventPriceSummaryRange = ko.observable(0);
+
+            for (const index in services) {
+                if (services.hasOwnProperty(index)) {
+                    let service = services[index],
+                        priceFrom = parseInt(service.service_price_from);
+
+                    currentEvent.eventPriceSummary(
+                        currentEvent.eventPriceSummary() + priceFrom * parseInt(service.service_quantity)
+                    );
+
+                    if (!_.isEmpty(service.is_price_range)) {
+                        var priceTo = parseInt(service.service_price_to);
+
+                        currentEvent.eventPriceSummaryRange(
+                            currentEvent.eventPriceSummaryRange() + priceTo * parseInt(service.service_quantity)
+                        );
+                    }
+                }
             }
-            currentEvent.eventPriceSummary(
-                currentEvent.eventPriceSummary() + parseInt(currentService.service_price_from)
-            );
-            if (!_.isEmpty(currentService.is_price_range)) {
-                currentEvent.eventPriceSummaryRange(
-                    currentEvent.eventPriceSummaryRange() + parseInt(currentService.service_price_to)
-                );
-            }
+
             var priceSummary = currentEvent.eventPriceSummary();
             if (currentEvent.eventPriceSummaryRange()) {
                 priceSummary += ' - ' + currentEvent.eventPriceSummaryRange();
             }
             $('.service-price-summary').find('small').text(priceSummary);
         },
-        updateEventDurationSummary: function (currentEvent, currentService) {
+
+        updateEventDurationSummary: function (currentService) {
+            var currentEvent = storage.currentEvent();
             var serviceDuration = currentService.service_duration_h + ' ч.';
             if (parseInt(currentService.service_duration_m)) {
                 serviceDuration += ' ' + parseInt(currentService.service_duration_m) + ' м.';
@@ -227,15 +280,25 @@ define([
 
             $('.service-duration-summary').find('small').html(serviceDuration);
         },
-        addEventService: function (event, service) {
+
+        addCurrentEventService: function (service) {
+            var event = storage.currentEvent();
             if (typeof event.services === "undefined") {
                 event.services = ko.observableArray();
             }
-            var serviceIndex = event.services().map(object => parseInt(object.service_id)).indexOf(service.service_id);
-            if (serviceIndex === -1) {
-                event.services().push(service);
-            }
+            event.services().push(service);
         },
+
+        getCurrentEventServiceById: function (serviceId) {
+            var event = storage.currentEvent();
+            if (typeof event.services === "undefined") {
+                return {};
+            }
+            var service = event.services().find(o => parseInt(o.service_id) === serviceId);
+
+            return service ? service : {};
+        },
+
         deleteEventService: function (event, service_id) {
             if (typeof event.services !== "undefined") {
                 var serviceIndex = event.services().map(object => parseInt(object.service_id)).indexOf(service_id);
@@ -244,6 +307,7 @@ define([
                 }
             }
         },
+
         initEvents: function (target) {
             $('.btn-delete', target).on('click', this.deleteService.bind(this));
             $('.btn-qty-plus', target).on('click', this.increaseServiceQty.bind(this));
@@ -251,7 +315,7 @@ define([
             $('.action-select.admin__action-multiselect', target).on('click', this.initServicesDropdown.bind(this));
             $('.action-select.admin__action-multiselect', target).on('focusin', this.onFocusIn.bind(this));
             $('.action-select.admin__action-multiselect', target).on('focusout', this.onFocusOut.bind(this));
-            $('.service-details', target).on('click', this.selectService.bind(this));
+            $('.service-details', target).on('click', this.selectServiceFromList.bind(this));
             // this.initAutocomplete(target);
             /*$(this.eventTableContainer).find(".fieldset-wrapper").collapsible({
                 "header": ".fieldset-wrapper-title",
@@ -261,6 +325,7 @@ define([
                 "active": true
             });*/
         },
+
         initAutocomplete: function (target) {
             $('input[name="service_name"]', target).autocomplete({
                 minLength: 2,
