@@ -18,7 +18,7 @@ define(['mage/translate'], function ($t) {
                                                         // '<input class="admin__control-text service_name" type="text" name="services[<%- data.row_index %>][service_name]" style="float: left;width: 90%;" />\n' +
                                                         '<div class="admin__action-multiselect-wrap action-select-wrap" style="width: 87%;float: left;">\n' +
                                                             '<div class="action-select admin__action-multiselect">\n' +
-                                                                '<div class="admin__action-multiselect-text selected-service-value"></div>\n' +
+                                                                '<div class="admin__action-multiselect-text selected-service-name"></div>\n' +
                                                                 '<div class="action-menu" data-bind="css:{_active: listVisible}" style="z-index: 1;">\n' +
                                                                     '<div class="services-detail-empty" data-bind="text: providersEmpty()"></div>\n' +
                                                                     '<ul class="services-search-items admin__action-multiselect-menu-inner _root">\n' +

@@ -6,8 +6,9 @@ define([
     'Perfect_Service/js/model/serviceManager',
     'Perfect_Event/js/model/config',
     'Perfect_Event/js/storage',
-    'ko'
-], function($, Component, mageTemplate, defaultTemplate, serviceManager, config, storage, ko) {
+    'ko',
+    'underscore'
+], function($, Component, mageTemplate, defaultTemplate, serviceManager, config, storage, ko, _) {
     'use strict';
 
     return Component.extend({
@@ -15,6 +16,7 @@ define([
             template: 'Perfect_Service/service_new',
             eventTableContainer: '.event-service-table tbody',
             listVisible: ko.observable(false),
+            eventDurationSummary: ko.observable(0),
             inputValue: '',
             multiselectFocus: false,
             hoverClass: '_hover',
@@ -52,8 +54,7 @@ define([
 
             var self = this;
             serviceManager().getServices(storage.currentEvent().extendedProps.employee_id, function (services) {
-                var dropdown = '',
-                    servicesSearchItems = templateText.find('.services-search-items');
+                var servicesSearchItems = templateText.find('.services-search-items');
 
                 for (const index in services) {
                     if (services.hasOwnProperty(index)) {
@@ -67,7 +68,7 @@ define([
                             servicePrice += ' - ' + service.service_price_to;
                         }
 
-                        dropdown +=
+                        let dropdown =
                             '<li class="admin__action-multiselect-menu-inner-item _root" data-role="option-group">\n' +
                                 '<div class="action-menu-item service-details" data-service-index="' + service.service_id + '">\n' +
                                     '<span class="service-name" style="font-weight: bold;margin-right: 5px;">' + service.service_name + '</span>' +
@@ -91,6 +92,11 @@ define([
             var self = this,
                 target = $(event.target).closest('.data-row');
 
+            var serviceIndex = target.find('.selected-service-name').data('service-index');
+            if (serviceIndex) {
+                self.deleteEventService(storage.currentEvent(), serviceIndex);
+            }
+
             target.fadeOut(200, function() {
                 target.remove();
 
@@ -101,6 +107,7 @@ define([
                     });
                 }
             });
+
             return this;
         },
         increaseServiceQty: function (event) {
@@ -169,29 +176,71 @@ define([
                     currentService = storage.getServiceById(masterId, serviceId);
 
                 if (currentService && typeof currentService.service_name !== "undefined") {
-                    $('.selected-service-value').text(currentService.service_name);
+                    var inputContainer = $(event.currentTarget).closest('.admin__field-control');
+                    $('.selected-service-name', inputContainer).attr('data-service-index', currentService.service_id)
+                        .text(currentService.service_name);
 
-                    $('.service-price-summary').find('small').text(parseInt(currentService.service_price_from));
+                    this.updateEventPriceSummary(currentEvent, currentService);
+                    this.updateEventDurationSummary(currentEvent, currentService);
 
-                    var serviceDuration = currentService.service_duration_h + ' ч.';
-                    if (parseInt(currentService.service_duration_m)) {
-                        serviceDuration += ' ' + parseInt(currentService.service_duration_m) + ' м.';
-                    }
-                    var start = new Date(currentEvent.start);
-                    var end = new Date(currentEvent.end);
+                    this.addEventService(currentEvent, currentService);
+                }
+            }
+        },
+        updateEventPriceSummary: function (currentEvent, currentService) {
+            if (typeof currentEvent.eventPriceSummary === "undefined") {
+                currentEvent.eventPriceSummary = ko.observable(0);
+                currentEvent.eventPriceSummaryRange = ko.observable(0);
+            }
+            currentEvent.eventPriceSummary(
+                currentEvent.eventPriceSummary() + parseInt(currentService.service_price_from)
+            );
+            if (!_.isEmpty(currentService.is_price_range)) {
+                currentEvent.eventPriceSummaryRange(
+                    currentEvent.eventPriceSummaryRange() + parseInt(currentService.service_price_to)
+                );
+            }
+            var priceSummary = currentEvent.eventPriceSummary();
+            if (currentEvent.eventPriceSummaryRange()) {
+                priceSummary += ' - ' + currentEvent.eventPriceSummaryRange();
+            }
+            $('.service-price-summary').find('small').text(priceSummary);
+        },
+        updateEventDurationSummary: function (currentEvent, currentService) {
+            var serviceDuration = currentService.service_duration_h + ' ч.';
+            if (parseInt(currentService.service_duration_m)) {
+                serviceDuration += ' ' + parseInt(currentService.service_duration_m) + ' м.';
+            }
+            var start = new Date(currentEvent.start);
+            var end = new Date(currentEvent.end);
 
-                    var hoursStart = start.getHours().toString().padStart(2, "0"),
-                        minutesStart = start.getMinutes().toString().padStart(2, "0"),
-                        hoursEnd = end.getHours().toString().padStart(2, "0"),
-                        minutesEnd = end.getMinutes().toString().padStart(2, "0");
+            var hoursStart = start.getHours().toString().padStart(2, "0"),
+                minutesStart = start.getMinutes().toString().padStart(2, "0"),
+                hoursEnd = end.getHours().toString().padStart(2, "0"),
+                minutesEnd = end.getMinutes().toString().padStart(2, "0");
 
-                    serviceDuration += ' (';
-                    serviceDuration += hoursStart + ':' + minutesStart;
-                    serviceDuration += ' - ';
-                    serviceDuration += hoursEnd + ':' + minutesEnd;
-                    serviceDuration += ')';
+            serviceDuration += ' (';
+            serviceDuration += hoursStart + ':' + minutesStart;
+            serviceDuration += ' - ';
+            serviceDuration += hoursEnd + ':' + minutesEnd;
+            serviceDuration += ')';
 
-                    $('.service-duration-summary').find('small').html(serviceDuration);
+            $('.service-duration-summary').find('small').html(serviceDuration);
+        },
+        addEventService: function (event, service) {
+            if (typeof event.services === "undefined") {
+                event.services = ko.observableArray();
+            }
+            var serviceIndex = event.services().map(object => parseInt(object.service_id)).indexOf(service.service_id);
+            if (serviceIndex === -1) {
+                event.services().push(service);
+            }
+        },
+        deleteEventService: function (event, service_id) {
+            if (typeof event.services !== "undefined") {
+                var serviceIndex = event.services().map(object => parseInt(object.service_id)).indexOf(service_id);
+                if (serviceIndex !== -1) {
+                    event.services().splice(serviceIndex, 1);
                 }
             }
         },
