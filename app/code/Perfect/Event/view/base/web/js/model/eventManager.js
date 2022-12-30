@@ -28,7 +28,9 @@ define([
                     extendedProps: {
                         employee_id: event.employee_id,
                         employeeHash: md5().hash(event.employee_id),
-                        client: event.client
+                        client: event.client,
+                        master: event.master,
+                        master_id: event.master_id
                     }
                 });
             }
@@ -47,8 +49,8 @@ define([
                         isEventNew = true;
                         event = $.extend(event, eventData);
                     }
-                    var eventEmployeeHash = event.extendedProps.employeeHash,
-                        calendar = storage.searchEventCalendar(eventEmployeeHash),
+                    var employeeHash = event.extendedProps.employeeHash,
+                        calendar = storage.searchEventCalendar(employeeHash),
                         eventEmployeeHash = md5().hash(eventData.employee_id);
 
                     if (typeof event !== "undefined" && !_.isEmpty(event) && Number.isInteger(parseInt(event.id))) {
@@ -70,7 +72,7 @@ define([
                             event.extendedProps.employeeHash = md5().hash(eventData.employee_id);
                         }
 
-                        if (eventEmployeeHash === eventEmployeeHash) {
+                        if (employeeHash === eventEmployeeHash) {
                             calendar.updateEvent(event);
                         } else {
                             if (!isEventNew) {
@@ -78,6 +80,7 @@ define([
                             }
                             calendar = storage.searchEventCalendar(eventEmployeeHash);
                             calendar.addEvent(event);
+                            calendar.refetchEvents();
                         }
                     }
                 });

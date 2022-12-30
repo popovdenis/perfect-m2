@@ -84,19 +84,20 @@ class ServiceRepository implements ServiceRepositoryInterface
         /* @var \Perfect\Service\Model\ResourceModel\Service\Collection $collection */
         $collection = $this->serviceFactory->create()->getCollection();
         $collection->getSelect()
-            ->joinInner(
+            ->joinLeft(
                 ['se' => $collection->getTable('perfect_service_employee')],
-                'se.service_id = main_table.entity_id',
+                'se.service_id = main_table.entity_id AND '
+                . $collection->getConnection()->quoteInto('se.employee_id = ?', $masterId),
                 [
                     'master_service_duration_h' => 'service_duration_h',
                     'master_service_duration_m' => 'service_duration_m'
                 ]
-            )->joinInner(
+            )->joinLeft(
                 ['sp' => $collection->getTable('perfect_service_price')],
-                'sp.service_id = main_table.entity_id',
+                'sp.service_id = main_table.entity_id AND '
+                . $collection->getConnection()->quoteInto('sp.employee_level = ?', 15),
                 ['is_price_range', 'service_price_from', 'service_price_to']
-            )->where('se.employee_id = ?', $masterId)
-            ->where('sp.employee_level = ?', 15);
+            );
 
         return $collection->getItems();
     }

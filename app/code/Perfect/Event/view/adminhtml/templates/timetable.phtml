@@ -36,7 +36,8 @@ if ($customers = $block->getEmployees()):
                 </div>
             </div>
         <?php $config = $block->getConfig($indexer) ?>
-        <?php $config['events'] = $this->getEvents($customer) ?>
+        <?php $config['master_id'] = $customer->getId() ?>
+        <?php $config['events'] = $block->getEvents($customer) ?>
         <?php $config['employeesHash'] = $employeesHash ?>
         <?php $config['employeeHash'] = md5($customer->getId()) ?>
 <script type="text/x-magento-init">

@@ -6,12 +6,13 @@ define([
     'Magento_Ui/js/modal/modal',
     'Magento_Ui/js/modal/confirm',
     'Perfect_Event/js/storage',
+    'Perfect_Event/js/model/eventManager',
     'spectrum',
     'qcTimepicker',
     'mage/calendar',
     'mage/collapsible',
     'jquery/ui',
-], function ($, _, ko, Component, modal, confirm, storage) {
+], function ($, _, ko, Component, modal, confirm, storage, eventManager) {
     'use strict';
 
     return Component.extend({
@@ -49,7 +50,7 @@ define([
                             content: $.mage.__('Are you sure you want to delete this event?'),
                             actions: {
                                 confirm: function () {
-                                    self._deleteEvent(storage.currentEvent());
+                                    eventManager().deleteEvent(storage.currentEvent());
                                 },
                                 cancel: function () {
                                     return false;

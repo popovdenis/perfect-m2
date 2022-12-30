@@ -121,6 +121,7 @@ class Timetable extends \Magento\Backend\Block\Template
             foreach ($entities as $entity) {
                 $events[$entity->getId()] = $entity->getData();
                 $events[$entity->getId()]['master'] = $customer->getFirstname();
+                $events[$entity->getId()]['master_id'] = $customer->getId();
 
                 $client = $this->getClientInfo($entity->getClientId());
                 $events[$entity->getId()]['client'] = [

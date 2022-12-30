@@ -121,6 +121,7 @@ class Save extends \Magento\Backend\App\Action
             $eventData['id'] = (int) $eventData['id'];
         } catch (NoSuchEntityException $exception) {
             $event = $this->eventFactory->create();
+            $event->setServiceName('Стрижка');
             unset($eventData['id']);
         }
 

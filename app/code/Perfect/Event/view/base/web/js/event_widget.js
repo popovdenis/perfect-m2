@@ -60,6 +60,7 @@ define([
                     dayMaxEvents: true,
                     nowIndicator: true,
                     events: eventManager().populateEvents(this.options.events),
+                    master_id: null,
                     views: {
                         timeGridDay: {pointer: true, titleFormat: {year: 'numeric', month: 'short', day: 'numeric'}, locale: 'ru'},
                         timeGridWeek: {pointer: true, titleFormat: {year: 'numeric', month: '2-digit', day: 'numeric'}, locale: 'ru'},
@@ -69,7 +70,9 @@ define([
                     },
                     dateClick: function (dateClickInfo) {
                         if (!eventPopup().isPopupActive()) {
-                            eventPopup().preparePopup(Event.newEvent(dateClickInfo)).openPopup();
+                            let dateInfo = Event.newEvent(dateClickInfo);
+                            dateInfo.extendedProps.employee_id = self.options.master_id;
+                            eventPopup().preparePopup(dateInfo).openPopup();
                         }
                     },
                     eventClick: function (eventClickInfo) {
