@@ -48,6 +48,7 @@ define([
                     if (_.isEmpty(event.id)) {
                         isEventNew = true;
                         event = $.extend(event, eventData);
+                        $.extend(event.extendedProps.client, eventData);
                     }
                     var employeeHash = event.extendedProps.employeeHash,
                         calendar = storage.searchEventCalendar(employeeHash),
